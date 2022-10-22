@@ -20,4 +20,4 @@ Las tareas a realizar se dividirán entre los integrantes y será de la siguient
 
 ### Semana 1 
 ------------
-Realizamos la primera reunión de equipo donde definimos las tareas y tiempos de cada integrante, segmentando en diferentes puntos los próximos puntos a desarrollar.
+Realizamos la primera reunión de equipo donde definimos las tareas y tiempos de cada integrante, segmentando en diferentes puntos los próximos pasos a desarrollar.
