@@ -8,13 +8,13 @@ Integrantes:
 Se desarrollará una aplicación encargada de toda la comunicación de un restaurante entre su equipo y sus clientes. Produciremos una comanda donde vinculamos las diferentes tareas, pedidos y acciones que serán detalladas posteriormente.
 Las tareas a realizar se dividirán entre los integrantes y será de la siguiente manera:
 
-##### :fa-pencil: Cristian Andrés Barraza
+##### Cristian Andrés Barraza
 - Asignación de tareas
 
-##### :fa-pencil: Andrés Wuthrich
+##### Andrés Wuthrich
 - Asignación de tareas
 
-##### :fa-pencil: Lucas Sanchez
+##### Lucas Sanchez
 - Asignación de tareas
 
 
