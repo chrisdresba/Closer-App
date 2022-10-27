@@ -39,18 +39,18 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async register() {
+   async register() {
     const loading = await this.loadingController.create();
     await loading.present();
 
-    const user = await this.authService.register(this.credentials.value);
+    this.router.navigate(["register"]);
     await loading.dismiss();
 
-    if(user){
+  /*  if(user){
       this.showAlert('Registro exitoso','!!!!');
     } else {
       this.showAlert('Registro falló','!!!!');
-    }
+    }*/
   }
 
   async login() {

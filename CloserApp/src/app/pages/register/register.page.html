@@ -1,9 +1,76 @@
-<ion-header>
+<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-button class="salir" (click)="Logout()" slot="end">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-button>
+    <ion-title slot="start"> Crear Cuenta </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content [fullscreen]="true" id="cardForm">
+  <ion-card id="box">
+    <ion-card-header>
+      <ion-button class="btnCliente" (click)="viewPerfil(true)" expand="block" >Cliente</ion-button>
+      <ion-button class="btnAnonimo" (click)="viewPerfil(false)" expand="block" >Anónimo</ion-button>
+    </ion-card-header>
+  <ion-card-content>
+    <form [formGroup]="loginForm">
+      <ion-item lines="full">
+        <ion-label position="stacked">Correo electrónico</ion-label>
+        <ion-input type="email" formControlName="email" required size="" name="email" [(ngModel)]="email"
+          placeholder="Correo electrónico">
+        </ion-input>
+      </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('email').hasError('required') && (loginForm.get('email').dirty || loginForm.get('email').touched)">Por
+          favor, ingrese su correo.</small>
+        <small *ngIf="loginForm.get('email').hasError('email')">Ingrese un correo valido.</small>
+      </ion-row>
+      <ion-item lines="full">
+        <ion-label position="stacked">Contraseña</ion-label>
+        <ion-input type="password" required formControlName="password" name="password"
+          [(ngModel)]="password" placeholder="Contraseña"></ion-input>
+      </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('password').hasError('required') && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+          [ngClass]="loginForm.get('password').hasError('required') && loginForm.get('password').touched ? 'visible' : 'hidden'">Ingrese
+          una contraseña.</small>
+        <small
+          *ngIf="loginForm.get('password').hasError('maxlength') && (loginForm.get('password').dirty || loginForm.get('password').touched)"
+          [ngClass]="loginForm.get('password').hasError('maxlength') && loginForm.get('password').touched ? 'visible' : 'hidden'">La
+          contraseña no debe contener mas de 6 caracteres.</small>
+      </ion-row>
+      <ion-item lines="full">
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input type="text" formControlName="nombre" required size="" name="nombre" [(ngModel)]="nombre"
+          placeholder="Ingrese su nombre">
+        </ion-input>
+      </ion-item>
+      <ion-item lines="full" *ngIf="perfilCliente">
+        <ion-label position="stacked">Apellido</ion-label>
+        <ion-input type="text" formControlName="apellido" required size="" name="apellido" [(ngModel)]="apellido"
+          placeholder="Ingrese su Apellido">
+        </ion-input>
+      </ion-item>
+      <ion-item lines="full" *ngIf="perfilCliente">
+        <ion-label position="stacked">Dni</ion-label>
+        <ion-input type="number" formControlName="dni" required size="" name="dni" [(ngModel)]="dni"
+          placeholder="Ingrese su dni">
+        </ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="stacked">Foto</ion-label>
+        <ion-fab-button class="btnFoto" expand="block" > <ion-icon class="icono" name="camera-sharp"></ion-icon></ion-fab-button>
+      </ion-item>
+    </form>
+  </ion-card-content>
+  </ion-card>
 </ion-content>
+
+<ion-footer [translucent]="true">
+  <ion-toolbar>
+    <ion-button class="btnGuardar" expand="block" >Guardar Usuario</ion-button>
+  </ion-toolbar>
+</ion-footer>
