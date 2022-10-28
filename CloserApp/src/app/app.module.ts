@@ -13,13 +13,21 @@ import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirebaseApp } from '@angular/fire/app';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { Camera } from '@ionic-native/camera/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [  ReactiveFormsModule,FormsModule, BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-      provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
-      provideAuth(() => getAuth()),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    AngularFireAuthModule,
+    AngularFirestoreModule
 ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [Camera,{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

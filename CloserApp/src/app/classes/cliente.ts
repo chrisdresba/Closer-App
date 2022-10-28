@@ -9,6 +9,6 @@ export class Cliente {
     password: string = '';
     fotoURL?: string;
     uid?: string = '';
-    validacion?: string = '';
+    validacion?: boolean;
     estado?: string = '';
 }
