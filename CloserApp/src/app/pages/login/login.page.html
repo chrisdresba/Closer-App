@@ -1,10 +1,14 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Closer</ion-title>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title slot="start">Closer</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+
+<ion-content id="box">
+  <!-- <div id="cardForm">   -->
+    <!-- <ion-card> -->
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button>{{opcion}}
       <!-- <ion-img src="../assets/opciones.png"></ion-img> -->
@@ -14,25 +18,31 @@
       <ion-fab-button (click)="cargarUsuario('2')" data-desc="Supervisor"></ion-fab-button>
       <ion-fab-button (click)="cargarUsuario('3')" data-desc="Metre"></ion-fab-button>
       <ion-fab-button (click)="cargarUsuario('4')" data-desc="Mozo"></ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('5')" data-desc="Cliente"></ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('5')" data-desc="Cliente">
+        <ion-img src="../assets/cliente.png"></ion-img>
+      </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 
-  <form [formGroup]="credentials" (ngSubmit)="login()" class="fondo">
-    <ion-item fill="solid" class="ion-margin-bottom espacio">
+  <form [formGroup]="credentials" (ngSubmit)="login()">
+    <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
+      <ion-label position="stacked">Correo electrónico</ion-label>
       <ion-input type="email" placeholder="Correo electrónico" formControlName="email"></ion-input>
       <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Correo electrónico es inválido</ion-note>
     </ion-item>
 
-    <ion-item fill="solid" class="ion-margin-bottom espacio">
+    <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
+      <ion-label position="stacked">Contraseña</ion-label>
       <ion-input type="password" placeholder="Contraseña" formControlName="password"></ion-input>
       <ion-note slot="error" *ngIf="(email.dirty || email.touched) && email.errors">Contraseña es inválida</ion-note>
     </ion-item>
 
     <!-- <ion-button expand="full" (click)="cargarUsuario()">Usuario</ion-button> -->
-    <ion-button expand="full" type="submit" color="success" class="boton" [disabled]="!credentials.valid">Ingresar</ion-button>
-    <ion-button expand="full" type="button" class="boton" (click)="register()">Crear cuenta
+    <ion-button expand="block" type="submit" color="success" class="boton" [disabled]="!credentials.valid">Ingresar</ion-button>
+    <ion-button expand="block" type="button" class="boton" (click)="register()">Crear cuenta
       <ion-icon slot="end" name="star"></ion-icon>
     </ion-button>
   </form>  
+  <!-- </ion-card> -->
+<!-- </div> -->
 </ion-content>
