@@ -12,14 +12,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterPage implements OnInit {
 
   user: Cliente;
-  email: string;
-  password: string;
-  nombre: string;
-  apellido: string;
-  dni: number;
-  fotoUrl: string;
+  foto: string;
   loginForm: FormGroup;
   perfilCliente:boolean = true;
+  view:boolean = false;
 
   constructor(
     public authSrv: AuthService,
@@ -34,12 +30,25 @@ export class RegisterPage implements OnInit {
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       apellido: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       dni: ["", Validators.compose([Validators.required,Validators.max(99999999)])],
-      fotoUrl: ["", Validators.compose([Validators.required, Validators.email])],
+      fotoUrl: ["urlFoto", Validators.compose([Validators.required])],
     });
   }
 
   viewPerfil(value:boolean){
     this.perfilCliente = value;
+    this.view = true;
+  }
+
+  back(){
+    this.view = false;
+  }
+
+  guardarUsuario(){
+    console.log(this.loginForm.value.email)
+    console.log(this.loginForm.value.password)
+    console.log(this.loginForm.value.nombre)
+    console.log(this.loginForm.value.apellido)
+    console.log(this.loginForm.value.dni)
   }
 
   Logout() {

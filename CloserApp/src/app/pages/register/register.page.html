@@ -1,23 +1,52 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-button class="salir" (click)="Logout()" slot="end">
+<div *ngIf="!view">
+  <ion-content id="viewHome">
+    <ion-card class="btnCliente cardUser" (click)="viewPerfil(true)">
+      <img src="./../../../assets/cliente.png" alt="" title="Cliente">
+      <h1>Cliente</h1>
+    </ion-card>
+    <ion-card class="btnAnonimo cardUser" (click)="viewPerfil(false)">
+      <img src="./../../../assets/anonimo.png" alt="" title="Anónimo">
+      <h1>Anónimo</h1>
+    </ion-card>
+  </ion-content>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
       <ion-icon name="exit-outline"></ion-icon>
-    </ion-button>
-    <ion-title slot="start"> Crear Cuenta </ion-title>
-  </ion-toolbar>
-</ion-header>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="Logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</div>
 
-<ion-content [fullscreen]="true" id="cardForm">
+<div id="viewForm" *ngIf="view">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title slot="start"> Crear Cuenta </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="back()">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="dark" (click)="Logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div id="cardForm">
   <ion-card id="box">
-    <ion-card-header>
-      <ion-button class="btnCliente" (click)="viewPerfil(true)" expand="block" >Cliente</ion-button>
-      <ion-button class="btnAnonimo" (click)="viewPerfil(false)" expand="block" >Anónimo</ion-button>
-    </ion-card-header>
-  <ion-card-content>
     <form [formGroup]="loginForm">
       <ion-item lines="full">
         <ion-label position="stacked">Correo electrónico</ion-label>
-        <ion-input type="email" formControlName="email" required size="" name="email" [(ngModel)]="email"
+        <ion-input type="email" formControlName="email" required size="" name="email"
           placeholder="Correo electrónico">
         </ion-input>
       </ion-item>
@@ -30,7 +59,7 @@
       <ion-item lines="full">
         <ion-label position="stacked">Contraseña</ion-label>
         <ion-input type="password" required formControlName="password" name="password"
-          [(ngModel)]="password" placeholder="Contraseña"></ion-input>
+          placeholder="Contraseña"></ion-input>
       </ion-item>
       <ion-row class="hiddenItems">
         <small
@@ -44,33 +73,62 @@
       </ion-row>
       <ion-item lines="full">
         <ion-label position="stacked">Nombre</ion-label>
-        <ion-input type="text" formControlName="nombre" required size="" name="nombre" [(ngModel)]="nombre"
-          placeholder="Ingrese su nombre">
+        <ion-input type="text" formControlName="nombre" required size="" name="nombre"
+          placeholder="Nombre">
         </ion-input>
       </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('nombre').hasError('required') && (loginForm.get('nombre').dirty || loginForm.get('nombre').touched)"
+          [ngClass]="loginForm.get('nombre').hasError('required') && loginForm.get('nombre').touched ? 'visible' : 'hidden'">Ingrese
+          un nombre.</small>
+      </ion-row>
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Apellido</ion-label>
-        <ion-input type="text" formControlName="apellido" required size="" name="apellido" [(ngModel)]="apellido"
-          placeholder="Ingrese su Apellido">
+        <ion-input type="text" formControlName="apellido" required size="" name="apellido"
+          placeholder="Apellido">
         </ion-input>
       </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('apellido').hasError('required') && (loginForm.get('apellido').dirty || loginForm.get('apellido').touched)"
+          [ngClass]="loginForm.get('apellido').hasError('required') && loginForm.get('apellido').touched ? 'visible' : 'hidden'">Ingrese
+          una apellido.</small>
+      </ion-row>
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Dni</ion-label>
-        <ion-input type="number" formControlName="dni" required size="" name="dni" [(ngModel)]="dni"
-          placeholder="Ingrese su dni">
+        <ion-input type="number" formControlName="dni" required size="" name="dni"
+          placeholder="DNI">
         </ion-input>
       </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('dni').hasError('required') && (loginForm.get('dni').dirty || loginForm.get('dni').touched)"
+          [ngClass]="loginForm.get('dni').hasError('required') && loginForm.get('dni').touched ? 'visible' : 'hidden'">Ingrese
+          un dni valido.</small>
+        <small
+          *ngIf="loginForm.get('dni').hasError('max') && (loginForm.get('dni').dirty || loginForm.get('dni').touched)"
+          [ngClass]="loginForm.get('dni').hasError('max') && loginForm.get('dni').touched ? 'visible' : 'hidden'">El dni debe ser menor a 99.999.999</small>
+      </ion-row>
       <ion-item lines="full">
         <ion-label position="stacked">Foto</ion-label>
-        <ion-fab-button class="btnFoto" expand="block" > <ion-icon class="icono" name="camera-sharp"></ion-icon></ion-fab-button>
+        <img src="./../../../assets/camara.png" alt="" id="btnFoto">
+      </ion-item>
+      <ion-row class="hiddenItems">
+        
+      </ion-row>
+      <ion-item lines="full" *ngIf="perfilCliente">
+        <ion-label position="stacked">Scanear Dni</ion-label>
+        <img src="./../../../assets/QrDni.png" alt="" id="qr">
       </ion-item>
     </form>
-  </ion-card-content>
   </ion-card>
-</ion-content>
+</div>
 
-<ion-footer [translucent]="true">
-  <ion-toolbar>
-    <ion-button class="btnGuardar" expand="block" >Guardar Usuario</ion-button>
-  </ion-toolbar>
-</ion-footer>
+
+  <ion-footer [translucent]="true">
+    <ion-toolbar>
+      <ion-button  [disabled]="!loginForm.valid" class="btnGuardar" (click)="guardarUsuario()" expand="block">Guardar Usuario</ion-button>
+    </ion-toolbar>
+  </ion-footer>
+</div>
