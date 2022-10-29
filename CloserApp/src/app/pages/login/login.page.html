@@ -1,28 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title slot="start">Closer</ion-title>
+    <!-- <ion-title slot="start"> -->
+      <ion-img src="../assets/logo2.png" class="vertical"></ion-img>
+
+    <!-- </ion-title> -->
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content id="box">
-  <!-- <div id="cardForm">   -->
-    <!-- <ion-card> -->
-
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>{{opcion}}
-      <!-- <ion-img src="../assets/opciones.png"></ion-img> -->
-    </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button (click)="cargarUsuario('1')" data-desc="Administrador"></ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('2')" data-desc="Supervisor"></ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('3')" data-desc="Metre"></ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('4')" data-desc="Mozo"></ion-fab-button>
-      <ion-fab-button (click)="cargarUsuario('5')" data-desc="Cliente">
-        <ion-img src="../assets/cliente.png"></ion-img>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+<ion-content id="viewHome">
+  <div id="cardForm">
+    <ion-card id="box">
 
   <form [formGroup]="credentials" (ngSubmit)="login()">
     <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
@@ -43,6 +31,31 @@
       <ion-icon slot="end" name="star"></ion-icon>
     </ion-button>
   </form>  
-  <!-- </ion-card> -->
-<!-- </div> -->
+  </ion-card>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>{{opcion}}
+      <!-- <ion-img src="../assets/opciones.png"></ion-img> -->
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="cargarUsuario('1')" data-desc="Administrador">
+        <ion-img src="../assets/admin.png"></ion-img>
+      </ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('2')" data-desc="Supervisor">
+        <ion-img src="../assets/supervisor.png"></ion-img>
+      </ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('3')" data-desc="Metre">
+        <ion-img src="../assets/metre.png"></ion-img>
+      </ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('4')" data-desc="Mozo">
+        <ion-img src="../assets/mozo.png"></ion-img>
+      </ion-fab-button>
+      <ion-fab-button (click)="cargarUsuario('5')" data-desc="Cliente">
+        <ion-img src="../assets/cliente.png"></ion-img>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+</div>
 </ion-content>
