@@ -65,6 +65,14 @@ h1 {
     font-weight: 600;
 }
 
+ion-label{
+    color:#000 !important;
+}
+ion-input{
+    --color:#000;
+}
+
+
 @media screen and (min-width: 460px) {
     #viewHome {
         display: flex;
@@ -103,6 +111,12 @@ h1 {
 ion-header {
     width: 100vw;
 }
+
+ion-toolbar{
+    --background:rgb(217, 217, 217);
+}
+
+
 #cardForm {
     background: lightgrey;// #fdfdfd4d  !important;
     // --background: #fdfdfd4d !important;

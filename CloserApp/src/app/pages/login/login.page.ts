@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { Cliente } from 'src/app/classes/cliente';
+import { ToastService } from 'src/app/services/toast.service';
+import { UsuariosService } from 'src/app/services/usuarios.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -11,18 +14,21 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPage implements OnInit {
   credentials: FormGroup;
-
   opcion:string;
-
+  public listado : Cliente[] = [];
+  estado:boolean;
   // cargarEmail: string;
   // cargarPassword: string;
 
-  constructor(private fb: FormBuilder, private loadingController: LoadingController, 
-    private authService: AuthService, private alertController: AlertController, private router: Router) 
+  constructor(private fb: FormBuilder, private loadingController: LoadingController,public toastSrv: ToastService,private toast: ToastController,
+    private authService: AuthService, private alertController: AlertController, private router: Router,public serv:UsuariosService) 
   { 
     this.opcion = "Staff";        
     // this.cargarEmail="";
     // this.cargarPassword="";
+    this.serv.getClientes().subscribe(item => {
+      this.listado = item;
+    });
   }
 
   get email(){
@@ -54,19 +60,26 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
+    const email = this.credentials.value.email;
     const loading = await this.loadingController.create();
     await loading.present();
 
     const user = await this.authService.login(this.credentials.value);
+    this.estado = this.buscarCliente(email);
     await loading.dismiss();
 
     if(user){
-      // this.showAlert('Ingreso home','!!!!');
-      this.router.navigate(['home']);
+      if(this.estado){
+    // this.showAlert('Ingreso home','!!!!');
+    this.router.navigate(['home']);
+      }else{
+        this.presentToast("Ingreso", "El usuario aún no fue validado!", "warning");
+      }
     } else {
-      this.showAlert('Ingreso falló','!!!!');
+      this.presentToast("Ingreso", "El usuario o la contraseña son incorrectos!", "warning");
     }
   }
+
 
   async cargarUsuario(numero:string){
     switch(numero){
@@ -97,4 +110,25 @@ export class LoginPage implements OnInit {
     const alert = await this.alertController.create({header, message, buttons: ['OK'], });
     await alert.present();
   }
+
+  buscarCliente(email: string){
+    for (let i = 0; i < this.listado.length; i++) {
+      if (this.listado[i].email == email && this.listado[i].validacion == false) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  async presentToast(header: string, message: string, color: string) {
+    const toast = await this.toast.create({
+      header,
+      message,
+      color,
+      duration: 2500,
+      position: "middle"
+    });
+    toast.present();
+  }
+
 }

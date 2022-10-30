@@ -115,11 +115,6 @@
         <ion-label position="stacked">Foto</ion-label>
         <img src="./../../../assets/camara.png" alt="" (click)="activarCamara()" id="btnFoto">
       </ion-item>
-      <ion-row class="hiddenItems">
-        <small
-          *ngIf="loginForm.get('fotoUrl').hasError('required')"
-          [ngClass]="loginForm.get('fotoUrl').hasError('required') && loginForm.get('fotoUrl').touched ? 'visible' : 'hidden'">Cargue una foto.</small>
-      </ion-row>
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Scanear Dni</ion-label>
         <img src="./../../../assets/QrDni.png" alt="" id="qr">
@@ -171,11 +166,6 @@
         <ion-label position="stacked">Foto</ion-label>
         <img src="./../../../assets/camara.png" (click)="activarCamara()" alt="" id="btnFoto">
       </ion-item>
-      <ion-row class="hiddenItems">
-        <small
-          *ngIf="auxForm.get('fotoUrl').hasError('required')"
-          [ngClass]="auxForm.get('fotoUrl').hasError('required') && auxForm.get('fotoUrl').touched ? 'visible' : 'hidden'">Cargue una foto.</small>
-      </ion-row>
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Scanear Dni</ion-label>
         <img src="./../../../assets/QrDni.png" alt="" id="qr">

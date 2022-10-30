@@ -26,6 +26,7 @@
     "@capacitor/keyboard": "4.0.1",
     "@capacitor/status-bar": "4.0.1",
     "@ionic-native/camera": "^5.36.0",
+    "@awesome-cordova-plugins/camera": "^5.46.0",
     "@ionic/angular": "^6.1.9",
     "firebase": "^9.12.1",
     "ionicons": "^6.0.3",

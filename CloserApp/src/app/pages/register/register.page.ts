@@ -6,7 +6,7 @@ import { Cliente } from 'src/app/classes/cliente';
 import { AuthService } from 'src/app/services/auth.service';
 import { ToastService } from 'src/app/services/toast.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 @Component({
@@ -22,8 +22,10 @@ export class RegisterPage implements OnInit {
   auxForm: FormGroup;
   perfilCliente: boolean = true;
   view: boolean = false;
-
+  fecha: string;
+  hora: string;
   storageRef = this.storage.storage.ref();
+
   options: CameraOptions = {
     quality: 50,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -53,13 +55,13 @@ export class RegisterPage implements OnInit {
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       apellido: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       dni: ["", Validators.compose([Validators.required, Validators.max(99999999)])],
-      fotoUrl: ["", Validators.compose([Validators.required])],
+    //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
     this.auxForm = this.fromBuilder.group({
       email: ["", Validators.compose([Validators.required, Validators.email])],
       password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
-      fotoUrl: ["", Validators.compose([Validators.required])],
+    //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
   }
 
@@ -129,15 +131,16 @@ export class RegisterPage implements OnInit {
       this.presentLoading();
     }, (err) => {
       console.log(err);
+      this.presentToast("Camara", "intentelo más tarde", "warning");
     });
 
   }
 
   async subirArchivo(file: any) {
     var res = new Date();
-    let fecha = res.getFullYear() + "-" + (res.getMonth() + 1) + "-" + res.getDate();
-    let hora = res.getHours() + ":" + res.getMinutes() + ":" + res.getSeconds();
-    const imagenUnoNombre = this.usuario + fecha + '-' + hora + '.jpeg';
+    this.fecha = res.getFullYear() + "-" + (res.getMonth() + 1) + "-" + res.getDate();
+    this.hora = res.getHours() + ":" + res.getMinutes() + ":" + res.getSeconds();
+    const imagenUnoNombre = this.usuario + this.fecha + '-' + this.hora + '.jpeg';
     const ref = this.storage.ref(imagenUnoNombre);
     this.storage.upload(imagenUnoNombre, file)
       .then((termino) => termino.ref.getDownloadURL().then((URL) => {
