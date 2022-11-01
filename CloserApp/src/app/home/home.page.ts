@@ -17,4 +17,8 @@ export class HomePage {
     this.router.navigateByUrl('/', { replaceUrl: true });
   }
 
+  gestionarUsuarios() {
+    this.router.navigateByUrl('usuarios', { replaceUrl: true });
+  }
+
 }
