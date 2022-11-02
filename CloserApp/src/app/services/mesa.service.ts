@@ -39,6 +39,10 @@ export class MesaService {
     }
   }
 
+  actualizarClienteListaEspera(res: ListaEspera) {
+    return this.firestore.collection('listaEspera').doc(res.usuario).update({ ...res });
+  }
+
   comprobarListaEspera(usuario: string) {
     for (let i = 0; i < this.listadoEspera.length; i++) {
       if (this.listadoEspera[i].usuario == usuario) {
