@@ -8,12 +8,16 @@ import { ToastService } from 'src/app/services/toast.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+//import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+
+declare let window: any; 
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
+
 export class RegisterPage implements OnInit {
 
   usuario: Cliente;
@@ -44,6 +48,7 @@ export class RegisterPage implements OnInit {
     private storage: AngularFireStorage,
     public loadingController: LoadingController,
     private camera: Camera,
+  //  public qr:BarcodeScanner
   ) {
 
   }
@@ -52,6 +57,7 @@ export class RegisterPage implements OnInit {
     this.loginForm = this.fromBuilder.group({
       email: ["", Validators.compose([Validators.required, Validators.email])],
       password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
+      passwordAux: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       apellido: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       dni: ["", Validators.compose([Validators.required, Validators.max(99999999)])],
@@ -60,6 +66,7 @@ export class RegisterPage implements OnInit {
     this.auxForm = this.fromBuilder.group({
       email: ["", Validators.compose([Validators.required, Validators.email])],
       password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
+      passwordAux: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
     //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
@@ -76,11 +83,12 @@ export class RegisterPage implements OnInit {
 
   async guardarUsuario() {
     try {
-      let email,password,nombre,apellido,dni,foto;
+      let email,password,passAux,nombre,apellido,dni,foto;
 
       if(this.perfilCliente){
         email = this.loginForm.value.email;
         password = this.loginForm.value.password;
+        passAux = this.loginForm.value.passwordAux;
         nombre = this.loginForm.value.nombre;
         apellido = this.loginForm.value.apellido;
         dni = this.loginForm.value.dni;
@@ -88,11 +96,15 @@ export class RegisterPage implements OnInit {
       }else{
         email = this.auxForm.value.email;
         password = this.auxForm.value.password;
+        passAux = this.auxForm.value.passwordAux;
         nombre = this.auxForm.value.nombre;
         apellido = "";
         dni = 0;
         foto = this.foto;
       }
+
+      if(password == passAux){
+
       if (this.validarEmail(email) && this.validarContraseña(password)) {
         const user = await this.authSrv.register({ email, password });
         if (user) {
@@ -117,6 +129,9 @@ export class RegisterPage implements OnInit {
           this.presentToast("Registro", "Usuario incorrecto o existente", "warning");
         }
       }
+    }else{
+      this.presentToast("Registro", "Las contraseñas deben ser iguales", "warning");
+    }
     } catch (error) {
       console.log(error);
     }
@@ -161,6 +176,23 @@ export class RegisterPage implements OnInit {
     return blob;
   }
 
+  ReadQrCode() {
+    // Optionally request the permission early
+    window.cordova.plugins.barcodeScanner.scan(
+      result => {
+        console.log(result);
+        this.presentToast("Qr", result, "warning");
+
+      },
+      err => console.error(err),
+      {
+        showTorchButton: true,
+        prompt: "Scan your code",
+        formats: "QR_CODE",
+        resultDisplayDuration: 0
+      }
+    );
+  }
 
   Logout() {
     localStorage.removeItem('creditos');

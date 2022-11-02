@@ -16,8 +16,11 @@
 
 <ion-content [fullscreen]="true">
   <ion-card id="box" style="margin-top: 10px;">
-    <ion-button expand="block" type="submit" color="success" class="boton" (click)="gestionarUsuarios()">
+    <ion-button *ngIf="rol == cliente"  expand="block" type="submit" color="success" class="boton" (click)="gestionarUsuarios()">
       <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
+    </ion-button>
+    <ion-button *ngIf="rol != cliente" expand="block" type="submit" color="success" class="boton" (click)="ingresarListaEspera()">
+      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Scan Qr Lista
     </ion-button>
   </ion-card>
 </ion-content>

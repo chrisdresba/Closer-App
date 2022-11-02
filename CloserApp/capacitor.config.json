@@ -1,0 +1,15 @@
+{
+  "appId": "io.ionic.closer",
+  "appName": "Closer",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "plugins": {
+    "SplashScreen":{
+      "launchShowDuration":3000
+    }
+  },
+  "cordova": {},
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh"
+
+}

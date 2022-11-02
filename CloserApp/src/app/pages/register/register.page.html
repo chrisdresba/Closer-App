@@ -73,6 +73,21 @@
           contraseña no debe contener al menos 6 caracteres.</small>
       </ion-row>
       <ion-item lines="full">
+        <ion-label position="stacked">Confirmar contraseña</ion-label>
+        <ion-input type="password" required formControlName="passwordAux" name="passwordAux"
+          placeholder="Contraseña"></ion-input>
+      </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="loginForm.get('passwordAux').hasError('required') && (loginForm.get('passwordAux').dirty || loginForm.get('passwordAux').touched)"
+          [ngClass]="loginForm.get('passwordAux').hasError('required') && loginForm.get('passwordAux').touched ? 'visible' : 'hidden'">Ingrese
+          una contraseña.</small>
+        <small
+          *ngIf="loginForm.get('passwordAux').hasError('minlength') && (loginForm.get('passwordAux').dirty || loginForm.get('passwordAux').touched)"
+          [ngClass]="loginForm.get('passwordAux').hasError('minlength') && loginForm.get('passwordAux').touched ? 'visible' : 'hidden'">La
+          contraseña no debe contener al menos 6 caracteres.</small>
+      </ion-row>
+      <ion-item lines="full">
         <ion-label position="stacked">Nombre</ion-label>
         <ion-input type="text" formControlName="nombre" required size="" name="nombre"
           placeholder="Nombre">
@@ -117,12 +132,12 @@
       </ion-item>
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Scanear Dni</ion-label>
-        <img src="./../../../assets/QrDni.png" alt="" id="qr">
+        <img src="./../../../assets/QrDni.png" (click)="ReadQrCode()" alt="" id="qr">
       </ion-item>
     </form>
 
         <!--Form Anónimo-->
-    <form [formGroup]="auxForm">
+    <form [formGroup]="auxForm" *ngIf="!perfilCliente">
       <ion-item lines="full">
         <ion-label position="stacked">Correo electrónico</ion-label>
         <ion-input type="email" formControlName="email" required size="" name="email"
@@ -148,6 +163,21 @@
         <small
           *ngIf="auxForm.get('password').hasError('minlength') && (auxForm.get('password').dirty || auxForm.get('password').touched)"
           [ngClass]="auxForm.get('password').hasError('minlength') && auxForm.get('password').touched ? 'visible' : 'hidden'">La
+          contraseña no debe contener al menos 6 caracteres.</small>
+      </ion-row>
+      <ion-item lines="full">
+        <ion-label position="stacked">Confirmar contraseña</ion-label>
+        <ion-input type="password" required formControlName="passwordAux" name="passwordAux"
+          placeholder="Contraseña"></ion-input>
+      </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="auxForm.get('passwordAux').hasError('required') && (auxForm.get('passwordAux').dirty || auxForm.get('passwordAux').touched)"
+          [ngClass]="auxForm.get('passwordAux').hasError('required') && auxForm.get('passwordAux').touched ? 'visible' : 'hidden'">Ingrese
+          una contraseña.</small>
+        <small
+          *ngIf="auxForm.get('passwordAux').hasError('minlength') && (auxForm.get('passwordAux').dirty || auxForm.get('passwordAux').touched)"
+          [ngClass]="auxForm.get('passwordAux').hasError('minlength') && auxForm.get('passwordAux').touched ? 'visible' : 'hidden'">La
           contraseña no debe contener al menos 6 caracteres.</small>
       </ion-row>
       <ion-item lines="full">

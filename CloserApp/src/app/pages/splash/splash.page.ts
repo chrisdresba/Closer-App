@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Plugins } from '@capacitor/core';
-const {SplashScreen} = Plugins;
+//import { Plugins } from '@capacitor/core';
+//const {SplashScreen} = Plugins;
+import { SplashScreen } from '@capacitor/splash-screen';
+
 
 @Component({
   selector: 'app-splash',
@@ -21,8 +23,9 @@ export class SplashPage implements OnInit {
     
   }
 
-  ionViewWillEnter(){
-    Plugins.SplashScreen.hide() 
+  async ionViewWillEnter(){
+    //Plugins.SplashScreen.hide() 
+    await SplashScreen.hide();
   }
 
 }

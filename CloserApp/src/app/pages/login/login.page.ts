@@ -14,16 +14,15 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginPage implements OnInit {
   credentials: FormGroup;
-  opcion:string;
-  public listado : Cliente[] = [];
-  estado:boolean;
+  opcion: string;
+  public listado: Cliente[] = [];
+  estado: boolean;
   // cargarEmail: string;
   // cargarPassword: string;
 
-  constructor(private fb: FormBuilder, private loadingController: LoadingController,public toastSrv: ToastService,private toast: ToastController,
-    private authService: AuthService, private alertController: AlertController, private router: Router,public serv:UsuariosService) 
-  { 
-    this.opcion = "Staff";        
+  constructor(private fb: FormBuilder, private loadingController: LoadingController, public toastSrv: ToastService, private toast: ToastController,
+    private authService: AuthService, private alertController: AlertController, private router: Router, public serv: UsuariosService) {
+    this.opcion = "Staff";
     // this.cargarEmail="";
     // this.cargarPassword="";
     this.serv.getClientes().subscribe(item => {
@@ -31,10 +30,10 @@ export class LoginPage implements OnInit {
     });
   }
 
-  get email(){
+  get email() {
     return this.credentials.get('email');
   }
-  get password(){
+  get password() {
     return this.credentials.get('password');
   }
 
@@ -45,18 +44,18 @@ export class LoginPage implements OnInit {
     });
   }
 
-   async register() {
+  async register() {
     const loading = await this.loadingController.create();
     await loading.present();
 
     this.router.navigate(["register"]);
     await loading.dismiss();
 
-  /*  if(user){
-      this.showAlert('Registro exitoso','!!!!');
-    } else {
-      this.showAlert('Registro falló','!!!!');
-    }*/
+    /*  if(user){
+        this.showAlert('Registro exitoso','!!!!');
+      } else {
+        this.showAlert('Registro falló','!!!!');
+      }*/
   }
 
   async login() {
@@ -66,13 +65,14 @@ export class LoginPage implements OnInit {
 
     const user = await this.authService.login(this.credentials.value);
     this.estado = this.buscarCliente(email);
+
     await loading.dismiss();
 
-    if(user){
-      if(this.estado){
-    // this.showAlert('Ingreso home','!!!!');
-    this.router.navigate(['home']);
-      }else{
+    if (user) {
+      if (this.estado) {
+        this.serv.rolUsuario(email);
+        this.router.navigate(['home']);
+      } else {
         this.presentToast("Ingreso", "El usuario aún no fue validado!", "warning");
       }
     } else {
@@ -81,40 +81,40 @@ export class LoginPage implements OnInit {
   }
 
 
-  async cargarUsuario(numero:string){
-    switch(numero){
+  async cargarUsuario(numero: string) {
+    switch (numero) {
       case '1':
-        this.credentials.setValue({email:'admin@admin.com', password:'111111'});
-        this.opcion = "Admin";        
+        this.credentials.setValue({ email: 'admin@admin.com', password: '111111' });
+        this.opcion = "Admin";
         break;
       case '2':
-        this.credentials.setValue({email:'supervisor@supervisor.com', password:'123456'});
-        this.opcion = "Supervisor";        
+        this.credentials.setValue({ email: 'supervisor@supervisor.com', password: '123456' });
+        this.opcion = "Supervisor";
         break;
       case '3':
-        this.credentials.setValue({email:'metre@metre.com', password:'333333'});
-        this.opcion = "Metre";        
+        this.credentials.setValue({ email: 'metre@metre.com', password: '333333' });
+        this.opcion = "Metre";
         break;
       case '4':
-        this.credentials.setValue({email:'mozo@mozo.com', password:'444444'});
-        this.opcion = "Mozo";        
+        this.credentials.setValue({ email: 'mozo@mozo.com', password: '444444' });
+        this.opcion = "Mozo";
         break;
       case '5':
-        this.credentials.setValue({email:'cliente@cliente.com', password:'123456'});
-        this.opcion = "Cliente";        
+        this.credentials.setValue({ email: 'cliente@cliente.com', password: '123456' });
+        this.opcion = "Cliente";
         break;
-      }  
+    }
   }
 
   async showAlert(header, message) {
-    const alert = await this.alertController.create({header, message, buttons: ['OK'], });
+    const alert = await this.alertController.create({ header, message, buttons: ['OK'], });
     await alert.present();
   }
 
-  buscarCliente(email: string){
+  buscarCliente(email: string) {
     for (let i = 0; i < this.listado.length; i++) {
       if (this.listado[i].email == email && this.listado[i].validacion == false) {
-        return false;
+        return false
       }
     }
     return true;
