@@ -37,16 +37,15 @@
           </ion-avatar>
           <ion-label>
             <h2 class="ion-text-capitalize bold">{{usuario.nombre}} {{usuario.apellido}}</h2>
-            <h3 *ngIf="usuario.dni">DNI {{usuario.dni}}</h3>
-            <p>{{usuario.perfil}}</p>
+            <h3 *ngIf="usuario.email">Correo: {{usuario.email}}</h3>
           </ion-label>
         </ion-item>
 
         <ion-item-options side="end">
-          <ion-item-option color="success" (click)="aprobarUsuario(usuario)">
+          <ion-item-option color="success" (click)="aprobarUsuario(usuario, true)">
             <ion-icon slot="icon-only" name="checkmark-outline"></ion-icon>
           </ion-item-option>
-          <ion-item-option color="danger" (click)="declinarUsuario(usuario)">
+          <ion-item-option color="danger" (click)="aprobarUsuario(usuario, false)">
             <ion-icon slot="icon-only" name="close-outline"></ion-icon>
           </ion-item-option>
         </ion-item-options>

@@ -51,8 +51,8 @@ export class UsuariosService {
     return await this.firestore.collection('staff').doc(res.uid).set(entidad);
   }
 
-  actualizarCliente(res: Cliente) {
-    return this.firestore.collection('clientes').doc(res.uid).update({ ...res });
+  async actualizarCliente(res: Cliente) {
+    return await this.firestore.collection('clientes').doc(res.uid).update({ ...res });
   }
 
   rolUsuario(email: string) {
