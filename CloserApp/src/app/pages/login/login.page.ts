@@ -6,6 +6,7 @@ import { Cliente } from 'src/app/classes/cliente';
 import { ToastService } from 'src/app/services/toast.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { AuthService } from '../../services/auth.service';
+import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
 
 @Component({
   selector: 'app-login',
@@ -113,7 +114,7 @@ export class LoginPage implements OnInit {
 
   buscarCliente(email: string) {
     for (let i = 0; i < this.listado.length; i++) {
-      if (this.listado[i].email == email && this.listado[i].validacion == false) {
+      if (this.listado[i].email == email && (this.listado[i].validacion == ValidacionUsuario.PENDIENTE || this.listado[i].validacion == ValidacionUsuario.RECHAZADO)){
         return false
       }
     }

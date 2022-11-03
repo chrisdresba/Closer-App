@@ -1,3 +1,5 @@
+import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
+
 export class Cliente {
     nombre: string = '';
     apellido: string = '';
@@ -7,6 +9,6 @@ export class Cliente {
     password: string = '';
     fotoURL?: string;
     uid?: string = '';
-    validacion?: boolean;
+    validacion?: ValidacionUsuario;
     estado?: string = '';
 }

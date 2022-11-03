@@ -9,6 +9,7 @@ import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 //import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
+import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
 
 declare let window: any; 
 
@@ -116,7 +117,7 @@ export class RegisterPage implements OnInit {
           this.usuario.apellido = apellido;
           this.usuario.dni = dni;
           this.usuario.fotoURL = foto;
-          this.usuario.validacion = false;
+          this.usuario.validacion = ValidacionUsuario.PENDIENTE;
           this.usuario.estado = "inactivo";
 
           this.servUsuario.saveCliente(this.usuario);
