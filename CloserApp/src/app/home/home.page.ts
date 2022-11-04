@@ -24,6 +24,7 @@ export class HomePage implements OnInit {
   ngOnInit(): void {
     if (localStorage.getItem('sesionRol')) {
       this.rol = localStorage.getItem('sesionRol');
+      console.log(this.rol);
     }
     this.usuario = this.afAuth.onAuthStateChanged(user => {
       if (user) {
@@ -52,6 +53,10 @@ export class HomePage implements OnInit {
       console.log(error);
     }
   
+  }
+
+  verListaEspera() {
+    this.router.navigateByUrl('espera', { replaceUrl: true });
   }
 
   async presentToast(header: string, message: string, color: string) {

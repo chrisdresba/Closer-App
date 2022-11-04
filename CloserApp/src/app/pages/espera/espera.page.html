@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Lista de espera</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card id="box">
+    <ion-list>
+      <ion-list-header color="light">
+        PENDIENTES
+      </ion-list-header>
+
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="back()">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="dark" (click)="logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  
+  <ion-item-sliding class="cnt-espera"><!--*ngIf="!this.listaEspera.estado"--> 
+    <ion-item>
+        <ul>
+          <li *ngFor="let cliente of this.listaEspera">
+            <ion-label>
+            <!-- (click)="seleccionarCliente(cliente)" -->
+            {{ cliente.usuario }} {{ cliente.fecha }} {{ cliente.hora }}
+            </ion-label>
+          </li>
+        </ul>
+    </ion-item>
+    <div (click)="traerListaEspera()">
+      <span>Actualizar lista</span>
+    </div>
+  </ion-item-sliding>
+
+    </ion-list>
+  </ion-card>
+</ion-content>

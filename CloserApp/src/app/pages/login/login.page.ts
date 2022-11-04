@@ -102,9 +102,13 @@ export class LoginPage implements OnInit {
         break;
       case '5':
         this.credentials.setValue({ email: 'cliente@cliente.com', password: '123456' });
-        this.opcion = "Cliente";
+        // this.opcion = "Cliente";
         break;
-    }
+      case '6':
+        this.credentials.setValue({ email: 'cliente@cliente.com', password: '123456' });
+        // this.opcion = "Cliente";
+        break;
+      }
   }
 
   async showAlert(header, message) {

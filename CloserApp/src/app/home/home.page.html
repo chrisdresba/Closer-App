@@ -16,11 +16,14 @@
 
 <ion-content [fullscreen]="true">
   <ion-card id="box" style="margin-top: 10px;">
-    <ion-button *ngIf="rol != 'cliente'"  expand="block" type="submit" color="success" class="boton" (click)="gestionarUsuarios()">
+    <ion-button *ngIf="rol == 'SUPERVISOR' || rol == 'ADMINISTRADOR'"  expand="block" type="submit" color="success" class="boton" (click)="gestionarUsuarios()">
       <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
     </ion-button>
-    <ion-button *ngIf="rol != cliente" expand="block" type="submit" color="success" class="boton" (click)="ingresarListaEspera()">
+    <ion-button *ngIf="rol == 'CLIENTE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="ingresarListaEspera()">
       <ion-icon class="lbl" slot="start" name="people"></ion-icon>Scan Qr Lista
+    </ion-button>
+    <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="verListaEspera()">
+      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Lista de espera
     </ion-button>
   </ion-card>
 </ion-content>

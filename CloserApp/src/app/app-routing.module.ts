@@ -27,7 +27,11 @@ const routes: Routes = [
   {
     path: 'usuarios',
     loadChildren: () => import('./usuarios/usuarios.module').then( m => m.UsuariosPageModule)
+  },  {
+    path: 'espera',
+    loadChildren: () => import('./pages/espera/espera.module').then( m => m.EsperaPageModule)
   }
+
 ];
 
 @NgModule({

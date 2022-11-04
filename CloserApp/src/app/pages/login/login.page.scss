@@ -1,13 +1,3 @@
-.espacio {
-    padding: 5%;
-}
-// .fondo{
-    // background: url("../../assets/fondo.png") center / cover;
-// }
-.boton{
-    height: 100px;
-}
-
 ion-fab-button[data-desc] {
     position: relative;
 }
@@ -24,6 +14,53 @@ ion-fab-button[data-desc]::after {
     border-radius: 10px;
     box-shadow: 0 3px 5px -1px rgba(69, 69, 69, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
+ion-header {
+    width: 100vw;
+}
+
+ion-toolbar{
+    --background: #39a1ac;
+    // --background:rgb(217, 217, 217);
+    width: 100%;
+}
+
+ion-label{
+    color:#000 !important;
+    font-size: 1.2em !important;
+    font-weight: 600;
+}
+ion-input{
+    --color:#000;
+}
+ion-item {
+    --background: transparent;
+}
+
+ion-img.vertical {
+    width: 20%;
+    height: 20%;
+    margin-top: 2%;
+    margin-left: 75%;
+    margin-right: 5%;
+
+    // height: 98%;
+    // width: 98%;
+    // height: 8rem;
+    // width: 16rem;   
+    // padding: 1%;    
+  }
+  
+ion-footer {
+    position: absolute;
+    bottom: 0;
+    height: 8vh;
+}
+
+// ion-title {
+//     --color: #fff;
+//     font-weight: 600;
+//     font-size: 1.5em;
+// }
 
   //Preview
   #viewHome {
@@ -42,6 +79,16 @@ ion-fab-button[data-desc]::after {
     margin: 0;
     border-radius: 0;
 }
+.espacio {
+    padding: 5%;
+}
+// .fondo{
+    // background: url("../../assets/fondo.png") center / cover;
+// }
+.boton{
+    height: 100px;
+}
+
 
 // .fondo{
 //     background-color: #fdfdfd4d !important;
@@ -64,14 +111,6 @@ h1 {
     -webkit-text-stroke: 0.6px rgb(10, 5, 5);
     font-weight: 600;
 }
-
-ion-label{
-    color:#000 !important;
-}
-ion-input{
-    --color:#000;
-}
-
 
 @media screen and (min-width: 460px) {
     #viewHome {
@@ -108,17 +147,9 @@ ion-input{
 
 //Form
 
-ion-header {
-    width: 100vw;
-}
-
-ion-toolbar{
-    --background:rgb(217, 217, 217);
-}
-
 
 #cardForm {
-    background: lightgrey;// #fdfdfd4d  !important;
+    background: grey;// #fdfdfd4d  !important;
     // --background: #fdfdfd4d !important;
     // background: #e3e3e3;
     width: 100%;
@@ -128,24 +159,15 @@ ion-toolbar{
 }
 
 #box {
-    background: lightgrey;
-    // --background: #fdfdfd4d !important;
-    height: 90vh;
+//    background: lightgrey;
+--background: rgba(253, 253, 253, 0.3);
+    height: 93vh;
     margin-top: -1em;
     // background: url("../../../assets/fondo.png") center / cover;
 }
 
 form {
     margin-top: 2em;
-}
-
-ion-item {
-    --background: transparent;
-}
-
-ion-label {
-    font-size: 1.2em !important;
-    font-weight: 600;
 }
 
 .icono {
@@ -177,37 +199,6 @@ ion-label {
     height: 8vh;
     font-weight: 600;
 }
-
-ion-img.vertical {
-    width: 20%;
-    height: 20%;
-    margin-top: 2%;
-    margin-left: 75%;
-    margin-right: 5%;
-
-    // height: 98%;
-    // width: 98%;
-    // height: 8rem;
-    // width: 16rem;   
-    // padding: 1%;    
-  }
-  
-ion-footer {
-    position: absolute;
-    bottom: 0;
-    height: 8vh;
-}
-
-ion-toolbar {
-    // --background: #39a1ac;
-    width: 100%;
-}
-
-// ion-title {
-//     --color: #fff;
-//     font-weight: 600;
-//     font-size: 1.5em;
-// }
 
 small{
   color:#bc4a57;
