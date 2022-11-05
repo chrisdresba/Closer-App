@@ -13,14 +13,22 @@ Las tareas a realizar se dividirán entre los integrantes y será de la siguient
 - Desarrollo de Splash Screen
 - Maquetado Pantalla de Registro
 - Formularios Pantalla de Registro
+- Creación de Qr Espera (validación pendiente)
+- Generación de Chat - Consulta al mozo
 
 ##### Andrés Wuthrich
 - Maquetado Pantalla de Ingreso
 - Lógica Pantalla de Ingreso
 - Servicios de autenticación
+- Ajuste en estilos de la Aplicación
+- Visualización Lista en Espera (Metre)
+- Asignación de Mesa a cliente (Metre)
 
 ##### Lucas Sanchez
-- Asignación de tareas
+-  Maquetado Pantalla de Inicio
+-  Desarrollo listado de clientes pendientes
+- Envio correo electrónico
+- Codigos Qr Mesas
 
 ### Semana 1 
 ------------
