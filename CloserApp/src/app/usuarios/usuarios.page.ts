@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Cliente } from 'src/app/classes/cliente'
 import { ToastService } from 'src/app/services/toast.service'
 import { LoadingController } from '@ionic/angular';
+import { MailService } from 'src/app/services/mail.service'
 
 @Component({
   selector: 'app-usuarios',
@@ -17,7 +18,7 @@ export class UsuariosPage implements OnInit {
   listaUsuarios: any[] = [];
   listaPendientes: any[] = [];
 
-  constructor(public usuarioService: UsuariosService, private authService: AuthService, private router: Router, private toastService: ToastService, private loadingController: LoadingController) { }
+  constructor(public usuarioService: UsuariosService, private authService: AuthService, private router: Router, private toastService: ToastService, private loadingController: LoadingController, private mailService: MailService) { }
 
   ngOnInit() {
     this.obtenerUsuarios();
@@ -42,6 +43,11 @@ export class UsuariosPage implements OnInit {
 
     this.usuarioService.actualizarCliente(usuario).then((resultado) => {
       // this.toastService.presentToast("Información:", "Usuario actualizado correctamente.", "success");
+      if (permitido) {
+        this.mailService.sendEmail(usuario, 'Se ha aceptado su solicitud de alta, ya puede disfrutar de nuestros servicios. ¡Gracias por elegirnos!.', 'Restaurante - Solicitud de alta de usuario');
+      } else {
+        this.mailService.sendEmail(usuario, 'Lamentablemente no se ha aceptado su solicitud. Disculpe las molestias.', 'Restaurante - Solicitud de alta de usuario');
+      }
     }, (err) => {
       console.log(err);
     });
