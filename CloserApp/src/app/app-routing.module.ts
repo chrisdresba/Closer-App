@@ -30,6 +30,10 @@ const routes: Routes = [
   },  {
     path: 'espera',
     loadChildren: () => import('./pages/espera/espera.module').then( m => m.EsperaPageModule)
+  },
+  {
+    path: 'pedido',
+    loadChildren: () => import('./pages/pedido/pedido.module').then( m => m.PedidoPageModule)
   }
 
 ];
