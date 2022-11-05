@@ -44,6 +44,10 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('usuarios', { replaceUrl: true });
   }
 
+  realizarPedido() {
+    this.router.navigateByUrl('pedido', { replaceUrl: true });
+  }
+
   ingresarListaEspera() {
     try {
     this.servMesa.agregarUsuarioListaEspera(this.usuarioLogin);

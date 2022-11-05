@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="box">
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="back()">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="dark" (click)="logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-item>
+    <button color="warning" expand="block" (click)="menu = 'PLATOS'">Platos</button>
+    <button color="warning" expand="block" (click)="menu = 'BEBIDAS'">Bebidas</button>
+    <button color="warning" expand="block" (click)="menu = 'POSTRES'">Postres</button>
+  </ion-item>
+
+  <ion-item *ngIf="menu == 'PLATOS'"></ion-item>
+  <ion-item *ngIf="menu == 'BEBIDAS'"></ion-item>
+  <ion-item *ngIf="menu == 'POSTRES'"></ion-item>
+
+  <ion-item>
+    <ion-label>
+      Importe acumulado ${{importeAcumulado}}
+    </ion-label>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      ¿Confirma finalizar pedido?
+    </ion-label>
+  </ion-item>
+
+</ion-content>

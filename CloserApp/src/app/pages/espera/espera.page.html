@@ -11,35 +11,65 @@
         PENDIENTES
       </ion-list-header>
 
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
-      <ion-icon name="exit-outline"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-list side="bottom">
-      <ion-fab-button color="dark" (click)="back()">
-        <ion-icon name="arrow-back-circle"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="dark" (click)="logout()">
-        <ion-icon name="exit-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
-  
-  <ion-item-sliding class="cnt-espera"><!--*ngIf="!this.listaEspera.estado"--> 
-    <ion-item>
-        <ul>
-          <li *ngFor="let cliente of this.listaEspera">
-            <ion-label>
-            <!-- (click)="seleccionarCliente(cliente)" -->
-            {{ cliente.usuario }} {{ cliente.fecha }} {{ cliente.hora }}
-            </ion-label>
-          </li>
-        </ul>
-    </ion-item>
-    <div (click)="traerListaEspera()">
-      <span>Actualizar lista</span>
-    </div>
-  </ion-item-sliding>
+      <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+          <ion-icon name="exit-outline"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="bottom">
+          <ion-fab-button color="dark" (click)="back()">
+            <ion-icon name="arrow-back-circle"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="dark" (click)="logout()">
+            <ion-icon name="exit-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab-list>
+      </ion-fab>
+
+      <ion-item-sliding *ngIf="!this.clienteSeleccionado"> 
+        <ion-item *ngFor="let cliente of this.listaEsperaFiltro">
+          <ion-label (click)="seleccionarCliente(cliente)">
+            <h2 class="ion-text-capitalize bold">{{ cliente.usuario }}</h2>
+            <h3>Fecha: {{ cliente.fecha }} Hora: {{ cliente.hora }}</h3>
+          </ion-label>
+        </ion-item>
+        <ion-button expand="block" fill="outline" (click)="traerListaMesa()">Actualizar lista de espera</ion-button>
+      </ion-item-sliding>
+
+      <ion-item-sliding> 
+        <ion-item id="select" *ngIf="this.clienteSeleccionado"> 
+          <ion-label>
+            <h2 class="ion-text-capitalize bold">{{ this.clienteSeleccionado.usuario }}</h2>
+            <h3> Fecha: {{ this.clienteSeleccionado.fecha }} Hora: {{ this.clienteSeleccionado.hora }}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-item-sliding>
+
+      <!-- <ion-item-sliding *ngIf="this.clienteSeleccionado">  -->
+      <ion-item-sliding *ngIf="!this.mesaSeleccionada"> 
+        <ion-item *ngFor="let mesa of this.listaMesaLibre">
+          <ion-label (click)="seleccionarMesa(mesa)">
+            <h2 class="ion-text-capitalize bold">{{ mesa.numero }} - {{ mesa.tipo }}</h2>
+            <h3>{{ mesa.estado }}</h3>                        
+          </ion-label>
+        </ion-item>
+        <ion-button expand="block" fill="outline" (click)="traerListaMesa()">Actualizar mesas disponibles</ion-button>
+      </ion-item-sliding>
+
+      <ion-item-sliding> 
+        <ion-item id="select" *ngIf="this.mesaSeleccionada"> 
+          <ion-label>
+            <h2 class="ion-text-capitalize bold">{{ this.mesaSeleccionada.numero }} - {{ this.mesaSeleccionada.tipo }}</h2>
+            <h3>{{ this.mesaSeleccionada.estado }}</h3>                        
+          </ion-label>
+        </ion-item>
+      </ion-item-sliding>
+
+      <ion-item-sliding> 
+        <ion-item *ngIf="this.mesaSeleccionada && this.clienteSeleccionado"> 
+          <ion-button expand="block" fill="outline" (click)="asignarMesa()">Asignar mesa</ion-button>
+          <ion-button expand="block" fill="outline" (click)="cancelarSeleccion()">Cancelar seleccion</ion-button>
+        </ion-item>
+      </ion-item-sliding>
 
     </ion-list>
   </ion-card>

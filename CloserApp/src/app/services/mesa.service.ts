@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ListaEspera } from '../classes/lista-espera';
+import { Mesa } from '../classes/mesa';
 
 @Injectable({
   providedIn: 'root'
@@ -10,21 +11,29 @@ import { ListaEspera } from '../classes/lista-espera';
 export class MesaService {
 
   listadoEspera: any[] = [];
-
   listadoMesas: any[] = [];
 
   constructor(private firestore: AngularFirestore) {
     this.getListaEspera().subscribe(lista => {
       this.listadoEspera = lista;
     })
-
-
+    this.getListaMesa().subscribe(lista => {
+      this.listadoMesas = lista;
+    })
   }
 
   getListaEspera = (): Observable<any[]> => {
     return this.firestore.collection('listaEspera').snapshotChanges().pipe(
       map(docs => {
         return docs.map(d => d.payload.doc.data()) as ListaEspera[];
+      })
+    );
+  }
+
+  getListaMesa = (): Observable<any[]> => {
+    return this.firestore.collection('mesas').snapshotChanges().pipe(
+      map(docs => {
+        return docs.map(d => d.payload.doc.data()) as Mesa[];
       })
     );
   }
@@ -41,6 +50,10 @@ export class MesaService {
 
   actualizarClienteListaEspera(res: ListaEspera) {
     return this.firestore.collection('listaEspera').doc(res.usuario).update({ ...res });
+  }
+
+  actualizarMesa(res: Mesa) {
+    return this.firestore.collection('mesa').doc(String(res.numero)).update({ ...res });
   }
 
   comprobarListaEspera(usuario: string) {
