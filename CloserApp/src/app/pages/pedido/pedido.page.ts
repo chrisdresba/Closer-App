@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-pedido',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PedidoPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
 
+  async back(){
+    this.router.navigateByUrl('home', { replaceUrl: true });
+  }
+
+  async logout(){
+    await this.authService.logout();
+
+    this.router.navigateByUrl('/', { replaceUrl: true });
+  }
 }
