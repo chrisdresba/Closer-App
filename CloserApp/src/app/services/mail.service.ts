@@ -10,7 +10,7 @@ export class MailService {
 
   sendEmail(usuario: any, cuerpo: any, subject: string) {
     this.http.post(`https://us-central1-closer-pps.cloudfunctions.net/mailer`, {
-      to: usuario.correo,
+      to: usuario.email,
       // to: 'TuMailPersonal', //Test
       message: cuerpo,
       subject,
