@@ -23,6 +23,8 @@ export class EsperaPage implements OnInit {
   public clienteSeleccionado: ListaEspera;
   public mesaSeleccionada: Mesa;
 
+  public select: string = '';
+
   constructor(private authService: AuthService, private router: Router, private serv: UsuariosService, 
     private mesaService: MesaService) {
     this.traerListaEspera();
@@ -40,7 +42,7 @@ export class EsperaPage implements OnInit {
     })
     this.serv.getClientes().subscribe(item => {
       this.clientes = item;
-      console.log(this.clientes);
+      // console.log(this.clientes);
     });
   }
 
@@ -48,7 +50,7 @@ export class EsperaPage implements OnInit {
     this.mesaService.getListaMesa().subscribe(item => {
       this.listaMesa = item;
       this.listaMesaLibre = this.filtrarLibres();
-      console.log(this.listaMesa);
+      // console.log(this.listaMesa);
     })
   }
 
@@ -62,10 +64,12 @@ export class EsperaPage implements OnInit {
 
 
   async seleccionarCliente(cliente: ListaEspera){
-    this.clienteSeleccionado = cliente; 
+    this.clienteSeleccionado = cliente;
+    this.select = "select"; 
   }
   async seleccionarMesa(mesa: Mesa){
     this.mesaSeleccionada = mesa; 
+    this.select = "select"; 
   }
 
   async asignarMesa(){
@@ -74,8 +78,11 @@ export class EsperaPage implements OnInit {
 
     this.mesaSeleccionada.estado = "ocupado";
     this.mesaSeleccionada.usuario = this.clienteSeleccionado.usuario;
-    // asignar nombre
+    this.mesaSeleccionada.mozoAsignado = "dgMzu3eG5kNN77m6DDsRmM6EXz43";
+    // asignar nombre y mozo aleatorio
     this.mesaService.actualizarMesa(this.mesaSeleccionada);
+
+    this.select = "confirmado"; 
   }
 
   async cancelarSeleccion(){

@@ -26,6 +26,9 @@
     <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="realizarPedido()">
       <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar pedido
     </ion-button>
+    <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="realizarEncuesta()">
+      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
+    </ion-button>
 
     <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="verListaEspera()">
       <ion-icon class="lbl" slot="start" name="people"></ion-icon>Lista de espera

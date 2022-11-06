@@ -53,7 +53,7 @@ export class MesaService {
   }
 
   actualizarMesa(res: Mesa) {
-    return this.firestore.collection('mesa').doc(String(res.numero)).update({ ...res });
+    return this.firestore.collection('mesas').doc(res.uid).update({ ...res });
   }
 
   comprobarListaEspera(usuario: string) {

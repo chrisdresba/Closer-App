@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Encuesta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card id="box">
+    <ion-list>
+      <ion-fab vertical="top" horizontal="end" slot="fixed">
+        <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="bottom">
+        <ion-fab-button color="dark" (click)="back()">
+          <ion-icon name="arrow-back-circle"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="dark" (click)="logout()">
+          <ion-icon name="exit-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>
+
+    <!-- <form [formGroup]="encuesta" (ngSubmit)="login()"> -->
+    <form>
+      <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
+        <ion-label position="stacked">¿Cómo valoras la calidad de nuestra comida?</ion-label>
+      </ion-item>
+      <ion-list>
+        <ion-radio-group>
+          <ion-item>
+            <ion-label>Excelente</ion-label>
+            <ion-radio slot="end" value="Excelente"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Normal</ion-label>
+            <ion-radio slot="end" value="Normal"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Basura</ion-label>
+            <ion-radio slot="end" value="Basura"></ion-radio>
+          </ion-item>
+        </ion-radio-group>        
+      </ion-list>
+
+      <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
+        <ion-label position="stacked">¿Cómo valoras la atención de nuestro personal que nos atendió?</ion-label>
+      </ion-item>
+      <ion-range [ticks]="true" [snaps]="true" [min]="0" [max]="10"></ion-range>
+    
+      <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
+        <ion-label position="stacked">¿Nos recomendarías?</ion-label>
+      </ion-item>
+      <ion-segment value="si">
+        <ion-segment-button value="si">
+          <ion-label>Sí</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="no">
+          <ion-label>No</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+      
+      <!-- <ion-button expand="full" (click)="cargarUsuario()">Usuario</ion-button> -->
+      <ion-button expand="block" type="submit" color="success" class="boton">Finalizar</ion-button>
+      <!-- <ion-button expand="block" type="submit" color="success" class="boton" [disabled]="!encuesta.valid">Finalizar</ion-button> -->
+      <ion-button expand="block" type="button" class="boton" (click)="back()">Cancelar</ion-button>
+
+      </form>
+    </ion-list>
+  </ion-card>
+
+</ion-content>

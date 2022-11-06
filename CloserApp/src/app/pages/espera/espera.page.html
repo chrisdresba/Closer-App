@@ -36,7 +36,7 @@
       </ion-item-sliding>
 
       <ion-item-sliding> 
-        <ion-item id="select" *ngIf="this.clienteSeleccionado"> 
+        <ion-item id={{select}} *ngIf="this.clienteSeleccionado"> 
           <ion-label>
             <h2 class="ion-text-capitalize bold">{{ this.clienteSeleccionado.usuario }}</h2>
             <h3> Fecha: {{ this.clienteSeleccionado.fecha }} Hora: {{ this.clienteSeleccionado.hora }}</h3>
@@ -56,7 +56,7 @@
       </ion-item-sliding>
 
       <ion-item-sliding> 
-        <ion-item id="select" *ngIf="this.mesaSeleccionada"> 
+        <ion-item id={{select}} *ngIf="this.mesaSeleccionada"> 
           <ion-label>
             <h2 class="ion-text-capitalize bold">{{ this.mesaSeleccionada.numero }} - {{ this.mesaSeleccionada.tipo }}</h2>
             <h3>{{ this.mesaSeleccionada.estado }}</h3>                        
@@ -65,7 +65,7 @@
       </ion-item-sliding>
 
       <ion-item-sliding> 
-        <ion-item *ngIf="this.mesaSeleccionada && this.clienteSeleccionado"> 
+        <ion-item *ngIf="this.mesaSeleccionada && this.clienteSeleccionado && this.mesaSeleccionada.estado == 'libre'"> 
           <ion-button expand="block" fill="outline" (click)="asignarMesa()">Asignar mesa</ion-button>
           <ion-button expand="block" fill="outline" (click)="cancelarSeleccion()">Cancelar seleccion</ion-button>
         </ion-item>

@@ -29,16 +29,18 @@
   <ion-item *ngIf="menu == 'BEBIDAS'"></ion-item>
   <ion-item *ngIf="menu == 'POSTRES'"></ion-item>
 
-  <ion-item>
-    <ion-label>
-      Importe acumulado ${{importeAcumulado}}
-    </ion-label>
-  </ion-item>
-
-  <ion-item>
-    <ion-label>
-      ¿Confirma finalizar pedido?
-    </ion-label>
-  </ion-item>
+  <ion-item-sliding> 
+    <ion-item>
+      <ion-label>
+        <h2 class="ion-text-capitalize bold">Importe acumulado ${{importeAcumulado}}</h2>
+        <h3>Tiempo {{tiempoMaximo}}</h3>
+      </ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>
+        ¿Confirma finalizar pedido?
+      </ion-label>
+    </ion-item>
+  </ion-item-sliding>
 
 </ion-content>
