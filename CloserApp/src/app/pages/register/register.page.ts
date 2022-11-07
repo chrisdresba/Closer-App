@@ -8,10 +8,10 @@ import { ToastService } from 'src/app/services/toast.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-//import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 
-declare let window: any; 
+declare let window: any;
 
 @Component({
   selector: 'app-register',
@@ -31,6 +31,12 @@ export class RegisterPage implements OnInit {
   hora: string;
   storageRef = this.storage.storage.ref();
 
+  scannedResult: any;
+  content_visibility = '';
+  nombre: string = '';
+  apellido: string = '';
+  dni: number;
+
   options: CameraOptions = {
     quality: 50,
     destinationType: this.camera.DestinationType.DATA_URL,
@@ -49,7 +55,6 @@ export class RegisterPage implements OnInit {
     private storage: AngularFireStorage,
     public loadingController: LoadingController,
     private camera: Camera,
-  //  public qr:BarcodeScanner
   ) {
 
   }
@@ -62,14 +67,14 @@ export class RegisterPage implements OnInit {
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       apellido: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
       dni: ["", Validators.compose([Validators.required, Validators.max(99999999)])],
-    //  fotoUrl: ["", Validators.compose([Validators.required])],
+      //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
     this.auxForm = this.fromBuilder.group({
       email: ["", Validators.compose([Validators.required, Validators.email])],
       password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
       passwordAux: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
       nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
-    //  fotoUrl: ["", Validators.compose([Validators.required])],
+      //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
   }
 
@@ -84,9 +89,9 @@ export class RegisterPage implements OnInit {
 
   async guardarUsuario() {
     try {
-      let email,password,passAux,nombre,apellido,dni,foto;
+      let email, password, passAux, nombre, apellido, dni, foto;
 
-      if(this.perfilCliente){
+      if (this.perfilCliente) {
         email = this.loginForm.value.email;
         password = this.loginForm.value.password;
         passAux = this.loginForm.value.passwordAux;
@@ -94,7 +99,7 @@ export class RegisterPage implements OnInit {
         apellido = this.loginForm.value.apellido;
         dni = this.loginForm.value.dni;
         foto = this.foto;
-      }else{
+      } else {
         email = this.auxForm.value.email;
         password = this.auxForm.value.password;
         passAux = this.auxForm.value.passwordAux;
@@ -104,35 +109,35 @@ export class RegisterPage implements OnInit {
         foto = this.foto;
       }
 
-      if(password == passAux){
+      if (password == passAux) {
 
-      if (this.validarEmail(email) && this.validarContraseña(password)) {
-        const user = await this.authSrv.register({ email, password });
-        if (user) {
-          const uid = user.user?.uid;
-          this.usuario = new Cliente();
-          this.usuario.uid = uid;
-          this.usuario.email = email;
-          this.usuario.nombre = nombre;
-          this.usuario.apellido = apellido;
-          this.usuario.dni = dni;
-          this.usuario.fotoURL = foto;
-          this.usuario.validacion = ValidacionUsuario.PENDIENTE;
-          this.usuario.estado = "inactivo";
+        if (this.validarEmail(email) && this.validarContraseña(password)) {
+          const user = await this.authSrv.register({ email, password });
+          if (user) {
+            const uid = user.user?.uid;
+            this.usuario = new Cliente();
+            this.usuario.uid = uid;
+            this.usuario.email = email;
+            this.usuario.nombre = nombre;
+            this.usuario.apellido = apellido;
+            this.usuario.dni = dni;
+            this.usuario.fotoURL = foto;
+            this.usuario.validacion = ValidacionUsuario.PENDIENTE;
+            this.usuario.estado = "inactivo";
 
-          this.servUsuario.saveCliente(this.usuario);
-          this.presentToast("Registro", "Usuario creado con exito", "success");
+            this.servUsuario.saveCliente(this.usuario);
+            this.presentToast("Registro", "Usuario creado con exito", "success");
 
-          setTimeout(() => {
-            this.router.navigate(['/login']);
-          }, 3000)
-        } else {
-          this.presentToast("Registro", "Usuario incorrecto o existente", "warning");
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 3000)
+          } else {
+            this.presentToast("Registro", "Usuario incorrecto o existente", "warning");
+          }
         }
+      } else {
+        this.presentToast("Registro", "Las contraseñas deben ser iguales", "warning");
       }
-    }else{
-      this.presentToast("Registro", "Las contraseñas deben ser iguales", "warning");
-    }
     } catch (error) {
       console.log(error);
     }
@@ -177,23 +182,67 @@ export class RegisterPage implements OnInit {
     return blob;
   }
 
-  ReadQrCode() {
-    // Optionally request the permission early
-    window.cordova.plugins.barcodeScanner.scan(
-      result => {
-        console.log(result);
-        this.presentToast("Qr", result, "warning");
 
-      },
-      err => console.error(err),
-      {
-        showTorchButton: true,
-        prompt: "Scan your code",
-        formats: "QR_CODE",
-        resultDisplayDuration: 0
+  /////// Lectura Qr
+  async checkPermission() {
+    try {
+      // check or request permission
+      const status = await BarcodeScanner.checkPermission({ force: true });
+      if (status.granted) {
+        // the user granted permission
+        return true;
       }
-    );
+      return false;
+    } catch (e) {
+      console.log(e);
+    }
   }
+
+  async ReadQrCode() {
+
+    try {
+      const permission = await this.checkPermission();
+      if(!permission) {
+        return;
+      }
+      await BarcodeScanner.hideBackground();
+      document.querySelector('body').classList.add('scanner-active');
+      this.content_visibility = 'hidden';
+      const result = await BarcodeScanner.startScan();
+      this.setValoresQr(result.content);
+
+      BarcodeScanner.showBackground();
+      document.querySelector('body').classList.remove('scanner-active');
+      this.content_visibility = '';
+      if(result?.hasContent) {
+        this.scannedResult = result.content;
+        console.log(this.scannedResult);
+      }
+    } catch(e) {
+      console.log(e);
+      this.stopScan();
+    } 
+    
+  }
+
+  stopScan() {
+    BarcodeScanner.showBackground();
+    BarcodeScanner.stopScan();
+    document.querySelector('body').classList.remove('scanner-active');
+    this.content_visibility = '';
+  }
+
+  ngOnDestroy(): void {
+    this.stopScan();
+  }
+
+  setValoresQr(value: any) {
+    let arr = value.split('@');
+    this.nombre = arr[2];
+    this.apellido = arr[1];
+    this.dni = parseInt(arr[4]);
+  }
+  ///////
 
   Logout() {
     localStorage.removeItem('creditos');

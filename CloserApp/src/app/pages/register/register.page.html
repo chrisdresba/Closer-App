@@ -21,7 +21,7 @@
   </ion-fab>
 </div>
 
-<div id="viewForm" *ngIf="view">
+<div id="viewForm" *ngIf="view" [style.visibility]="content_visibility" >
   <ion-header [translucent]="true">
     <ion-toolbar>
       <ion-title slot="start"> Crear Cuenta </ion-title>
@@ -90,7 +90,7 @@
       <ion-item lines="full">
         <ion-label position="stacked">Nombre</ion-label>
         <ion-input type="text" formControlName="nombre" required size="" name="nombre"
-          placeholder="Nombre">
+          placeholder="Nombre" [(ngModel)]="nombre">
         </ion-input>
       </ion-item>
       <ion-row class="hiddenItems">
@@ -102,7 +102,7 @@
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Apellido</ion-label>
         <ion-input type="text" formControlName="apellido" required size="" name="apellido"
-          placeholder="Apellido">
+          placeholder="Apellido" [(ngModel)]="apellido">
         </ion-input>
       </ion-item>
       <ion-row class="hiddenItems">
@@ -114,7 +114,7 @@
       <ion-item lines="full" *ngIf="perfilCliente">
         <ion-label position="stacked">Dni</ion-label>
         <ion-input type="number" formControlName="dni" required size="" name="dni"
-          placeholder="DNI">
+          placeholder="DNI" [(ngModel)]="dni">
         </ion-input>
       </ion-item>
       <ion-row class="hiddenItems">
@@ -196,7 +196,7 @@
         <ion-label position="stacked">Foto</ion-label>
         <img src="./../../../assets/camara.png" (click)="activarCamara()" alt="" id="btnFoto">
       </ion-item>
-      <ion-item lines="full" *ngIf="perfilCliente">
+      <ion-item lines="full" *ngIf="perfilCliente" class="itemQr">
         <ion-label position="stacked">Scanear Dni</ion-label>
         <img src="./../../../assets/QrDni.png" alt="" id="qr">
       </ion-item>

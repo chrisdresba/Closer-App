@@ -1,37 +1,44 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title slot="start"> Bienvenido </ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-fab vertical="top" horizontal="end" slot="fixed">
-  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
-    <ion-icon name="exit-outline"></ion-icon>
-  </ion-fab-button>
-  <ion-fab-list side="bottom">
-    <ion-fab-button color="dark" (click)="logout()">
+<div [style.visibility]="content_visibility">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title slot="start"> Bienvenido </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
       <ion-icon name="exit-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab-list>
-</ion-fab>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
-<ion-content [fullscreen]="true">
-  <ion-card id="box" style="margin-top: 10px;">
-    <ion-button *ngIf="rol == 'SUPERVISOR' || rol == 'ADMINISTRADOR'"  expand="block" type="submit" color="success" class="boton" (click)="gestionarUsuarios()">
-      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
-    </ion-button>
+  <ion-content [fullscreen]="true">
+    <ion-card id="box" style="margin-top: 10px;">
+      <ion-button *ngIf="rol == 'SUPERVISOR' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="gestionarUsuarios()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
+      </ion-button>
 
-    <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="ingresarListaEspera()">
-      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Scan Qr Lista
-    </ion-button>
-    <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="realizarPedido()">
-      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar pedido
-    </ion-button>
-    <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="realizarEncuesta()">
-      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
-    </ion-button>
+      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="ReadQrCode()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Scan Qr Lista
+      </ion-button>
+      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="realizarPedido()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar pedido
+      </ion-button>
+      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="realizarEncuesta()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
+      </ion-button>
 
-    <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success" class="boton" (click)="verListaEspera()">
-      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Lista de espera
-    </ion-button>
-  </ion-card>
-</ion-content>
+      <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="verListaEspera()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Lista de espera
+      </ion-button>
+    </ion-card>
+  </ion-content>
+</div>

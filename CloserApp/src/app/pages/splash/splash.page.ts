@@ -23,9 +23,9 @@ export class SplashPage implements OnInit {
     
   }
 
-  async ionViewWillEnter(){
+ /* async ionViewWillEnter(){
     //Plugins.SplashScreen.hide() 
     await SplashScreen.hide();
-  }
+  } */
 
 }

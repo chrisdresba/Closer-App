@@ -36,7 +36,7 @@ h1 {
     justify-content: center;
     align-items: center;
    // --background: url("./../../../assets/fondo2.png") no-repeat center; //#48ca3c;
-   --background:linear-gradient(to right, #3c9f07, #e4e4d9);
+   --background:linear-gradient(to top, #3c9f07, #e4e4d9);
     overflow: hidden;
     background-attachment: fixed;
     background-size: cover;
@@ -49,12 +49,13 @@ h1 {
     justify-content: center;
     align-items: center;
     // --background: url("./../../../assets/fondo.png") no-repeat center;
-    --background: linear-gradient(to right, #C4E0E5, #4CA1AF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    --background: linear-gradient(to top, #C4E0E5, #4CA1AF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     overflow: hidden;
     background-attachment: fixed;
     background-size: cover;
     flex-direction: column;
 }
+
 
 @media screen and (min-width: 460px) {
     #viewHome {
@@ -151,6 +152,7 @@ ion-input{
   display: flex;
   flex-direction: row;
   margin: auto;
+  padding-bottom: 5px;
 }
 
 .btnGuardar {
@@ -158,7 +160,6 @@ ion-input{
     height: 8vh;
     font-weight: 600;
 }
-
 
 ion-footer {
     position: absolute;
