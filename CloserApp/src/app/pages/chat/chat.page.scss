@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+ion-toolbar{
+    --background: #188ba0;
+    font-family: 'Acme', sans-serif;
+    color: aliceblue;
+    font-size: 1.5em;
+    height: 8vh;
+}
+ion-title{
+    font-size: 1.5em;
+}
+
+ion-content{
+    width: 100%;
+    --background: url("./../../../assets/fondo.png") center;
+	overflow: hidden;
+	background-attachment: fixed;
+	background-size: cover;
+    height: 87vh;
+}
+
+ion-button{
+    margin: 0;
+}
+
+ion-footer{
+    display: flex;
+    flex-direction: row;
+    height: 5vh;
+}
+ion-input{
+    --background:rgb(234, 247, 255) ;
+    --color:#000;
+}
+
+
+ion-card-header{
+    background-color: rgba(128, 128, 128, 0.1);
+    background:transparent;
+    font-weight: bold;
+    margin-bottom: -10px;
+}
+
+.soyYo{ 
+    position: relative;
+    margin-left: auto;
+}
+.hora{
+    position: relative;
+    float:right;
+    font-size: 8px;
+    margin-top: 20px;
+}

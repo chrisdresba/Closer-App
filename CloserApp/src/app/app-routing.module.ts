@@ -38,6 +38,14 @@ const routes: Routes = [
   {
     path: 'encuesta',
     loadChildren: () => import('./pages/encuesta/encuesta.module').then( m => m.EncuestaPageModule)
+  },
+  {
+    path: 'chat',
+    loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatPageModule)
+  },
+  {
+    path: 'chat-mozo',
+    loadChildren: () => import('./pages/chat-mozo/chat-mozo.module').then( m => m.ChatMozoPageModule)
   }
 
 ];

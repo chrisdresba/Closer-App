@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start"> Consulta Al Mozo </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let message of listadoMensajes">
+        <ion-card *ngIf="message.usuario !== usuarioLogin">
+          <ion-card-header title="{{message.usuario}}" class="cardHeader">
+            {{message.usuario}}
+          </ion-card-header>
+          <ion-card-content class="cardContent">
+            {{message.mensaje }}
+            <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="soyYo" *ngIf="message.usuario === usuarioLogin">
+          <ion-card-content>
+            {{message.mensaje }}  
+            <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+          </ion-card-content>
+        </ion-card>
+    </ion-row>
+  </ion-grid> 
+</ion-content>
+
+<ion-footer>
+  <ion-input [(ngModel)]="mensaje" maxlength="60" type="text" name="" id=""></ion-input>
+  <ion-button (click)=" guardarMensaje()" >Enviar</ion-button>
+</ion-footer>

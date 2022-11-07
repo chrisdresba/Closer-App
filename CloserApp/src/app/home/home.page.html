@@ -26,6 +26,10 @@
         class="boton" (click)="ReadQrCode()">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Scan Qr Lista
       </ion-button>
+      <ion-button *ngIf="rol == 'cliente'" expand="block" type="submit" color="success"
+      class="boton" routerLink="/chat" >
+      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consulta Al Mozo
+    </ion-button>
       <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
         class="boton" (click)="realizarPedido()">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar pedido
