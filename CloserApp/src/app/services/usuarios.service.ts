@@ -13,6 +13,7 @@ export class UsuariosService {
 
   listado: any[] = [];
   listadoStaff: any[] = [];
+  nombre: string = '';
 
   constructor(private firestore: AngularFirestore) {
     this.getClientes().subscribe(usuario => {
@@ -58,6 +59,9 @@ export class UsuariosService {
   rolUsuario(email: string) {
     for (let i = 0; i < this.listado.length; i++) {
       if (this.listado[i].email == email) {
+        this.nombre = this.listado[i].nombre;
+        // concatenar nombre y apellido 
+        // localStorage.setItem('sesionRol', 'cliente', this.nombre)
         localStorage.setItem('sesionRol', 'cliente')
         break;
       }

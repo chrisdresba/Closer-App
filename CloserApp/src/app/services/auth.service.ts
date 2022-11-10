@@ -33,6 +33,7 @@ export class AuthService {
   }
 
   logout() {
+    localStorage.clear();
     return signOut(this.auth); 
   }
 }
