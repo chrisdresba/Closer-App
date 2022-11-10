@@ -20,26 +20,28 @@
 <ion-content>
   <ion-grid>
     <ion-row *ngFor="let message of listadoMensajes">
-        <ion-card *ngIf="message.usuario !== usuarioLogin">
-          <ion-card-header title="{{message.usuario}}" class="cardHeader">
-            {{message.usuario}}
-          </ion-card-header>
-          <ion-card-content class="cardContent">
-            {{message.mensaje }}
-            <p class="hora">{{message.fecha}} - {{message.hora}}</p>
-          </ion-card-content>
-        </ion-card>
-        <ion-card class="soyYo" *ngIf="message.usuario === usuarioLogin">
-          <ion-card-content>
-            {{message.mensaje }}  
-            <p class="hora">{{message.fecha}} - {{message.hora}}</p>
-          </ion-card-content>
-        </ion-card>
-    </ion-row>
+      <ion-card *ngIf="message.usuario !== usuarioLogin">
+        <ion-card-header title="{{message.usuario}}" class="cardHeader">
+          <p class="mensaje"> {{message.usuario}}</p>
+        </ion-card-header>
+        <ion-card-content >
+          {{message.mensaje }}
+          <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="soyYo" *ngIf="message.usuario === usuarioLogin">
+        <ion-card-content class="cardContent">
+           <p class="mensaje">{{message.mensaje }}</p>  
+          <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+        </ion-card-content>
+      </ion-card>
+  </ion-row>
   </ion-grid> 
 </ion-content>
 
 <ion-footer>
-  <ion-input [(ngModel)]="mensaje" maxlength="60" type="text" name="" id=""></ion-input>
-  <ion-button (click)=" guardarMensaje()" >Enviar</ion-button>
-</ion-footer>
+  <div id="footer">
+    <ion-input [(ngModel)]="mensaje" maxlength="60" type="text" name="" id=""></ion-input>
+    <ion-button (click)=" guardarMensaje()" >Enviar</ion-button>
+  </div>
+  </ion-footer>

@@ -1,9 +1,89 @@
+<div *ngIf="!view">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title slot="start">Consultas mesas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content id="viewHome">
+    <ion-button expand="block" type="submit" color="secondary"
+    class="boton" (click)="chatPorMesa(1)" >
+    <ion-icon class="icon" slot="start" name="pizza"></ion-icon>Mesa 1
+  </ion-button>
+  <ion-button expand="block" type="submit" color="secondary"
+  class="boton" (click)="chatPorMesa(2)">
+  <ion-icon class="icon" slot="start" name="fast-food"></ion-icon>Mesa 2
+</ion-button>
+<ion-button expand="block" type="submit" color="secondary"
+class="boton" (click)="chatPorMesa(3)" >
+<ion-icon class="icon" slot="start" name="ice-cream"></ion-icon>Mesa 3
+</ion-button>
+<ion-button expand="block" type="submit" color="secondary"
+class="boton" (click)="chatPorMesa(4)" >
+<ion-icon class="icon" slot="start" name="beer"></ion-icon>Mesa 4
+</ion-button>
+  </ion-content>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="backHome()">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="dark" (click)="Logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</div>
+
+<div *ngIf="view" id="chat">
 <ion-header>
   <ion-toolbar>
-    <ion-title>chatMozo</ion-title>
+    <ion-title slot="start">Consultas Mesa {{mesa}} </ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row *ngFor="let message of listadoMensajes">
+        <ion-card *ngIf="message.usuario !== usuarioLogin">
+          <ion-card-header title="{{message.usuario}}" class="cardHeader">
+            <p class="mensaje"> {{message.usuario}}</p>
+          </ion-card-header>
+          <ion-card-content >
+            {{message.mensaje }}
+            <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="soyYo" *ngIf="message.usuario === usuarioLogin">
+          <ion-card-content class="cardContent">
+             <p class="mensaje">{{message.mensaje }}</p>  
+            <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+          </ion-card-content>
+        </ion-card>
+    </ion-row>
+  </ion-grid> 
 </ion-content>
+
+<ion-footer>
+  <div id="footer">
+  <ion-input [(ngModel)]="mensaje" maxlength="60" type="text" name="" id=""></ion-input>
+  <ion-button (click)=" guardarMensaje()" >Enviar</ion-button>
+</div>
+</ion-footer>
+
+</div>

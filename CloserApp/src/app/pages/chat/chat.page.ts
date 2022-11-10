@@ -25,7 +25,7 @@ export class ChatPage implements OnInit {
   usuario: any;
   usuarioLogin: string;
   rol: string;
-  mesa:any;
+  mesa: any;
 
   constructor(
     public authSrv: AuthService,
@@ -36,11 +36,11 @@ export class ChatPage implements OnInit {
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
     private mesaService: MesaService
-  ) { 
+  ) {
     this.presentLoading();
     setTimeout(() => {
       this.ordenarMensajes()
-    }, 2000)
+    }, 4000)
   }
 
   ngOnInit() {
@@ -51,21 +51,24 @@ export class ChatPage implements OnInit {
       }
     })
 
+    //Busqueda Mensajes
+    this.chat.getMensajes().subscribe(aux => {
+      this.listadoAux = aux;
+    })
     //Busqueda Mesa
-    this.mesaService.getListaMesa().subscribe(item=>{
+    this.mesaService.getListaMesa().subscribe(item => {
       this.listaMesa = item;
     })
     this.buscarMesa();
 
-  //Busqueda Mensajes
-    this.chat.getMensajes().subscribe(aux => {
-      this.listado = aux;
-    })
-    this.filtrarMensajes();
-    this.ordenarMensajes();
+    //Asigno un tiempo para filtrar la busqueda
+    setTimeout(() => {
+      this.listado = this.filtrarMensajes();
+    }, 2000)
+
   }
 
-  buscarMesa(){
+  buscarMesa() {
     for (let i = 0; i < this.listaMesa.length; i++) {
       if (this.listaMesa[i].usuario == this.usuarioLogin) {
         this.mesa = this.listaMesa[i].numero;
@@ -76,7 +79,7 @@ export class ChatPage implements OnInit {
   }
 
   filtrarMensajes() {
-    return this.listado.filter(item => item.mesa == this.mesa);
+    return this.listadoAux.filter(item => item.mesa == this.mesa);
   }
 
   ordenarMensajes() {
@@ -84,7 +87,7 @@ export class ChatPage implements OnInit {
   }
 
   guardarMensaje() {
-    this.chat.guardarMensaje(this.usuarioLogin, this.mesa,this.mensaje);
+    this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
     setTimeout(() => {
       this.ordenarMensajes();
     }, 500)
@@ -95,7 +98,7 @@ export class ChatPage implements OnInit {
     const loading = await this.loadingController.create({
       spinner: 'circles',
       message: 'Cargando...',
-      duration: 2000,
+      duration: 3000,
       translucent: true,
 
       cssClass: 'my-loading-class'
@@ -119,8 +122,7 @@ export class ChatPage implements OnInit {
   }
 
   Logout() {
-    localStorage.removeItem('creditos');
-    localStorage.removeItem('usuario');
+    localStorage.removeItem('sesionRol');
     this.authSrv.logout();
     this.router.navigate(["login"]);
   }
