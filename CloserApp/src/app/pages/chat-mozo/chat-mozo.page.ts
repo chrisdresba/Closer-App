@@ -48,6 +48,8 @@ export class ChatMozoPage implements OnInit {
       }
     })
 
+    
+
     //Busqueda Mesa
     this.mesaService.getListaMesa().subscribe(item => {
       this.listaMesa = item;

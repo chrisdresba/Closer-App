@@ -62,7 +62,7 @@ class="boton" (click)="chatPorMesa(4)" >
     <ion-row *ngFor="let message of listadoMensajes">
         <ion-card *ngIf="message.usuario !== usuarioLogin">
           <ion-card-header title="{{message.usuario}}" class="cardHeader">
-            <p class="mensaje"> {{message.usuario}}</p>
+            <p class="mensaje"> Mesa N°{{mesa}}</p>
           </ion-card-header>
           <ion-card-content >
             {{message.mensaje }}

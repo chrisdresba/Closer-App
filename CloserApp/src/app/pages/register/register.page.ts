@@ -24,18 +24,17 @@ export class RegisterPage implements OnInit {
   usuario: Cliente;
   foto: string;
   loginForm: FormGroup;
-  auxForm: FormGroup;
   perfilCliente: boolean = true;
-  view: boolean = false;
+  view: boolean = true;
   fecha: string;
   hora: string;
   storageRef = this.storage.storage.ref();
+  nombre:string;
+  apellido:string;
+  dni: number; 
 
   scannedResult: any;
   content_visibility = '';
-  nombre: string = '';
-  apellido: string = '';
-  dni: number;
 
   options: CameraOptions = {
     quality: 50,
@@ -69,29 +68,15 @@ export class RegisterPage implements OnInit {
       dni: ["", Validators.compose([Validators.required, Validators.max(99999999)])],
       //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
-    this.auxForm = this.fromBuilder.group({
-      email: ["", Validators.compose([Validators.required, Validators.email])],
-      password: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
-      passwordAux: ["", Validators.compose([Validators.required, Validators.minLength(6)])],
-      nombre: ["", Validators.compose([Validators.required, Validators.minLength(3)])],
-      //  fotoUrl: ["", Validators.compose([Validators.required])],
-    });
+   
   }
 
-  viewPerfil(value: boolean) {
-    this.perfilCliente = value;
-    this.view = true;
-  }
 
-  back() {
-    this.view = false;
-  }
 
   async guardarUsuario() {
     try {
       let email, password, passAux, nombre, apellido, dni, foto;
 
-      if (this.perfilCliente) {
         email = this.loginForm.value.email;
         password = this.loginForm.value.password;
         passAux = this.loginForm.value.passwordAux;
@@ -99,15 +84,6 @@ export class RegisterPage implements OnInit {
         apellido = this.loginForm.value.apellido;
         dni = this.loginForm.value.dni;
         foto = this.foto;
-      } else {
-        email = this.auxForm.value.email;
-        password = this.auxForm.value.password;
-        passAux = this.auxForm.value.passwordAux;
-        nombre = this.auxForm.value.nombre;
-        apellido = "";
-        dni = 0;
-        foto = this.foto;
-      }
 
       if (password == passAux) {
 
@@ -245,8 +221,7 @@ export class RegisterPage implements OnInit {
   ///////
 
   Logout() {
-    localStorage.removeItem('creditos');
-    localStorage.removeItem('usuario');
+    localStorage.clear();
     this.authSrv.logout();
     this.router.navigate(["login"]);
   }

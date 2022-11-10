@@ -30,6 +30,10 @@
       class="boton" routerLink="/chat" >
       <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consulta Al Mozo
     </ion-button>
+    <ion-button *ngIf="rol == 'cliente'" expand="block" type="submit" color="success"
+    class="boton" routerLink="/juego-uno" >
+    <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juego
+  </ion-button>
     <ion-button *ngIf="rol == 'MOZO'" expand="block" type="submit" color="success"
     class="boton" routerLink="/chat-mozo" >
     <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consultas Mesas

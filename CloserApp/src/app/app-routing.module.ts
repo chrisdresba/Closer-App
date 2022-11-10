@@ -27,7 +27,8 @@ const routes: Routes = [
   {
     path: 'usuarios',
     loadChildren: () => import('./usuarios/usuarios.module').then( m => m.UsuariosPageModule)
-  },  {
+  },
+  {
     path: 'espera',
     loadChildren: () => import('./pages/espera/espera.module').then( m => m.EsperaPageModule)
   },
@@ -46,7 +47,15 @@ const routes: Routes = [
   {
     path: 'chat-mozo',
     loadChildren: () => import('./pages/chat-mozo/chat-mozo.module').then( m => m.ChatMozoPageModule)
+  },
+  {
+    path: 'juego-uno',
+    loadChildren: () => import('./pages/juego-uno/juego-uno.module').then( m => m.JuegoUnoPageModule)
+  },  {
+    path: 'register-anonimo',
+    loadChildren: () => import('./pages/register-anonimo/register-anonimo.module').then( m => m.RegisterAnonimoPageModule)
   }
+
 
 ];
 

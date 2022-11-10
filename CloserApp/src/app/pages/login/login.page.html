@@ -56,6 +56,16 @@
     </ion-fab-list>
   </ion-fab>
 
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button><span style="padding: 2px;">Anónimo</span>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="anonimo()">
+        <ion-img src="../assets/anonimo.png"></ion-img> 
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button>Clientes
       <!-- <ion-img src="../assets/opciones.png"></ion-img> -->

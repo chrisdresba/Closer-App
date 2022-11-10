@@ -39,6 +39,11 @@ export class HomePage implements OnInit {
         this.usuarioLogin = this.usuario.email;
       }
     })
+
+    if (localStorage.getItem('anonimo')) {
+      this.usuarioLogin = localStorage.getItem('anonimo');
+    }
+
     this.servMesa.getListaEspera().subscribe(item => {
       this.listaEspera = item;
       // console.log(this.listaEspera);

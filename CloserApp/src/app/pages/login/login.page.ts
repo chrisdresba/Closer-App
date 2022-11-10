@@ -59,6 +59,14 @@ export class LoginPage implements OnInit {
       }*/
   }
 
+  async anonimo() {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    this.router.navigate(["register-anonimo"]);
+    await loading.dismiss();
+  }
+
   async login() {
     const email = this.credentials.value.email;
     const loading = await this.loadingController.create();

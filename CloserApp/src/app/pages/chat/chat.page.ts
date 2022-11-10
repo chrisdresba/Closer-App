@@ -44,12 +44,17 @@ export class ChatPage implements OnInit {
   }
 
   ngOnInit() {
+  
     this.usuario = this.afAuth.onAuthStateChanged(user => {
       if (user) {
         this.usuario = user;
         this.usuarioLogin = this.usuario.email;
       }
     })
+
+    if (localStorage.getItem('anonimo')) {
+      this.usuarioLogin = localStorage.getItem('anonimo');
+    }
 
     //Busqueda Mensajes
     this.chat.getMensajes().subscribe(aux => {

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start"> Mayor o Menor</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-content>
+  <ion-grid>
+    <ion-row *ngFor="let message of listadoMensajes">
+      <ion-card *ngIf="message.usuario !== usuarioLogin">
+        <ion-card-header title="{{message.usuario}}" class="cardHeader">
+          <p class="mensaje"> {{message.usuario}}</p>
+        </ion-card-header>
+        <ion-card-content >
+          {{message.mensaje }}
+          <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class="soyYo" *ngIf="message.usuario === usuarioLogin">
+        <ion-card-content class="cardContent">
+           <p class="mensaje">{{message.mensaje }}</p>  
+          <p class="hora">{{message.fecha}} - {{message.hora}}</p>
+        </ion-card-content>
+      </ion-card>
+  </ion-row>
+  </ion-grid> 
+</ion-content>
+<div id="container">
+  <div class="vida">
+      <img src="assets/vida.png" alt="" class="intentos">
+      <h4>{{intentos}}</h4>
+  </div>
+  <div class="boxCartas">
+      <div class="box">
+          <div class="cartas card-1">{{ carta1 }}</div>
+          <img src="{{url}}" class="mensaje">
+          <div class="cartas card-2">{{ carta2 }}</div>
+          <h3 class="score">Puntaje: {{ puntaje }}</h3>
+      </div>
+  </div>
+  <div class="btnMayorMenor">
+      <button (click)="mayor()">MAYOR</button>
+      <button (click)="menor()">MENOR</button>
+
+  </div>
+</div>
+
+<ion-content>
+
+</ion-content>

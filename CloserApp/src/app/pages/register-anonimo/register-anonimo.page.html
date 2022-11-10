@@ -1,0 +1,46 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-title slot="start"> Ingreso Anónimo </ion-title>
+    </ion-toolbar>
+</ion-header>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="Logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <div id="cardForm">
+  <ion-card id="box">
+        <!--Form Anónimo-->
+        <img src="./../../../assets/logo2.png" alt="">
+    <form [formGroup]="auxForm">
+      <ion-item lines="full">
+        <ion-label position="stacked">Nombre</ion-label>
+        <ion-input type="text" formControlName="nombre" required size="" name="nombre"
+          placeholder="Nombre">
+        </ion-input>
+      </ion-item>
+      <ion-row class="hiddenItems">
+        <small
+          *ngIf="auxForm.get('nombre').hasError('required') && (auxForm.get('nombre').dirty || auxForm.get('nombre').touched)"
+          [ngClass]="auxForm.get('nombre').hasError('required') && auxForm.get('nombre').touched ? 'visible' : 'hidden'">Ingrese
+          un nombre.</small>
+      </ion-row>
+      <ion-item lines="full">
+        <ion-label position="stacked">Foto</ion-label>
+        <img src="./../../../assets/camara.png" (click)="activarCamara()" alt="" id="btnFoto">
+      </ion-item>
+    </form>
+  </ion-card>
+  </div>
+
+  <ion-footer [translucent]="true">
+    <ion-toolbar>
+      <ion-button  [disabled]="!auxForm.valid" class="btnGuardar" (click)="guardarUsuario()" expand="block">INGRESAR</ion-button>
+    </ion-toolbar>
+  </ion-footer>
