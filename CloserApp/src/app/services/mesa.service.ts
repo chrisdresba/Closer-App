@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ListaEspera } from '../classes/lista-espera';
 import { Mesa } from '../classes/mesa';
+import { ItemPedido } from '../classes/item-pedido';
+import { Pedido } from '../classes/pedido';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +58,10 @@ export class MesaService {
     return this.firestore.collection('mesas').doc(res.uid).update({ ...res });
   }
 
+  actualizarEstadoPedido(res: Pedido) {
+    return this.firestore.collection('pedidos').doc(res.uid).update({ ...res });
+  }
+
   comprobarListaEspera(usuario: string) {
     for (let i = 0; i < this.listadoEspera.length; i++) {
       if (this.listadoEspera[i].usuario == usuario) {
@@ -65,5 +71,19 @@ export class MesaService {
     return true;
   }
 
-}
+  async agregarPedido(item: Pedido) {
+    // this.itemsCollection.add(JSON.parse(JSON.stringify(especialidad)));
 
+    let pedido = { 'uid': item.uid, 'usuario': item.usuario, 'mesa': item.mesa, 'productos': item.productos, 
+    'precioAcumulado': item.precioAcumulado, 'estado': item.estado, 'descuento': item.descuento };
+    console.log('serv', pedido);
+    return await this.firestore.collection('pedidos').doc(item.uid).set(pedido);
+  }
+
+  async agregarItemPedido(item: ItemPedido) {
+    let itemPedido = { 'uid': item.uid, 'usuario': item.usuario, 'mesa': item.mesa, 'producto': item.producto, 
+    'cantidad': item.cantidad, 'estado': item.estado };
+    console.log('serv', itemPedido);
+      return await this.firestore.collection('itemPedido').doc(item.uid).set(itemPedido);
+  }
+}
