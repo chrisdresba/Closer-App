@@ -7,6 +7,8 @@ import { ChatService } from 'src/app/services/chat.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
+import { Mensaje } from 'src/app/classes/mensaje';
+import { observable } from 'rxjs';
 
 
 
@@ -44,7 +46,7 @@ export class ChatPage implements OnInit {
   }
 
   ngOnInit() {
-  
+
     this.usuario = this.afAuth.onAuthStateChanged(user => {
       if (user) {
         this.usuario = user;
@@ -88,15 +90,32 @@ export class ChatPage implements OnInit {
   }
 
   ordenarMensajes() {
-    this.listadoMensajes = this.listado.sort((a?, b?) => (((a.referencia! > b.referencia!)) ? 1 : -1));
+    this.listadoMensajes = this.listado.sort((a?, b?) => (((a.fecha! > b.fecha!)||(a.fecha! == b.fecha! && a.referencia! > b.referencia!)) ? 1 : -1));
   }
 
   guardarMensaje() {
-    this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
-    setTimeout(() => {
-      this.ordenarMensajes();
-    }, 500)
-    this.mensaje = '';
+    let fecha = new Date();
+    const dia = fecha.getFullYear() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getDate();
+    const hora = fecha.getHours() + ':' + this.revision(fecha.getMinutes()) + ':' + this.revision(fecha.getSeconds());
+    let referencia = (fecha.getHours() * 3600) + (fecha.getMinutes() * 60) + fecha.getSeconds();
+
+    let obj;
+    obj = new Mensaje()
+    obj.usuario = this.usuarioLogin;
+    obj.fecha = dia;
+    obj.hora = hora;
+    obj.mensaje = this.mensaje;
+    obj.referencia = referencia.toString(); 
+    obj.mesa = this.mesa;
+
+    if (this.mensaje.length > 0) {
+      this.listadoMensajes.push(obj);
+      this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
+      setTimeout(() => {
+        this.ordenarMensajes();
+      }, 500)
+      this.mensaje = '';
+    }
   }
 
   async presentLoading() {
@@ -136,4 +155,10 @@ export class ChatPage implements OnInit {
     this.router.navigate(["home"]);
   }
 
+  revision(dato: any) {
+    if (dato < 10) {
+      return ('0' + dato);
+    }
+    return dato;
+  }
 }

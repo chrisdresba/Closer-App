@@ -7,6 +7,8 @@ import { ChatService } from 'src/app/services/chat.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
+import { Observable } from 'rxjs';
+import { Mensaje } from 'src/app/classes/mensaje';
 
 
 @Component({
@@ -37,7 +39,7 @@ export class ChatMozoPage implements OnInit {
     public afAuth: AngularFireAuth,
     private mesaService: MesaService
   ) {
-  
+
   }
 
   ngOnInit() {
@@ -47,8 +49,6 @@ export class ChatMozoPage implements OnInit {
         this.usuarioLogin = this.usuario.email;
       }
     })
-
-    
 
     //Busqueda Mesa
     this.mesaService.getListaMesa().subscribe(item => {
@@ -68,16 +68,33 @@ export class ChatMozoPage implements OnInit {
   }
 
   ordenarMensajes() {
-    this.listadoMensajes = this.listado.sort((a?, b?) => (((a.referencia! > b.referencia!)) ? 1 : -1));
+    this.listadoMensajes = this.listado.sort((a?, b?) => (((a.fecha! > b.fecha!)||(a.fecha! == b.fecha! && a.referencia! > b.referencia!)) ? 1 : -1));
   }
 
   guardarMensaje() {
-    this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
-    setTimeout(() => {
-      this.listado = this.filtrarMensajes();
-      this.ordenarMensajes();
-    }, 500)
-    this.mensaje = '';
+    let fecha = new Date();
+    const dia = fecha.getFullYear() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getDate();
+    const hora = fecha.getHours() + ':' + this.revision(fecha.getMinutes()) + ':' + this.revision(fecha.getSeconds());
+    let referencia = (fecha.getHours() * 3600) + (fecha.getMinutes() * 60) + fecha.getSeconds();
+
+    let obj;
+    obj = new Mensaje()
+    obj.usuario = this.usuarioLogin;
+    obj.fecha = dia;
+    obj.hora = hora;
+    obj.mensaje = this.mensaje;
+    obj.referencia = referencia.toString();
+    obj.mesa = this.mesa;
+
+    if (this.mensaje.length > 0) {
+      this.listadoMensajes.push(obj);
+      this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
+      setTimeout(() => {
+        this.listado = this.filtrarMensajes();
+        this.ordenarMensajes();
+      }, 500)
+      this.mensaje = '';
+    }
   }
 
   chatPorMesa(mesa: any) {
@@ -90,7 +107,7 @@ export class ChatMozoPage implements OnInit {
 
     setTimeout(() => {
       this.view = true;
-    },3000)
+    }, 3000)
 
 
   }
@@ -135,6 +152,13 @@ export class ChatMozoPage implements OnInit {
   back() {
     this.view = false;
 
+  }
+
+  revision(dato: any) {
+    if (dato < 10) {
+      return ('0' + dato);
+    }
+    return dato;
   }
 
 }

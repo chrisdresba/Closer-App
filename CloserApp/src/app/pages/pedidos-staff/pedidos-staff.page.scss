@@ -1,9 +1,7 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
 
 ion-toolbar {
-    --background: #39a1ac;
-    width: 100%;
+    --background: #188ba0;
     font-family: 'Acme', sans-serif;
     color: aliceblue;
     font-size: 1.5em;
@@ -12,10 +10,4 @@ ion-toolbar {
 
 ion-title {
     font-size: 1.5em;
-}
-
-#box {
-    --background: rgba(253, 253, 253, 0.3);
-    height: 93vh;
-    margin-top: -1em;
 }

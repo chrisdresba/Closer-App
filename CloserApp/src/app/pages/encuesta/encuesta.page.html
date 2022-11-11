@@ -3,23 +3,23 @@
     <ion-title>Encuesta</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+  <ion-icon name="exit-outline"></ion-icon>
+</ion-fab-button>
+<ion-fab-list side="bottom">
+  <ion-fab-button color="dark" (click)="back()">
+    <ion-icon name="arrow-back-circle"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-button color="dark" (click)="logout()">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab-list>
+</ion-fab>
 
 <ion-content>
   <ion-card id="box">
     <ion-list>
-      <ion-fab vertical="top" horizontal="end" slot="fixed">
-        <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
-        <ion-icon name="exit-outline"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-list side="bottom">
-        <ion-fab-button color="dark" (click)="back()">
-          <ion-icon name="arrow-back-circle"></ion-icon>
-        </ion-fab-button>
-        <ion-fab-button color="dark" (click)="logout()">
-          <ion-icon name="exit-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab-list>
-    </ion-fab>
 
     <form (ngSubmit)="agregarEncuesta()">    
     <!-- <form [formGroup]="formEncuesta" (ngSubmit)="agregarEncuesta()">     -->

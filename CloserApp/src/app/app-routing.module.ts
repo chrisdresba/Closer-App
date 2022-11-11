@@ -54,6 +54,10 @@ const routes: Routes = [
   },  {
     path: 'register-anonimo',
     loadChildren: () => import('./pages/register-anonimo/register-anonimo.module').then( m => m.RegisterAnonimoPageModule)
+  },
+  {
+    path: 'pedidos-staff',
+    loadChildren: () => import('./pages/pedidos-staff/pedidos-staff.module').then( m => m.PedidosStaffPageModule)
   }
 
 

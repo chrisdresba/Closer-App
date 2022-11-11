@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { MesaService } from '../services/mesa.service';
 import { ToastService } from '../services/toast.service';
@@ -19,13 +19,19 @@ export class HomePage implements OnInit {
   content_visibility = '';
   listaEspera: ListaEspera[] = [];
 
-
   usuario: any;
   usuarioLogin: string;
   rol: string;
+  mesa: string;
+  view:boolean = false;
 
-  constructor(private authService: AuthService, private router: Router, public afAuth: AngularFireAuth,public servMesa:MesaService,public toastSrv: ToastService, private toast: ToastController) {
+  constructor(private authService: AuthService,   public loadingController: LoadingController, private router: Router, public afAuth: AngularFireAuth, public servMesa: MesaService, public toastSrv: ToastService, private toast: ToastController) {
 
+    this.presentLoading();
+    setTimeout(()=>{
+      this.mesa = this.servMesa.comprobarMesaAsignada(this.usuarioLogin);
+      this.view = true;
+    },2000)
   }
 
   ngOnInit(): void {
@@ -64,19 +70,23 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('pedido', { replaceUrl: true });
   }
 
+  verPedidos(){
+    this.router.navigateByUrl('pedidos-staff', { replaceUrl: true });
+  }
+
   realizarEncuesta() {
     this.router.navigateByUrl('encuesta', { replaceUrl: true });
   }
 
   ingresarListaEspera() {
     try {
-    this.servMesa.agregarUsuarioListaEspera(this.usuarioLogin);
+      this.servMesa.agregarUsuarioListaEspera(this.usuarioLogin);
       this.presentToast("Lista de Espera", "Ya te encuentras en la lista de espera!", "success");
     } catch (error) {
-    
+
       console.log(error);
     }
-  
+
   }
 
 
@@ -90,7 +100,7 @@ export class HomePage implements OnInit {
         return true;
       }
       return false;
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   }
@@ -98,7 +108,7 @@ export class HomePage implements OnInit {
   async ReadQrCode() {
     try {
       const permission = await this.checkPermission();
-      if(!permission) {
+      if (!permission) {
         return;
       }
       await BarcodeScanner.hideBackground();
@@ -106,15 +116,15 @@ export class HomePage implements OnInit {
       this.content_visibility = 'hidden';
       const result = await BarcodeScanner.startScan();
       this.opcionesQr(result.content);
-  
+
       BarcodeScanner.showBackground();
       document.querySelector('body').classList.remove('scanner-active');
       this.content_visibility = '';
-      if(result?.hasContent) {
+      if (result?.hasContent) {
         this.scannedResult = result.content;
         console.log(this.scannedResult);
       }
-    } catch(e) {
+    } catch (e) {
       console.log(e);
       this.stopScan();
     }
@@ -128,26 +138,38 @@ export class HomePage implements OnInit {
   }
 
   ngOnDestroy(): void {
-      this.stopScan();
+    this.stopScan();
   }
   /////////
 
-  opcionesQr(qr:string){
+  opcionesQr(qr: string) {
 
-    switch(qr){
+    switch (qr) {
       case 'listaEspera':
-          this.agregarALista();
+        this.agregarALista();
         break;
-        default:;
+      case '8soLfeZGDhBYjhkJhaVM':
+        console.log('mesa 4');
+        break;
+      case '9USkEuuY6nJWaO8CSF5Z':
+        console.log('mesa 3');
+        break;
+      case 'EXceXQ6iRmsibO4jXRHj':
+        console.log('mesa 2');
+        break;
+      case 'tR1zsOW4f0Lpqfc0kAGp':
+        console.log('mesa 1');
+        break;
+      default: ;
     }
   }
 
-  agregarALista(){
+  agregarALista() {
     for (let i = 0; i < this.listaEspera.length; i++) {
       if (this.listaEspera[i].usuario == this.usuarioLogin) {
-        if(this.listaEspera[i].estado == true){
+        if (this.listaEspera[i].estado == true) {
           this.presentToast("Lista de Espera", "No puedes agregarte nuevamente a la lista de espera!", "warning");
-        return false;
+          return false;
         }
       }
     }
@@ -157,6 +179,22 @@ export class HomePage implements OnInit {
 
   verListaEspera() {
     this.router.navigateByUrl('espera', { replaceUrl: true });
+  }
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      spinner: 'circles',
+      message: 'Cargando...',
+      duration: 2000,
+      translucent: true,
+
+      cssClass: 'my-loading-class'
+
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
   }
 
   async presentToast(header: string, message: string, color: string) {
