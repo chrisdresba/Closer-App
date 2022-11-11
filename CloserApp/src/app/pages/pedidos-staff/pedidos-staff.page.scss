@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+ion-toolbar {
+    --background: #188ba0;
+    font-family: 'Acme', sans-serif;
+    color: aliceblue;
+    font-size: 1.5em;
+    height: 55px;
+}
+
+ion-title {
+    font-size: 1.5em;
+}

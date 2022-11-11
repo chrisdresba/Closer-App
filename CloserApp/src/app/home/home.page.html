@@ -57,6 +57,12 @@
           class="boton" (click)="verListaEspera()">
           <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Lista de espera
         </ion-button>
+
+        <ion-button *ngIf="rol != 'cliente'" expand="block" type="submit" color="success"
+          class="boton" (click)="verPedidos()">
+          <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Pedidos
+        </ion-button>
+
       </div>
     </ion-card>
   </ion-content>
