@@ -24,7 +24,7 @@
     <form (ngSubmit)="agregarEncuesta()">    
     <!-- <form [formGroup]="formEncuesta" (ngSubmit)="agregarEncuesta()">     -->
       <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
-        <ion-label position="stacked">¿Cómo valoras la calidad de nuestra comida?</ion-label>
+        <ion-label position="stacked">¿Cómo valoras la calidad de la comida?</ion-label>
       </ion-item>
       <ion-list>
         <ion-radio-group (ionChange)="checkValueComida($event)" [value]="item">
@@ -59,7 +59,7 @@
       </ion-list>
 
       <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
-        <ion-label position="stacked">¿Cómo valoras la atención de nuestro personal que nos atendió?</ion-label>
+        <ion-label position="stacked">¿Cómo valoras la atención del personal?</ion-label>
       </ion-item>
       <ion-range name="personal" [ticks]="true" [snaps]="true" [min]="0" [max]="10" (ionChange)="checkValuePersonal($event)" [value]="item"></ion-range>
       <!-- <ion-range name="personal" formControlName="personal" [ticks]="true" [snaps]="true" [min]="0" [max]="10"></ion-range> -->
@@ -68,11 +68,11 @@
       <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
         <ion-label position="stacked">¿Nos recomendarías?</ion-label>
       </ion-item>
-      <ion-segment value="default">
+      <ion-segment (ionChange)="checkValueRecomendacion($event)">
         <ion-segment-button name="recomendacion" value="default">
           <ion-label>Sí</ion-label>
         </ion-segment-button>
-        <ion-segment-button name="recomendacion" value="no">
+        <ion-segment-button name="recomendacion" value="NO">
           <ion-label>No</ion-label>
         </ion-segment-button>
       </ion-segment>

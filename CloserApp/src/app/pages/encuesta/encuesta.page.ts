@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { uuidv4 } from '@firebase/util';
@@ -19,9 +20,10 @@ export class EncuestaPage implements OnInit {
   personal: string = '';
   comida: string = '';
   recomendacion: string = '';
+  usuario: any;
   
   constructor(private router: Router, private authService: AuthService, private encuestaService: EncuestaService,
-    private formBuilder: FormBuilder) { 
+    private formBuilder: FormBuilder, private afAuth: AngularFireAuth) { 
       this.formEncuesta = this.formBuilder.group({
         // 'comida': ['', Validators.required],
         // 'recomendacion': ['', Validators.required],
@@ -31,24 +33,29 @@ export class EncuestaPage implements OnInit {
     }
 
   ngOnInit() {
-}
+    this.usuario = this.afAuth.onAuthStateChanged(user => {
+      if (user) {
+        this.usuario = user;
+      }
+    })
+  }
 
-async checkValueComida(event) { 
-  this.comida = event.detail.value;  
-  // console.log(event.detail.value);
-}
+  async checkValueComida(event) { 
+    this.comida = event.detail.value;  
+    // console.log(event.detail.value);
+  }
 
-async checkValuePersonal(event) { 
-  this.personal = event.detail.value;  
-  // console.log(event.detail.value);
-}
+  async checkValuePersonal(event) { 
+    this.personal = event.detail.value;  
+    // console.log(event.detail.value);
+  }
 
-async checkValueRecomendacion(event) { 
-  this.recomendacion = event.detail.value;  
-  // console.log(event.detail.value);
-}
+  async checkValueRecomendacion(event) { 
+    this.recomendacion = event.detail.value;  
+    // console.log(event.detail.value);
+  }
 
-async agregarEncuesta(){
+  async agregarEncuesta(){
 
     this.uuid = uuidv4();
     this.encuesta = new Encuesta();
@@ -57,9 +64,15 @@ async agregarEncuesta(){
     // this.encuesta.recomendacion = this.formEncuesta.controls['recomendacion'].value;
     // this.encuesta.personal = this.formEncuesta.controls['personal'].value;
 
-    this.encuesta.recomendacion = this.recomendacion;
+    console.log(this.recomendacion);
+    if(this.recomendacion == 'default'){
+      this.encuesta.recomendacion = 'SI';
+    } else {
+      this.encuesta.recomendacion = this.recomendacion;
+    }
     this.encuesta.personal = this.personal;
     this.encuesta.comida = this.comida;
+    this.encuesta.usuario = this.usuario.email;
 
     this.encuestaService.agregarEncuesta(this.encuesta);
   }
