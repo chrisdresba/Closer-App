@@ -76,13 +76,13 @@ export class PedidoPage implements OnInit {
     this.itemPedido.producto = item;
     this.itemPedido.usuario = "cliente@cliente.com";
     this.itemPedido.estado = EstadoPedido.PENDIENTE;
-    this.itemPedido.cantidad =+ 1;
+    this.itemPedido.cantidad += 1;
     this.itemPedido.uid = this.uuid;
 
     this.mesaService.agregarItemPedido(this.itemPedido); 
     console.log("item", this.itemPedido);
 
-    this.importeAcumulado =+ item.precio;
+    this.importeAcumulado += item.precio;
 
     if(this.tiempoMaximo < item.tiempo)
       this.tiempoMaximo = item.tiempo;

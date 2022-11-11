@@ -71,6 +71,15 @@ export class MesaService {
     return true;
   }
 
+  comprobarMesaAsignada(usuario: string) {
+    for (let i = 0; i < this.listadoMesas.length; i++) {
+      if (this.listadoMesas[i].usuario == usuario) {
+     
+        return this.listadoMesas[i].numero;
+      }
+    }
+  }
+
   async agregarPedido(item: Pedido) {
     // this.itemsCollection.add(JSON.parse(JSON.stringify(especialidad)));
 

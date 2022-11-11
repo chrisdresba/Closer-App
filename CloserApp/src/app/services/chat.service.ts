@@ -10,11 +10,10 @@ import { Mensaje } from '../classes/mensaje';
 export class ChatService {
 
   public chat: Mensaje[] = [];
+  public chats: Observable<any[]>;
 
   constructor(private firestore: AngularFirestore) {
-    this.getMensajes().subscribe(item => {
-      this.chat = item;
-    })
+    this.chats = this.firestore.collection('mensajes').valueChanges();
    }
 
    async guardarMensaje(usuario: any,mesa:any,mensaje: any) {

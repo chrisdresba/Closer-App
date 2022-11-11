@@ -17,40 +17,47 @@
 
   <ion-content [fullscreen]="true">
     <ion-card id="box" style="margin-top: 10px;">
-      <ion-button *ngIf="rol == 'SUPERVISOR' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
-        class="boton" (click)="gestionarUsuarios()">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
-      </ion-button>
+      <div *ngIf="view">
+        <ion-button *ngIf="rol == 'SUPERVISOR' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+          class="boton" (click)="gestionarUsuarios()">
+          <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
+        </ion-button>
 
-      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
-        class="boton" (click)="ReadQrCode()">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Scan Qr Lista
-      </ion-button>
-      <ion-button *ngIf="rol == 'cliente'" expand="block" type="submit" color="success"
-      class="boton" routerLink="/chat" >
-      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consulta Al Mozo
-    </ion-button>
-    <ion-button *ngIf="rol == 'cliente'" expand="block" type="submit" color="success"
-    class="boton" routerLink="/juego-uno" >
-    <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juego
-  </ion-button>
-    <ion-button *ngIf="rol == 'MOZO'" expand="block" type="submit" color="success"
-    class="boton" routerLink="/chat-mozo" >
-    <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consultas Mesas
-  </ion-button>
-      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
-        class="boton" (click)="realizarPedido()">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar pedido
-      </ion-button>
-      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
-        class="boton" (click)="realizarEncuesta()">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
-      </ion-button>
+        <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+          class="boton" (click)="ReadQrCode()">
+          <ion-icon class="lbl" slot="start" name="qr-code-sharp"></ion-icon>Lista de Espera
+        </ion-button>
 
-      <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
-        class="boton" (click)="verListaEspera()">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Lista de espera
-      </ion-button>
+        <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+          routerLink="/chat">
+          <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consulta Al Mozo
+        </ion-button>
+
+        <ion-button *ngIf="rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+          routerLink="/juego-uno">
+          <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juego
+        </ion-button>
+
+        <ion-button *ngIf="rol == 'MOZO'" expand="block" type="submit" color="success" class="boton"
+          routerLink="/chat-mozo">
+          <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Consultas Mesas
+        </ion-button>
+
+        <ion-button *ngIf="this.mesa && rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit"
+          color="success" class="boton" (click)="realizarPedido()">
+          <ion-icon class="lbl" slot="start" name="qr-code-sharp"></ion-icon>Realizar pedido
+        </ion-button>
+
+        <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+          class="boton" (click)="realizarEncuesta()">
+          <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
+        </ion-button>
+
+        <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+          class="boton" (click)="verListaEspera()">
+          <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Lista de espera
+        </ion-button>
+      </div>
     </ion-card>
   </ion-content>
 </div>
