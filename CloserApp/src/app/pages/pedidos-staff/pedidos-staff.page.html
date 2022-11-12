@@ -18,5 +18,15 @@
 </ion-fab>
 
 <ion-content>
-
+  <div>
+    <ion-card *ngFor="let pedido of listadoVista">
+      <p>Mesa {{pedido[1]}} - Estado Pedido {{pedido[2]}}</p>
+      <ul *ngFor="let item of pedido[3]">
+          <li>{{item.nombre}} {{item.cantidad}}</li>  
+      </ul>
+      <ion-button (click)="aceptarPedido(pedido[0])">Aceptar Pedido</ion-button>
+      <ion-button (click)="entregarPedido(pedido[0])" class="btnEntregar">Entregar Pedido</ion-button>
+    </ion-card>
+    <ion-button (click)="recargar()" style="display:block;">Recargar</ion-button>
+  </div>
 </ion-content>

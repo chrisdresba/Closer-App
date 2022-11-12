@@ -116,6 +116,14 @@ export class LoginPage implements OnInit {
         this.credentials.setValue({ email: 'cliente10@cliente.com', password: '123456' });
         // this.opcion = "Cliente";
         break;
+      case '7':
+        this.credentials.setValue({ email: 'cocinero@cocinero.com', password: '123456' });
+        this.opcion = "Cocinero";
+        break;
+      case '8':
+        this.credentials.setValue({ email: 'bartender@bartender.com', password: '123456' });
+        this.opcion = "Bartender";
+        break;
       }
   }
 

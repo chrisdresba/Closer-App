@@ -58,6 +58,10 @@ const routes: Routes = [
   {
     path: 'pedidos-staff',
     loadChildren: () => import('./pages/pedidos-staff/pedidos-staff.module').then( m => m.PedidosStaffPageModule)
+  },
+  {
+    path: 'items-pedido-staff',
+    loadChildren: () => import('./pages/items-pedido-staff/items-pedido-staff.module').then( m => m.ItemsPedidoStaffPageModule)
   }
 
 

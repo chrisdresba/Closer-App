@@ -74,6 +74,10 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('pedidos-staff', { replaceUrl: true });
   }
 
+  verItemsPedidos(){
+    this.router.navigateByUrl('items-pedido-staff', { replaceUrl: true });
+  }
+
   realizarEncuesta() {
     this.router.navigateByUrl('encuesta', { replaceUrl: true });
   }
