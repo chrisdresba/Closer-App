@@ -35,7 +35,8 @@
       <ul>
         <li>{{item.producto?.nombre}} x {{item.cantidad}}</li>
       </ul>
-      <ion-button>Poner en preparación</ion-button>
+      <ion-button (click)="actualizarEstadoItem(item, 'ELABORACION')" *ngIf="item.estado === 'PENDIENTE'">Poner en preparación</ion-button>
+      <ion-button (click)="actualizarEstadoItem(item, 'LISTO')" class="btnEntregar" *ngIf="item.estado === 'EN ELABORACION'">Listo para servir</ion-button>
     </ion-card>
 
   </section>
@@ -57,7 +58,8 @@
       <ul>
         <li>{{item.producto?.nombre}} x {{item.cantidad}}</li>
       </ul>
-      <ion-button>Poner en preparación</ion-button>
+      <ion-button (click)="actualizarEstadoItem(item, 'ELABORACION')" *ngIf="item.estado === 'PENDIENTE'">Poner en preparación</ion-button>
+      <ion-button (click)="actualizarEstadoItem(item, 'LISTO')" class="btnEntregar" *ngIf="item.estado === 'EN ELABORACION'">Listo para servir</ion-button>
     </ion-card>
 
   </section>

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
-import { ItemPedidoService } from 'src/app/services/item-pedido.service';
+import { PedidosService } from 'src/app/services/pedidos.service';
 import { ItemPedido } from 'src/app/classes/item-pedido';
 import { TipoProducto } from 'src/app/enumerados/tipo-producto';
 import { EstadoPedido } from 'src/app/enumerados/estado-pedido'
@@ -29,7 +29,7 @@ export class ItemsPedidoStaffPage implements OnInit {
     private toast: ToastController,
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
-    private itemPedidoService: ItemPedidoService
+    private pedidosService: PedidosService
   ) { }
 
   ngOnInit() {
@@ -78,7 +78,7 @@ export class ItemsPedidoStaffPage implements OnInit {
   }
 
   obtenerItemsPedido() {
-    this.itemPedidoService.getItemsPedido().subscribe(items => {
+    this.pedidosService.getItemPedido().subscribe(items => {
       this.listaItemsPedido = items;
       this.listaItemsPedidoCocinero = this.filtrarPedidosCocinero();
       this.listaItemsPedidoBartender = this.filtrarPedidosBartender();
@@ -86,10 +86,30 @@ export class ItemsPedidoStaffPage implements OnInit {
   }
 
   filtrarPedidosCocinero() {
-    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.COCINA || item.producto.tipo === TipoProducto.POSTRE) && (item.estado === EstadoPedido.PENDIENTE));
+    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.COCINA || item.producto.tipo === TipoProducto.POSTRE) && (item.estado === EstadoPedido.PENDIENTE || item.estado === EstadoPedido.ELABORACION));
   }
 
   filtrarPedidosBartender() {
-    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.BAR) && (item.estado === EstadoPedido.PENDIENTE));
+    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.BAR) && (item.estado === EstadoPedido.PENDIENTE || item.estado === EstadoPedido.ELABORACION));
   }
+
+  async actualizarEstadoItem(item: ItemPedido, estado: string) {
+    const loading = await this.loadingController.create();
+    await loading.present();
+
+    if (estado === 'ELABORACION') {
+      item.estado = EstadoPedido.ELABORACION;
+    } else if (estado === 'LISTO') {
+      item.estado = EstadoPedido.LISTO;
+    }
+
+
+    this.pedidosService.actualizarEstadoItemPedido(item).then((resultado) => {
+    }, (err) => {
+      console.log(err);
+    });
+
+    await loading.dismiss();
+  }
+
 }
