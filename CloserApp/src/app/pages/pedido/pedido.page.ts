@@ -12,6 +12,8 @@ import { ItemPedido } from 'src/app/classes/item-pedido';
 import { timeStamp } from 'console';
 import { v4 as uuidv4 } from 'uuid';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Mesa } from 'src/app/classes/mesa';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-pedido',
@@ -23,9 +25,16 @@ export class PedidoPage implements OnInit {
   listaComida: any[] = [];
   listaBebida: any[] = [];
   listaPostre: any[] = [];
+  listaItems: ItemPedido[] = [];
+  listaItemsPedido: ItemPedido[] = [];
+  public listaMesa: Mesa[] = [];
+  mesaOcupadas: Mesa;
+
+  mesa: Mesa;
   pedido: Pedido;
   itemPedido: ItemPedido;
   uuid: string = '';
+  
   // listaProductosPedido: Array<ItemPedido> = new Array<ItemPedido>();
   listaProductosPedido: Array<string> = new Array<string>();
 
@@ -34,7 +43,9 @@ export class PedidoPage implements OnInit {
   tiempoMaximo: number = 0;
 
   constructor(private router: Router, private authService: AuthService, private productosService: ProductosService,
-    private mesaService: MesaService, private afAuth: AngularFireAuth) { }
+    private mesaService: MesaService, private afAuth: AngularFireAuth, public toastSrv: ToastService) {
+      this.traerListaMesa();
+    }
 
   ngOnInit() {
     this.obtenerProductos();
@@ -42,6 +53,20 @@ export class PedidoPage implements OnInit {
       if (user) {
         this.usuario = user;
       }
+    })
+  }
+
+  async traerListaMesa(){
+    this.mesaService.getListaMesa().subscribe(item => {
+      this.listaMesa = item;
+      // this.listaMesaLibre = this.filtrarLibres();
+      // console.log(this.listaMesa);
+
+      this.listaMesa.forEach(mesa => {
+        if(mesa.estado == "ocupado" && mesa.usuario == this.usuario.email){
+          this.mesa = mesa;
+        }});
+      // console.log(this.mesa);
     })
   }
 
@@ -76,10 +101,31 @@ export class PedidoPage implements OnInit {
     return this.listaProductos.filter((prod: Producto) => prod.tipo === TipoProducto.POSTRE);
   }
 
+  // filtrarMesa() {
+  //   return this.listaMesas.filter((mesa: Mesa) => mesa.estado == "ocupado" && mesa.usuario == this.usuario.email);
+  // }
+
+  async traerListaItems(){
+    this.mesaService.getListaItemsPedidos().subscribe(item => {
+      this.listaItems = item;
+      // this.listaItemsPedido = this.filtrarItemsPedido();
+      // console.log(this.listaMesa);
+    })
+  }
+
+  // filtrarItemsPedido() {
+
+  //   return this.listaItems.filter(item => item.uid == this.pedido.uid); 
+          
+  //       });
+        
+  //  }
+
+
   agregar(item: Producto){
     this.uuid = uuidv4();
     this.itemPedido = new ItemPedido();
-    this.itemPedido.mesa = "02";
+    this.itemPedido.mesa = this.mesa.numero;
     this.itemPedido.producto = item;
     this.itemPedido.usuario = this.usuario.email;
     this.itemPedido.estado = EstadoPedido.PENDIENTE;
@@ -101,6 +147,7 @@ export class PedidoPage implements OnInit {
     } else {
       this.actualizarPedido(this.itemPedido);
     }
+    this.traerListaItems();
   }
 
   actualizarPedido(item: ItemPedido){
@@ -112,11 +159,12 @@ export class PedidoPage implements OnInit {
 
     console.log("agregar", this.pedido);
   }
+
   cargarPedido(item: ItemPedido){
     this.uuid = uuidv4();
     this.pedido = new Pedido();
     this.pedido.estado = EstadoPedido.CONFIRMAR;
-    this.pedido.mesa = "02";
+    this.pedido.mesa = this.mesa.numero;
     this.pedido.precioAcumulado = this.importeAcumulado;
     this.pedido.uid = this.uuid;
     // console.log('uid', this.pedido.uid);
@@ -132,7 +180,20 @@ export class PedidoPage implements OnInit {
 
   confirmarPedido(){
     // console.log("conf ", this.pedido);
+    this.presentToast("Confirmado", "El pedido está en marcha", "success");
     this.pedido.estado = EstadoPedido.PENDIENTE;   
     this.mesaService.actualizarEstadoPedido(this.pedido);
+
+  }
+
+  async presentToast(header: string, message: string, color: string) {
+    const toast = await this.toastSrv.toast.create({
+      header,
+      message,
+      color,
+      duration: 2500,
+      position: "middle"
+    });
+    toast.present();
   }
 }

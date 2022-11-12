@@ -14,6 +14,7 @@ export class MesaService {
 
   listadoEspera: any[] = [];
   listadoMesas: any[] = [];
+  listadoItemsPedidos: any[] = [];
 
   constructor(private firestore: AngularFirestore) {
     this.getListaEspera().subscribe(lista => {
@@ -36,6 +37,14 @@ export class MesaService {
     return this.firestore.collection('mesas').snapshotChanges().pipe(
       map(docs => {
         return docs.map(d => d.payload.doc.data()) as Mesa[];
+      })
+    );
+  }
+
+  getListaItemsPedidos = (): Observable<any[]> => {
+    return this.firestore.collection('itemPedido').snapshotChanges().pipe(
+      map(docs => {
+        return docs.map(d => d.payload.doc.data()) as ItemPedido[];
       })
     );
   }
