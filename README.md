@@ -132,5 +132,5 @@ Desarrollamos las tareas requeridas para cumplir con los objetivos hasta el punt
 # Encuesta
 ![](https://github.com/chrisdresba/Closer-App/blob/main/Img/Encuesta.jpeg?raw=true?raw=true)
 
-#Juego
+# Juego
 ![](https://github.com/chrisdresba/Closer-App/blob/main/Img/Juego.jpeg?raw=true?raw=true)
