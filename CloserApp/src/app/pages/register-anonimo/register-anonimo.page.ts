@@ -65,7 +65,7 @@ export class RegisterAnonimoPage implements OnInit {
       this.presentToast("Ingreso", "Usuario creado con exito", "success");
       setTimeout(() => {
         this.router.navigate(['/home']);
-      }, 3000)
+      }, 2000)
     }else{
       this.presentToast("Ingreso", "Debe ingresar su nombre y una foto", "warning");
     }

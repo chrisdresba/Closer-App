@@ -24,7 +24,7 @@ export class JuegoUnoPage implements OnInit {
   public random: number = 0;
   public puntaje: number = 0;
   public mensaje?: string;
-  public intentos: number = 3;
+  public intentos: number = 5;
   public juego: string = 'mayor o menor';
   email: string = '';
   fecha?: string = '';
@@ -36,7 +36,11 @@ export class JuegoUnoPage implements OnInit {
     private toast: ToastController,
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
-  ) { }
+  ) { 
+    setTimeout(()=>{
+      this.presentToast("Mayor o Menor", "Suma 50 puntos para ganar un descuento!", "success");
+    },500)
+  }
 
   ngOnInit() {
     this.usuario = this.afAuth.onAuthStateChanged(user => {
@@ -121,7 +125,11 @@ export class JuegoUnoPage implements OnInit {
   finDePartida() {
     this.puntaje = 0;
     this.url = "assets/in.png";
+    this.presentToast("Mayor o Menor", "Será la próxima!", "warning");
     this.reiniciar();
+    setTimeout(()=>{
+      this.router.navigate(["home"]);
+    },2000);
   }
 
   ////////////
