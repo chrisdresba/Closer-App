@@ -7,4 +7,5 @@ export class Producto {
     tipo: TipoProducto;
     estado?: string = '';
     fotos?: string[];
+    id:string;
 }
