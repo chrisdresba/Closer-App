@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start"> PEDIDOS </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-content>
+
+  <!-- COCINERO-->
+  <section *ngIf="rol === 'COCINERO'">
+
+    <ion-item color="warning" *ngIf="listaItemsPedidoCocinero && listaItemsPedidoCocinero.length === 0">
+      <ion-label class="ion-text-wrap">
+        No hay pedidos con productos pendientes a preparar
+      </ion-label>
+    </ion-item>
+
+    <ion-card *ngFor="let item of listaItemsPedidoCocinero">
+      <h2 class="ion-text-capitalize bold">{{item.usuario?.nombre}}</h2>
+      <p>MESA #{{item.mesa}}</p>
+      <p>Productos a preparar:</p>
+      <ul>
+        <li>{{item.producto?.nombre}} x {{item.cantidad}}</li>
+      </ul>
+      <ion-button>Poner en preparación</ion-button>
+    </ion-card>
+
+  </section>
+  <!-- --------- -->
+
+  <!-- BARTENDER-->
+  <section *ngIf="rol === 'BARTENDER'">
+
+    <ion-item color="warning" *ngIf="listaItemsPedidoBartender && listaItemsPedidoBartender.length === 0">
+      <ion-label class="ion-text-wrap">
+        No hay pedidos con productos pendientes a preparar
+      </ion-label>
+    </ion-item>
+
+    <ion-card *ngFor="let item of listaItemsPedidoBartender">
+      <h2 class="ion-text-capitalize bold">{{item.usuario?.nombre}}</h2>
+      <p>MESA #{{item.mesa}}</p>
+      <p>Productos a preparar:</p>
+      <ul>
+        <li>{{item.producto?.nombre}} x {{item.cantidad}}</li>
+      </ul>
+      <ion-button>Poner en preparación</ion-button>
+    </ion-card>
+
+  </section>
+  <!-- --------- -->
+
+</ion-content>

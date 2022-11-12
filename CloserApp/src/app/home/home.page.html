@@ -58,8 +58,13 @@
           <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Lista de espera
         </ion-button>
 
-        <ion-button *ngIf="rol != 'cliente'" expand="block" type="submit" color="success"
+        <ion-button *ngIf="rol != 'cliente' && rol != 'COCINERO' && rol != 'BARTENDER'" expand="block" type="submit" color="success"
           class="boton" (click)="verPedidos()">
+          <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Pedidos
+        </ion-button>
+
+        <ion-button *ngIf="rol == 'COCINERO' || rol == 'BARTENDER'" expand="block" type="submit" color="success"
+          class="boton" (click)="verItemsPedidos()">
           <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Pedidos
         </ion-button>
 

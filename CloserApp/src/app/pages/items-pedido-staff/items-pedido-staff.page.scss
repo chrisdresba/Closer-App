@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+ion-toolbar {
+    display: flex;
+    --background: #188ba0;
+    font-family: 'Acme', sans-serif;
+    color: aliceblue;
+    font-size: 1.5em;
+    height: 55px;
+}
+
+ion-content{
+
+    --background: #969fa1;
+}
+ion-title {
+    font-size: 1.5em;
+}
+
+ion-card{
+    display: flex;
+    flex-direction: column;
+}
+li{
+    list-style: none;
+    font-weight: 400;
+}
+
+p{
+    margin-left: 5px;
+    font-weight: 600;
+}
+
+.btnEntregar{
+    --background: #1db010;;
+}
