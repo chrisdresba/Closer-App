@@ -1,10 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
 ion-toolbar {
     --background: #39a1ac;
     width: 100%;
+    font-family: 'Acme', sans-serif;
+    color: aliceblue;
+    height: 55px;
 }
 
+ion-title {
+    font-size: 2em;
+}
+
+ion-content {
+    width: 100%;
+    --background: url("./../../../../src/assets/background5.jpeg") center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
 #box {
-    --background: rgba(253, 253, 253, 0.3);
-    height: 93vh;
-    margin-top: -1em;
+    background: rgba(253, 253, 253, 0.3);
+    height: 85h;
+    margin-top: 1em;
 }

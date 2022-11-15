@@ -17,7 +17,6 @@
 
   <ion-content [fullscreen]="true">
     <ion-card id="box" style="margin-top: 10px;">
-      <div *ngIf="view">
         <ion-button *ngIf="rol == 'SUPERVISOR' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
           class="boton" (click)="gestionarUsuarios()">
           <ion-icon class="lbl" slot="start" name="people"></ion-icon>Gestionar Usuarios
@@ -73,7 +72,6 @@
           <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Pedidos
         </ion-button>
 
-      </div>
     </ion-card>
   </ion-content>
 </div>

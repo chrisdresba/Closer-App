@@ -29,6 +29,7 @@ export class PedidoPage implements OnInit {
   listaItemsPedido: ItemPedido[] = [];
   public listaMesa: Mesa[] = [];
   mesaOcupadas: Mesa;
+  menu:string='PLATOS';
 
   mesa: Mesa;
   pedido: Pedido;
@@ -54,6 +55,8 @@ export class PedidoPage implements OnInit {
         this.usuario = user;
       }
     })
+
+    
   }
 
   async traerListaMesa(){

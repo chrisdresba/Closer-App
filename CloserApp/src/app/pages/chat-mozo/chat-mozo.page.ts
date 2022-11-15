@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Mensaje } from 'src/app/classes/mensaje';
 
 
@@ -19,9 +20,7 @@ import { Mensaje } from 'src/app/classes/mensaje';
 export class ChatMozoPage implements OnInit {
 
   view: boolean = false;
-  public listado: Array<any> = [];
-  public listadoAux: Array<any> = [];
-  public listadoMensajes: Array<any> = [];
+  public listadoMensajes: Observable<Mensaje[]>;
   public listaMesa: Mesa[] = [];
   public mensaje: string = '';
   usuario: any;
@@ -55,20 +54,31 @@ export class ChatMozoPage implements OnInit {
       this.listaMesa = item;
     })
 
-    //Busqueda Mensajes
-    this.chat.getMensajes().subscribe(aux => {
-      this.listadoAux = aux;
-    })
-
   }
 
-
-  filtrarMensajes() {
-    return this.listadoAux.filter(item => item.mesa == this.mesa);
+  traerMensajes(mesa:any) {
+    switch (mesa) {
+      case '01':
+        this.listadoMensajes = this.chat.chats01;
+        break;
+      case '02':
+        this.listadoMensajes = this.chat.chats02;
+        break;
+      case '03':
+        this.listadoMensajes = this.chat.chats03;
+        break;
+      case '04':
+        this.listadoMensajes = this.chat.chats04;
+        break;
+    }
   }
 
   ordenarMensajes() {
-    this.listadoMensajes = this.listado.sort((a?, b?) => (((a.fecha! > b.fecha!)||(a.fecha! == b.fecha! && a.referencia! > b.referencia!)) ? 1 : -1));
+    this.listadoMensajes = this.listadoMensajes.pipe(
+      map(docs => {
+        return docs.sort((a?, b?) => (((a.fecha! > b.fecha!) || (a.fecha! == b.fecha! && a.referencia! > b.referencia!)) ? 1 : -1));
+      })
+    );
   }
 
   guardarMensaje() {
@@ -87,29 +97,19 @@ export class ChatMozoPage implements OnInit {
     obj.mesa = this.mesa;
 
     if (this.mensaje.length > 0) {
-      this.listadoMensajes.push(obj);
       this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
-      setTimeout(() => {
-        this.listado = this.filtrarMensajes();
-        this.ordenarMensajes();
-      }, 500)
       this.mensaje = '';
     }
   }
 
   chatPorMesa(mesa: any) {
-    this.mesa = mesa;
-    this.listado = this.filtrarMensajes();
-    setTimeout(() => {
-      this.ordenarMensajes()
-    }, 1000)
+    this.mesa = '0'+mesa;
     this.presentLoading();
-
     setTimeout(() => {
+      this.traerMensajes(this.mesa);
+      this.ordenarMensajes();
       this.view = true;
     }, 3000)
-
-
   }
 
   async presentLoading() {
@@ -151,7 +151,7 @@ export class ChatMozoPage implements OnInit {
 
   back() {
     this.view = false;
-
+    this.listadoMensajes;
   }
 
   revision(dato: any) {

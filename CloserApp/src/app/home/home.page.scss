@@ -16,8 +16,11 @@ ion-title {
   margin-top: -1em;
 }
 
-ion-content{
-  --background: #a4a4a4;
+ion-content {
+  width: 100%;
+  --background: url("./../../../src/assets/background1.jpeg") center;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 ////////////////////////////////////7

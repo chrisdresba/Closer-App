@@ -3,30 +3,31 @@
     <ion-title>Pedido</ion-title>
   </ion-toolbar>
 </ion-header>
-
-<ion-content id="box">
-  <ion-fab vertical="top" horizontal="end" slot="fixed">
-    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="logout()">
       <ion-icon name="exit-outline"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="bottom">
-      <ion-fab-button color="dark" (click)="back()">
-        <ion-icon name="arrow-back-circle"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="dark" (click)="logout()">
-        <ion-icon name="exit-outline"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+  </ion-fab-list>
+</ion-fab>
 
-  <ion-item>
-    <ion-button color="warning" fill="outline" expand="block" style="width: 27%;" (click)="menu = 'PLATOS'">
+<ion-content>
+ 
+  <div id="box">
+  <ion-item class="btnCategorias">
+    <ion-button color="warning" fill="outline" expand="block" style="width: 30%;" (click)="menu = 'PLATOS'">
       Platos
     </ion-button>
-    <ion-button color="warning" fill="outline" expand="block" style="width: 27%;" (click)="menu = 'BEBIDAS'">
+    <ion-button color="warning" fill="outline" expand="block" style="width: 30%;" (click)="menu = 'BEBIDAS'">
       Bebidas
     </ion-button>
-    <ion-button color="warning" fill="outline" expand="block" style="width: 27%;" (click)="menu = 'POSTRES'">
+    <ion-button color="warning" fill="outline" expand="block" style="width: 30%;" (click)="menu = 'POSTRES'">
       Postres
     </ion-button>
   </ion-item>
@@ -149,5 +150,6 @@
       </ion-label>
     </ion-item>
   </ion-item-sliding> -->
+</div>
 
 </ion-content>
