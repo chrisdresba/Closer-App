@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+
+
+ion-toolbar {
+  --background: #188ba0;
+  font-family: 'Acme', sans-serif;
+  color: aliceblue;
+  font-size: 1.5em;
+  height: 55px;
+}
+
+ion-title {
+  font-size: 1.5em;
+}
+
+ion-content {
+  width: 100%;
+  --background: url("./../../../../src/assets/background1.jpeg") center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+#box {
+  --background: rgba(253, 253, 253, 0.3);
+  height: 90vh;
+  margin-top: -1em;
+  font-family: 'Acme', sans-serif;
+}
+
+ion-card {
+  font-family: 'Acme', sans-serif;
+  padding: 10px;
+  font-size: 1em;
+  color: #fff;
+}
+
+.estadoBox {
+  background: rgba(71, 121, 123, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 30px;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+p,
+li {
+  font-size: 1.2em;
+}
+
+img {
+  width: 100%;
+  margin: auto;
+}
+
+span {
+  margin-left: 5px;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+img,
+h1,
+p {
+  display: flex;
+  justify-content: center;
+}
+
+ion-button {
+  height: 50px;
+  font-size: 1em;
+  font-weight: 600;
+  --background: #31ac04;
+}

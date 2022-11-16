@@ -62,6 +62,14 @@ const routes: Routes = [
   {
     path: 'items-pedido-staff',
     loadChildren: () => import('./pages/items-pedido-staff/items-pedido-staff.module').then( m => m.ItemsPedidoStaffPageModule)
+  },
+  {
+    path: 'estado-pedido',
+    loadChildren: () => import('./pages/estado-pedido/estado-pedido.module').then( m => m.EstadoPedidoPageModule)
+  },
+  {
+    path: 'solicitar-cuenta',
+    loadChildren: () => import('./pages/solicitar-cuenta/solicitar-cuenta.module').then( m => m.SolicitarCuentaPageModule)
   }
 
 
