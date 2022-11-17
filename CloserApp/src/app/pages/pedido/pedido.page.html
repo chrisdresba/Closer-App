@@ -133,21 +133,32 @@
       </ion-label>
     </ion-item>
     <ion-item>
-      <ion-label *ngIf="importeAcumulado > 0">
+      <ion-label *ngIf="importeAcumulado > 0 && confirmar == false">
         <ion-button expand="block" color="warning" style="width: 100%;" (click)="confirmarPedido()">
           ¿Confirma finalizar pedido?
         </ion-button>
+        <ion-button expand="block" type="button" class="boton" style="width: 100%;" (click)="back()">
+          Cancelar
+        </ion-button>
+      </ion-label>
+      <ion-label *ngIf="confirmar != false">
+        <ion-button expand="block" type="button" class="boton" color="warning" style="width: 100%;" (click)="back()">
+          Volver al menú
+        </ion-button>
+
       </ion-label>
     </ion-item>
   </ion-item-sliding>
 
-  <!-- <ion-item-sliding *ngIf="pedido != undefined"> 
-    <h2 class="ion-text-capitalize bold">Detalle del pedido</h2>
-    <ion-item *ngFor="let itemPedido of listaItems"> 
-      <ion-label>
-        <h3>{{ this.itemPedido.cantidad }} - {{ this.itemPedido.producto.nombre }}</h3>                        
-      </ion-label>
-    </ion-item>
-  </ion-item-sliding> -->
+  <ion-item-sliding *ngIf="pedido != undefined"> 
+    <ion-label>
+      <h2 class="ion-text-capitalize bold">Detalle del pedido</h2>
+      <ion-item *ngFor="let itemPedido of listaDetalle[3]"> 
+        <ion-label>
+          <h3>{{ itemPedido.cantidad }} - {{ itemPedido.nombre }}</h3>                        
+        </ion-label>
+      </ion-item>
+    </ion-label>
+  </ion-item-sliding>
 
 </ion-content>

@@ -48,7 +48,4 @@ export class PedidosService {
     return this.firestore.collection('itemPedido').doc(res.uid).update({ ...res });
   }
   
-
-
-
 }

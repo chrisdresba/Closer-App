@@ -7,6 +7,10 @@ import { MesaService } from '../services/mesa.service';
 import { ToastService } from '../services/toast.service';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { ListaEspera } from '../classes/lista-espera';
+import { PedidosService } from '../services/pedidos.service';
+import { Pedido } from '../classes/pedido';
+import { Mesa } from '../classes/mesa';
+import { EstadoPedido } from '../enumerados/estado-pedido';
 
 @Component({
   selector: 'app-home',
@@ -24,8 +28,14 @@ export class HomePage implements OnInit {
   rol: string;
   mesa: string;
   view:boolean = false;
+  encuesta:boolean = false;
 
-  constructor(private authService: AuthService,   public loadingController: LoadingController, private router: Router, public afAuth: AngularFireAuth, public servMesa: MesaService, public toastSrv: ToastService, private toast: ToastController) {
+  listaPedidos: Pedido[] = [];
+  public listaMesas: Mesa[] = [];
+
+  constructor(private authService: AuthService, public loadingController: LoadingController, private router: Router, 
+    public afAuth: AngularFireAuth, public servMesa: MesaService, public toastSrv: ToastService, 
+    private toast: ToastController, private pedidoService: PedidosService) {
 
     this.presentLoading();
     setTimeout(()=>{
@@ -35,6 +45,11 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.servMesa.getListaMesa().subscribe(item => {
+      this.listaMesas = item;
+      // console.log(this.listaMesas);
+    })
+
     if (localStorage.getItem('sesionRol')) {
       this.rol = localStorage.getItem('sesionRol');
       console.log(this.rol);
@@ -43,17 +58,53 @@ export class HomePage implements OnInit {
       if (user) {
         this.usuario = user;
         this.usuarioLogin = this.usuario.email;
+        this.traerPedidos(this.usuarioLogin);
       }
     })
 
     if (localStorage.getItem('anonimo')) {
       this.usuarioLogin = localStorage.getItem('anonimo');
+      this.traerPedidos(this.usuarioLogin);
     }
 
     this.servMesa.getListaEspera().subscribe(item => {
       this.listaEspera = item;
       // console.log(this.listaEspera);
     })
+
+  }
+
+  async traerPedidos(usuarioLogueado: string){
+    this.pedidoService.getPedidos().subscribe(aux => {
+      this.listaPedidos = aux;
+      // console.log("lista",this.listaPedidos);
+
+      this.filtrarPedidos(usuarioLogueado);
+    });
+  }
+
+  filtrarPedidos(userLogin: string) {
+    // console.log("userLogin", userLogin);
+    // console.log("log",this.usuarioLogin);
+    for( let i=0; i< this.listaPedidos.length; i++) {
+      // console.log (this.listaPedidos[i].usuario, this.listaPedidos[i].estado);
+      // console.log("mes",this.listaMesas);
+      if (this.usuarioLogin == this.listaPedidos[i].usuario && this.listaPedidos[i].uidEncuesta != '') {
+        for( let i=0; i< this.listaMesas.length; i++) {
+          // console.log (this.listaPedidos[i].mesa, this.listaMesas[i].numero, this.listaMesas[i].estado);
+          if (this.listaPedidos[i].mesa == this.listaMesas[i].numero && this.listaMesas[i].estado == 'ocupado') {
+    
+            this.encuesta = true;       
+            break;
+          }
+        }
+
+      }
+      if(this.encuesta == true){
+        break;
+      }      
+    }
+    console.log("filtro", this.encuesta);
   }
 
   async logout() {
@@ -80,6 +131,10 @@ export class HomePage implements OnInit {
 
   realizarEncuesta() {
     this.router.navigateByUrl('encuesta', { replaceUrl: true });
+  }
+
+  verValoraciones() {
+    this.router.navigateByUrl('graficos', { replaceUrl: true });
   }
 
   ingresarListaEspera() {

@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gráficos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="back()">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="dark" (click)="logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  
+  <ion-card id="box">
+    <div style="width: 250px">Nuestra comida
+      <!-- <canvas id="comida"> -->
+        <canvas id="comida"></canvas>
+        <script type="module" src="comida.js"></script>
+    </div>
+  
+    <div style="width: 250px">Nuestro personal
+      <!-- <canvas id="comida"> -->
+        <canvas id="personal"></canvas>
+        <script type="module" src="personal.js"></script>
+    </div>
+  
+    <div style="width: 250px">Nos recomiendan
+      <!-- <canvas id="comida"> -->
+        <canvas id="recomendacion"></canvas>
+        <script type="module" src="recomendacion.js"></script>
+    </div>
+  </ion-card>
+
+
+</ion-content>

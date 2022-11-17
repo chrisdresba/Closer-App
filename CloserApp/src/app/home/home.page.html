@@ -48,9 +48,14 @@
           <ion-icon class="lbl" slot="start" name="qr-code-sharp"></ion-icon>Realizar pedido
         </ion-button>
 
-        <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        <ion-button *ngIf="this.encuesta == false && (rol == 'cliente' || rol == 'ADMINISTRADOR')" expand="block" type="submit" color="success"
           class="boton" (click)="realizarEncuesta()">
           <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
+        </ion-button>
+
+        <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+          class="boton" (click)="verValoraciones()">
+          <ion-icon class="lbl" slot="start" name="people"></ion-icon>¿Qué opinan nuestros clientes?
         </ion-button>
 
         <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
