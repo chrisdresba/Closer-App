@@ -14,6 +14,7 @@ import { ItemPedido } from 'src/app/classes/item-pedido';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-pedidos-staff',
@@ -38,7 +39,8 @@ export class PedidosStaffPage implements OnInit {
     private mesaService: MesaService,
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
-    public servPedido: PedidosService
+    public servPedido: PedidosService,
+    public chat: ChatService
   ) {
     this.presentLoading();
     setTimeout(() => {
@@ -169,6 +171,12 @@ export class PedidosStaffPage implements OnInit {
     }
 
     if (auxiliar) {
+      
+      for (let e = 0; e < this.pedido.productos.length; e++) {
+        this.servPedido.eliminarItemPedido(this.pedido.productos[e]);
+      }
+      this.servPedido.eliminarPedido(this.pedido.uid);
+      this.chat.eliminarSala(this.pedido.mesa);
       // this.pedido.estado = EstadoPedido.ENTREGADO;
       //   this.mesaService.actualizarEstadoPedido(this.pedido);
       this.mesaAsignada.estado = 'libre';

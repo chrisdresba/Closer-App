@@ -152,8 +152,8 @@ export class SolicitarCuentaPage implements OnInit {
 
   async ReadQrCode() {
 
-    localStorage.setItem('propina', '10'); /////VALOR ETAPA DE PRUEBA
-    this.actualizarPropina(10);/////VALOR ETAPA DE PRUEBA
+   // localStorage.setItem('propina', '10'); /////VALOR ETAPA DE PRUEBA
+   // this.actualizarPropina(10);/////VALOR ETAPA DE PRUEBA
 
     try {
       const permission = await this.checkPermission();
@@ -222,7 +222,6 @@ export class SolicitarCuentaPage implements OnInit {
     this.mesaService.actualizarEstadoPedido(this.pedido);
     this.presentLoading();
     setTimeout(()=>{
-      this.filtrarPedido();
       this.propinaValue = true;
     },3000)
 

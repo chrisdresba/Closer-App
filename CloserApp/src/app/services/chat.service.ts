@@ -32,6 +32,11 @@ export class ChatService {
     return await this.firestore.collection('mensajes-mesa' + mesa).add(texto);
   }
 
+  eliminarSala(mesa: any) {
+    return this.firestore.collection('mensajes-mesa' + mesa).ref.where( 'mesa', '==', mesa ).get().then( data => data.forEach( doc => doc.ref.delete() ) );
+  }
+
+
   getMensajes = (): Observable<any[]> => {
     return this.firestore.collection('mensajes').snapshotChanges().pipe(
       map(docs => {
