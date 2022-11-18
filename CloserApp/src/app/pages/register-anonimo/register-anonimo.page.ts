@@ -54,7 +54,7 @@ export class RegisterAnonimoPage implements OnInit {
   async guardarUsuario() {
     try {
       let nombre, foto;
-      this.foto = 'dsadasd';
+      this.foto = 'foto'; /////VALOR ETAPA DE PRUEBA
       nombre = this.auxForm.value.nombre;
       foto = this.foto;
 

@@ -152,6 +152,9 @@ export class SolicitarCuentaPage implements OnInit {
 
   async ReadQrCode() {
 
+    localStorage.setItem('propina', '10'); /////VALOR ETAPA DE PRUEBA
+    this.actualizarPropina(10);/////VALOR ETAPA DE PRUEBA
+
     try {
       const permission = await this.checkPermission();
       if (!permission) {

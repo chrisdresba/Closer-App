@@ -22,7 +22,7 @@ ion-content {
 
 #box {
   --background: rgba(253, 253, 253, 0.3);
-  height: 90vh;
+  min-height: 90vh;
   margin-top: -1em;
   font-family: 'Acme', sans-serif;
 }

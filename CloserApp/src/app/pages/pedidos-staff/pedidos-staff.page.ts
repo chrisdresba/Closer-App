@@ -60,6 +60,8 @@ export class PedidosStaffPage implements OnInit {
     this.servPedido.getPedidos().subscribe(item => {
       this.listadoPedidos = item;
     })
+
+    
   }
 
   filtrarPedidos() {
@@ -84,7 +86,7 @@ export class PedidosStaffPage implements OnInit {
           }
         }
         obj.push(platos);
-        if (item.productos.length == acumulador && item.estado != EstadoPedido.ENTREGADO) {
+        if (item.productos.length == acumulador && !( item.estado == EstadoPedido.ENTREGADO ||  item.estado == EstadoPedido.CONFIRMADO )) {
           obj.push(EstadoPedido.LISTO);
           this.pedidoAux = item;
           this.pedidoAux.estado = EstadoPedido.LISTO;
@@ -111,7 +113,8 @@ export class PedidosStaffPage implements OnInit {
     for (let e = 0; e < this.listadoPedidos.length; e++) {
       if (this.listadoPedidos[e].uid == id) {
         this.pedido = this.listadoPedidos[e];
-        if (this.pedido.estado == EstadoPedido.CONFIRMAR) {
+
+        if (this.pedido.estado == EstadoPedido.PENDIENTE) {
           this.listadoPedidos[e].estado = EstadoPedido.ACEPTADO;
           auxiliar = true;
         }
