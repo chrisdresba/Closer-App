@@ -73,9 +73,9 @@ export class HomePage implements OnInit {
       // console.log(this.listaEspera);
     })
   
-    this.servMesa.getListaMesa().subscribe(item => {
-      this.listaMesas = item;
-    })
+    // this.servMesa.getListaMesa().subscribe(item => {
+    //   this.listaMesas = item;
+    // })
   }
 
   async traerPedidos(usuarioLogueado: string){
@@ -88,21 +88,21 @@ export class HomePage implements OnInit {
   }
 
   filtrarPedidos(userLogin: string) {
-    // console.log("userLogin", userLogin);
-    // console.log("log",this.usuarioLogin);
+    console.log("userLogin", userLogin);
+    console.log("log",this.usuarioLogin);
     for( let i=0; i< this.listaPedidos.length; i++) {
-      // console.log (this.listaPedidos[i].usuario, this.listaPedidos[i].estado);
-      // console.log("mes",this.listaMesas);
+      console.log (this.listaPedidos[i].usuario, this.listaPedidos[i].estado);
+      console.log("mes",this.listaMesas);
       if (this.usuarioLogin == this.listaPedidos[i].usuario && this.listaPedidos[i].uidEncuesta != '') {
-        for( let i=0; i< this.listaMesas.length; i++) {
-          // console.log (this.listaPedidos[i].mesa, this.listaMesas[i].numero, this.listaMesas[i].estado);
-          if (this.listaPedidos[i].mesa == this.listaMesas[i].numero && this.listaMesas[i].estado == 'ocupado') {
-    
+        console.log("hola");
+        for( let j=0; j< this.listaMesas.length; j++) {
+          console.log (this.listaPedidos[i].mesa, this.listaMesas[j].numero, this.listaMesas[j].estado);
+          if (this.listaPedidos[i].mesa == this.listaMesas[j].numero && this.listaMesas[j].estado == 'ocupado') {
+            console.log("hola2");
             this.encuesta = true;       
             break;
           }
         }
-
       }
       if(this.encuesta == true){
         break;

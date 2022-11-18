@@ -23,7 +23,7 @@
 
     <form (ngSubmit)="agregarEncuesta()">    
     <!-- <form [formGroup]="formEncuesta" (ngSubmit)="agregarEncuesta()">     -->
-      <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio" style="margin-top: -1em;">
+      <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio" style="margin-top: 0.2em;">
         <ion-label position="stacked">¿Cómo valoras la calidad de la comida?</ion-label>
       </ion-item>
       <ion-list>
@@ -41,29 +41,12 @@
             <ion-radio slot="end" name="comida" value="Basura"></ion-radio>
           </ion-item>
         </ion-radio-group>        
-        <!-- <ion-radio-group value="Excelente">
-          <ion-item>
-            <ion-label>Excelente</ion-label>
-            <ion-radio slot="end" name="comida" value="Excelente" formControlName="comida"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label>Normal</ion-label>
-            <ion-radio slot="end" name="comida1" value="Normal" formControlName="comida1"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label>Basura</ion-label>
-            <ion-radio slot="end" name="comida2" value="Basura" formControlName="comida2"></ion-radio>
-          </ion-item>
-        </ion-radio-group>         -->
-        <!-- <small *ngIf="formEncuesta.get('comida')?.errors?.required && formEncuesta.get('comida')?.touched">Comida es requerido</small> -->
       </ion-list>
 
       <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
         <ion-label position="stacked">¿Cómo valoras la atención del personal?</ion-label>
       </ion-item>
       <ion-range name="personal" [pin]="true" [ticks]="true" [snaps]="true" [min]="0" [max]="10" (ionChange)="checkValuePersonal($event)" [value]="item"></ion-range>
-      <!-- <ion-range name="personal" formControlName="personal" [ticks]="true" [snaps]="true" [min]="0" [max]="10"></ion-range> -->
-      <!-- <small *ngIf="formEncuesta.get('personal')?.errors?.required && formEncuesta.get('personal')?.touched">Personal es requerido</small> -->
     
       <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
         <ion-label position="stacked">¿Nos recomendarías?</ion-label>

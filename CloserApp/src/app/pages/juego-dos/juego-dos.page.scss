@@ -47,12 +47,6 @@ h4 {
 	font-family: 'Permanent Marker', cursive;
 }
 
-
-
-
-
-
-
 * {
 	box-sizing: border-box;
 	padding: 0;
@@ -102,26 +96,25 @@ h3,h4 {
 }
 
 .box{
-	margin-top: 3.5em;
+	margin-top: 1em;
 }
 
 button {
 	background-color: cadetblue;
 	color: aliceblue;
-	width: 4rem;
-	height: 2.5rem;
-	margin: 10px;
-	border-radius: 1rem;
+	width: 2.8rem;
+	height: 2rem;
+	margin: 3px;
+	border-radius: 0.5rem;
 	font-family: 'Poppins', cursive;
-	
 }
 
 .ahorcado-img{
-	width: 200px;
-	height: 200px;
-	margin-bottom: 2rem;
+	width: 150px;
+	height: 150px;
+	margin-bottom: 1.6rem;
 	box-shadow: 0 0 0 3px #646464;
-	border-radius: 0.2rem;
+	border-radius: 0.1rem;
 }
 
 .vida{

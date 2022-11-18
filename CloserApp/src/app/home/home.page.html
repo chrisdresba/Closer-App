@@ -58,14 +58,19 @@
       </ion-button>
 
       <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
-        routerLink="/juego-uno">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juego
+        routerLink="/menu-juegos">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juegos
       </ion-button>
 
+    <!-- <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+      routerLink="/juego-dos">
+      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Ahorcado
+    </ion-button>
+
       <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
-        routerLink="/juego-dos">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Ahorcado
-      </ion-button>
+        routerLink="/juego-uno">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juego
+      </ion-button> -->
 
       <ion-button *ngIf="rol == 'MOZO'" expand="block" type="submit" color="success" class="boton"
         routerLink="/chat-mozo">
@@ -77,7 +82,7 @@
         <ion-icon class="lbl" slot="start" name="qr-code-sharp"></ion-icon>Realizar pedido
       </ion-button>
 
-      <ion-button *ngIf="this.mesa && rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit"
+      <ion-button *ngIf="this.encuesta == false && this.mesa && rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit"
         color="success" class="boton" (click)="realizarEncuesta()">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
       </ion-button>
