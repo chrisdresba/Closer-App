@@ -27,7 +27,9 @@ export class PedidosStaffPage implements OnInit {
   listadoVista: any[] = [];
   usuario: any;
   pedido: Pedido;
+  pedidoAux: Pedido;
   itemPedido: ItemPedido;
+  mesaAsignada: Mesa;
 
   constructor(public authSrv: AuthService,
     private router: Router,
@@ -58,26 +60,40 @@ export class PedidosStaffPage implements OnInit {
     this.servPedido.getPedidos().subscribe(item => {
       this.listadoPedidos = item;
     })
+
+    
   }
 
   filtrarPedidos() {
+
     this.listadoPedidos.forEach(item => {
 
       if (item.productos.length > 0) {
         let obj = [];
         let platos = [];
+        let acumulador = 0;
         obj.push(item.uid);
         obj.push(item.mesa);
-        obj.push(item.estado);
 
         for (let e = 0; e < item.productos.length; e++) {
           for (let i = 0; i < this.listaItemPedidos.length; i++) {
             if (this.listaItemPedidos[i].uid == item.productos[e]) {
-              platos.push({ 'nombre': this.listaItemPedidos[i].producto.nombre, 'cantidad': this.listaItemPedidos[i].cantidad })
+              platos.push({ 'nombre': this.listaItemPedidos[i].producto.nombre, 'cantidad': this.listaItemPedidos[i].cantidad, 'estado': this.listaItemPedidos[i].estado })
+              if (this.listaItemPedidos[i].estado == EstadoPedido.LISTO) {
+                acumulador++;
+              }
             }
           }
         }
         obj.push(platos);
+        if (item.productos.length == acumulador && !( item.estado == EstadoPedido.ENTREGADO ||  item.estado == EstadoPedido.CONFIRMADO )) {
+          obj.push(EstadoPedido.LISTO);
+          this.pedidoAux = item;
+          this.pedidoAux.estado = EstadoPedido.LISTO;
+          this.mesaService.actualizarEstadoPedido(this.pedidoAux);
+        } else {
+          obj.push(item.estado);
+        }
         this.listadoVista.push(obj);
       }
 
@@ -97,15 +113,16 @@ export class PedidosStaffPage implements OnInit {
     for (let e = 0; e < this.listadoPedidos.length; e++) {
       if (this.listadoPedidos[e].uid == id) {
         this.pedido = this.listadoPedidos[e];
-        if (this.pedido.estado == EstadoPedido.CONFIRMAR) {
-          this.listadoPedidos[e].estado = EstadoPedido.PENDIENTE;
+
+        if (this.pedido.estado == EstadoPedido.PENDIENTE) {
+          this.listadoPedidos[e].estado = EstadoPedido.ACEPTADO;
           auxiliar = true;
         }
       }
     }
 
     if (auxiliar) {
-      this.pedido.estado = EstadoPedido.PENDIENTE;
+      this.pedido.estado = EstadoPedido.ACEPTADO;
       this.mesaService.actualizarEstadoPedido(this.pedido);
       this.recargar();
       this.presentToast("Pedido", "El pedido fue aceptado", "success");
@@ -117,6 +134,7 @@ export class PedidosStaffPage implements OnInit {
 
   async entregarPedido(id: string) {
     let auxiliar = false;
+
     for (let e = 0; e < this.listadoPedidos.length; e++) {
       if (this.listadoPedidos[e].uid == id) {
         this.pedido = this.listadoPedidos[e];
@@ -128,7 +146,7 @@ export class PedidosStaffPage implements OnInit {
     }
 
     if (auxiliar) {
-      this.pedido.estado = EstadoPedido.ENTREGADO;
+      this.pedido.estado = 'ENTREGADO'
       this.mesaService.actualizarEstadoPedido(this.pedido);
       this.recargar();
       this.presentToast("Pedido", "El pedido fue entregado", "success");
@@ -138,10 +156,36 @@ export class PedidosStaffPage implements OnInit {
 
   }
 
+  async confirmarPago(id: string) {
+    let auxiliar = false;
+    for (let e = 0; e < this.listadoPedidos.length; e++) {
+      if (this.listadoPedidos[e].uid == id) {
+        this.pedido = this.listadoPedidos[e];
+        if (this.pedido.estado == EstadoPedido.CONFIRMADO) {
+          auxiliar = true;
+          this.mesaAsignada = this.mesaService.devolverMesaAsignada(this.pedido.mesa);
+        }
+      }
+    }
+
+    if (auxiliar) {
+      // this.pedido.estado = EstadoPedido.ENTREGADO;
+      //   this.mesaService.actualizarEstadoPedido(this.pedido);
+      this.mesaAsignada.estado = 'libre';
+      this.mesaAsignada.usuario = '';
+      this.mesaService.actualizarMesa(this.mesaAsignada);
+      this.recargar();
+      this.presentToast("Pago", "Pago confirmado", "success");
+    } else {
+      this.presentToast("Pago", "Aún no se puede realizar el pago, el pedido no fue entregado", "warning");
+    }
+
+  }
+
 
   confirmarPedido() {
     // console.log("conf ", this.pedido);
-    this.pedido.estado = EstadoPedido.PENDIENTE;
+    this.pedido.estado = EstadoPedido.ACEPTADO;
     this.mesaService.actualizarEstadoPedido(this.pedido);
   }
 

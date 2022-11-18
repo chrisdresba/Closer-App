@@ -20,13 +20,15 @@
 <ion-content>
   <div>
     <ion-card *ngFor="let pedido of listadoVista">
-      <p>Mesa {{pedido[1]}} - Estado Pedido {{pedido[2]}}</p>
-      <ul *ngFor="let item of pedido[3]">
-          <li>{{item.nombre}} {{item.cantidad}}</li>  
-      </ul>
+      <p class="tituloMesa">Mesa {{pedido[1]}} - Estado Pedido {{pedido[3]}}</p>
+      <div *ngFor="let item of pedido[2]" class="itemsPedido">
+        <p style="width: 60vw;" class="tituloProducto"> {{item.cantidad}} {{item.nombre}}</p>  
+        <p style="width: 40vw;" class="estadoProducto">{{item.estado}}</p>
+      </div>
       <ion-button (click)="aceptarPedido(pedido[0])">Aceptar Pedido</ion-button>
       <ion-button (click)="entregarPedido(pedido[0])" class="btnEntregar">Entregar Pedido</ion-button>
+      <ion-button (click)="confirmarPago(pedido[0])" class="btnPago">Confirmar Pago</ion-button>
     </ion-card>
-    <ion-button (click)="recargar()" style="display:block;">Recargar</ion-button>
+    <ion-button (click)="recargar()" class="btnRecargar">Recargar</ion-button>
   </div>
 </ion-content>

@@ -64,7 +64,10 @@ export class PedidoPage implements OnInit {
       }
     })
 
-    
+    if (localStorage.getItem('anonimo')) {
+      this.usuarioLogin = localStorage.getItem('anonimo');
+    }
+
   }
 
   async traerListaMesa(){

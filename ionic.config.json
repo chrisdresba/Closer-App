@@ -1,5 +1,7 @@
 {
   "name": "CloserApp",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

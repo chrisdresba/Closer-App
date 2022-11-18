@@ -40,6 +40,11 @@ export class EstadoPedidoPage implements OnInit {
   ) {
     this.presentLoading();
     setTimeout(() => {
+      if (localStorage.getItem('anonimo')) {
+        this.usuarioLogin = localStorage.getItem('anonimo');
+      }
+    }, 1000);
+    setTimeout(() => {
       this.filtrarPedido();
     }, 2500)
   }
@@ -104,9 +109,10 @@ export class EstadoPedidoPage implements OnInit {
   }
 
   async confirmarPedido() {
-    this.pedido.estado = EstadoPedido.CONFIRMADO;
-    this.mesaService.actualizarEstadoPedido(this.pedido);
     this.listadoVista[2] = EstadoPedido.CONFIRMADO;
+    this.pedido.estado = EstadoPedido.CONFIRMADO;
+    console.log(this.pedido);
+    this.mesaService.actualizarEstadoPedido(this.pedido);
     this.presentToast("Pedido", "El pedido fue confirmado", "success");
 
   }

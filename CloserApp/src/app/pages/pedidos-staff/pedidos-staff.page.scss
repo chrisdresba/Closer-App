@@ -9,28 +9,62 @@ ion-toolbar {
     height: 55px;
 }
 
-ion-content{
+ion-content {
 
     --background: #969fa1;
 }
+
 ion-title {
     font-size: 1.5em;
 }
 
-ion-card{
+ion-card {
     display: flex;
     flex-direction: column;
 }
-li{
+
+li {
     list-style: none;
     font-weight: 400;
 }
 
-p{
+p {
     margin-left: 5px;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.btnEntregar {
+    --background: #1db010;
+    ;
+}
+
+.btnPago{
+    --background:#497886;
+}
+
+.btnRecargar{
+    display:block;
+    --background:rgb(12, 11, 11);
     font-weight: 600;
 }
 
-.btnEntregar{
-    --background: #1db010;;
+.itemsPedido {
+    display: flex;
+}
+
+
+.tituloProducto {
+    justify-content: flex-start;
+}
+
+.estadoProducto{
+    display: flex;
+    justify-content: center;
+}
+
+.tituloMesa{
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
 }

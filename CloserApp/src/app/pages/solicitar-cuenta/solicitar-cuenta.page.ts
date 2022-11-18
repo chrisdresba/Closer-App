@@ -8,6 +8,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { MesaService } from 'src/app/services/mesa.service';
 import { EstadoPedido } from 'src/app/enumerados/estado-pedido';
 import { Observable } from 'rxjs';
+import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { Pedido } from 'src/app/classes/pedido';
 import { ItemPedido } from 'src/app/classes/item-pedido';
 import { PedidosService } from 'src/app/services/pedidos.service';
@@ -19,6 +20,8 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 })
 export class SolicitarCuentaPage implements OnInit {
 
+  scannedResult: any;
+  content_visibility = '';
 
   listadoPedidos: Pedido[] = [];
   listaItemPedidos: ItemPedido[] = [];
@@ -27,6 +30,7 @@ export class SolicitarCuentaPage implements OnInit {
   usuarioLogin: any;
   pedido: Pedido;
   itemPedido: ItemPedido;
+  propinaValue: boolean = false;
 
   constructor(
     public authSrv: AuthService,
@@ -57,6 +61,9 @@ export class SolicitarCuentaPage implements OnInit {
       this.usuarioLogin = localStorage.getItem('anonimo');
     }
 
+    if (localStorage.getItem('propina')) {
+      this.propinaValue = true;
+    }
 
     this.servPedido.getItemPedido().subscribe(item => {
       this.listaItemPedidos = item;
@@ -96,16 +103,16 @@ export class SolicitarCuentaPage implements OnInit {
             if (this.listaItemPedidos[i].uid == item.productos[e]) {
 
               for (let e = 0; e < platos.length; e++) { //PLATOS 
-                if(this.listaItemPedidos[i].producto.nombre == platos[e].nombre){
+                if (this.listaItemPedidos[i].producto.nombre == platos[e].nombre) {
                   platos[e].cantidad += 1;
-                  platos[e].precioFinal +=   platos[e].precio;
+                  platos[e].precioFinal += platos[e].precio;
                   validacion = true;
                 }
               }
 
-              if(validacion == false){
+              if (validacion == false) {
                 platos.push({ 'nombre': this.listaItemPedidos[i].producto.nombre, 'cantidad': this.listaItemPedidos[i].cantidad, 'precio': this.listaItemPedidos[i].producto.precio, 'precioFinal': this.listaItemPedidos[i].producto.precio })
-              }  
+              }
 
             }
           }
@@ -124,6 +131,100 @@ export class SolicitarCuentaPage implements OnInit {
     this.mesaService.actualizarEstadoPedido(this.pedido);
     this.listadoVista[2] = EstadoPedido.CONFIRMADO;
     this.presentToast("Pedido", "El pedido fue confirmado", "success");
+
+  }
+
+  /////LECTURA QR
+
+  async checkPermission() {
+    try {
+      // check or request permission
+      const status = await BarcodeScanner.checkPermission({ force: true });
+      if (status.granted) {
+        // the user granted permission
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  async ReadQrCode() {
+
+    localStorage.setItem('propina', '10'); /////VALOR ETAPA DE PRUEBA
+    this.actualizarPropina(10);/////VALOR ETAPA DE PRUEBA
+
+    try {
+      const permission = await this.checkPermission();
+      if (!permission) {
+        return;
+      }
+      await BarcodeScanner.hideBackground();
+      document.querySelector('body').classList.add('scanner-active');
+      this.content_visibility = 'hidden';
+      const result = await BarcodeScanner.startScan();
+      this.opcionesQr(result.content);
+
+      BarcodeScanner.showBackground();
+      document.querySelector('body').classList.remove('scanner-active');
+      this.content_visibility = '';
+      if (result?.hasContent) {
+        this.scannedResult = result.content;
+      }
+    } catch (e) {
+      console.log(e);
+      this.stopScan();
+    }
+  }
+
+  stopScan() {
+    BarcodeScanner.showBackground();
+    BarcodeScanner.stopScan();
+    document.querySelector('body').classList.remove('scanner-active');
+    this.content_visibility = '';
+  }
+
+  ngOnDestroy(): void {
+    this.stopScan();
+  }
+  /////////
+
+  opcionesQr(qr: string) {
+
+    switch (qr) {
+      case '00malo':
+        localStorage.setItem('propina', '0');
+         this.actualizarPropina(0);
+        break;
+      case '05regular':
+        localStorage.setItem('propina', '5');
+        this.actualizarPropina(5);
+        break;
+      case '10bueno':
+        localStorage.setItem('propina', '10');
+        this.actualizarPropina(10);
+        break;
+      case '15muybueno':
+        localStorage.setItem('propina', '15');
+        this.actualizarPropina(15);
+        break;
+      case '20excelente':
+        localStorage.setItem('propina', '20');
+        this.actualizarPropina(20);
+        break;
+      default: ;
+    }
+  }
+
+  actualizarPropina(value:number){
+    this.pedido.propina = value;
+    this.mesaService.actualizarEstadoPedido(this.pedido);
+    this.presentLoading();
+    setTimeout(()=>{
+      this.filtrarPedido();
+      this.propinaValue = true;
+    },3000)
 
   }
 

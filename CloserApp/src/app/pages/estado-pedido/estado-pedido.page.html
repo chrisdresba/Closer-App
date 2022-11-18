@@ -26,8 +26,10 @@
       <ul *ngFor="let item of listadoVista[3]">
           <li> {{item.cantidad}} {{item.nombre}}</li>  
       </ul>
+      <ion-button *ngIf="listadoVista[2] == 'ENTREGADO'" expand="block" type="submit" (click)="confirmarPedido()">CONFIRMAR ENTREGA</ion-button>
+      <br>
     </ion-card>
-    <ion-button *ngIf="listadoVista[2] == 'ENTREGADO'" expand="block" type="submit" (click)="confirmarPedido()">CONFIRMAR ENTREGA</ion-button>
+
   </ion-card>
 
 </ion-content>

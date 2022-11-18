@@ -17,7 +17,7 @@ declare let window: any;
   styleUrls: ['./register-anonimo.page.scss'],
 })
 export class RegisterAnonimoPage implements OnInit {
-  foto: string = '';
+  foto: string;
   auxForm: FormGroup;
   nombre:string;
   fecha: string;
@@ -54,7 +54,7 @@ export class RegisterAnonimoPage implements OnInit {
   async guardarUsuario() {
     try {
       let nombre, foto;
-
+      this.foto = 'foto'; /////VALOR ETAPA DE PRUEBA
       nombre = this.auxForm.value.nombre;
       foto = this.foto;
 

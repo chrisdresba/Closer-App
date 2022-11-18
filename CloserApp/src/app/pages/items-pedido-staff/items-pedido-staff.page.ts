@@ -78,8 +78,10 @@ export class ItemsPedidoStaffPage implements OnInit {
   }
 
   obtenerItemsPedido() {
+
     this.pedidosService.getItemPedido().subscribe(items => {
       this.listaItemsPedido = items;
+      console.log(this.listaItemsPedido)
       this.listaItemsPedidoCocinero = this.agruparPorMesa(this.filtrarPedidosCocinero());
       this.listaItemsPedidoBartender = this.agruparPorMesa(this.filtrarPedidosBartender());
     }, error => console.log(error));
