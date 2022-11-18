@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { ChatService } from 'src/app/services/chat.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
+import { Pedido } from 'src/app/classes/pedido';
+import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
   selector: 'app-juego-uno',
@@ -13,6 +15,10 @@ import { Mesa } from 'src/app/classes/mesa';
   styleUrls: ['./juego-uno.page.scss'],
 })
 export class JuegoUnoPage implements OnInit {
+
+  listadoPedidos: Pedido[] = [];
+  pedido: Pedido;
+  juegoValue: string = '';
 
   usuario: any;
   usuarioLogin: string;
@@ -36,10 +42,9 @@ export class JuegoUnoPage implements OnInit {
     private toast: ToastController,
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
-  ) { 
-    setTimeout(()=>{
-      this.presentToast("Mayor o Menor", "Suma 50 puntos para ganar un descuento!", "success");
-    },500)
+    public servPedido: PedidosService
+  ) {
+    this.identificarPedido();
   }
 
   ngOnInit() {
@@ -55,6 +60,33 @@ export class JuegoUnoPage implements OnInit {
       this.usuarioLogin = localStorage.getItem('anonimo');
     }
 
+    if (localStorage.getItem('juegoOk')) {
+      this.juegoValue = localStorage.getItem('juegoOk');
+    }
+
+    this.servPedido.getPedidos().subscribe(item => {
+      this.listadoPedidos = item;
+    })
+
+  }
+
+  identificarPedido() {
+
+    setTimeout(() => {
+      if (this.juegoValue == 'OK') {
+        this.presentToast("Mayor o Menor", "Suma 100 puntos para ganar un descuento!", "success");
+      } else {
+        this.presentToast("Mayor o Menor", "Suma 100 puntos y gana!", "success");
+      }
+    }, 1000)
+
+    setTimeout(() => {
+      this.listadoPedidos.forEach(item => {
+        if (item.productos.length > 0 && item.usuario == this.usuarioLogin) {
+          this.pedido = item;
+        }
+      })
+    }, 2500)
   }
 
   //////////////
@@ -79,13 +111,15 @@ export class JuegoUnoPage implements OnInit {
 
     if (this.carta1 > this.random) {
       this.url = "assets/ok.png";
-      this.puntaje = this.puntaje + 5;
+      this.puntaje = this.puntaje + 10;
     } else if (this.carta1 == this.random) {
       this.url = "assets/in.png";
     } else {
       this.url = "assets/no.png";
       this.intentos--;
     }
+
+    this.comprobarVictoria();
 
     if (this.intentos != 0) {
       setTimeout(() => {
@@ -103,13 +137,15 @@ export class JuegoUnoPage implements OnInit {
 
     if (this.carta1 < this.random) {
       this.url = "assets/ok.png";
-      this.puntaje = this.puntaje + 5;
+      this.puntaje = this.puntaje + 10;
     } else if (this.carta1 == this.random) {
       this.url = "assets/in.png";
     } else {
       this.url = "assets/no.png";
       this.intentos--;
     }
+
+      this.comprobarVictoria();
 
     if (this.intentos != 0) {
       setTimeout(() => {
@@ -122,14 +158,34 @@ export class JuegoUnoPage implements OnInit {
     }
   }
 
+  comprobarVictoria() {
+    if (this.puntaje == 100) {
+      if (localStorage.getItem('juegoOk')) {
+        this.presentToast("Mayor o Menor", "Felicitaciones, has ganado!", "success");
+      } else {
+        this.pedido.descuento = 10;
+        this.servPedido.actualizarEstadoPedido(this.pedido);
+        this.presentToast("Mayor o Menor", "Felicitaciones, has ganado! 10% DE DESCUENTO", "success");
+        localStorage.setItem('juegoOk', 'OK');
+      }
+
+      setTimeout(() => {
+        this.router.navigate(["home"]);
+      }, 3000);
+    }
+  }
+
   finDePartida() {
     this.puntaje = 0;
     this.url = "assets/in.png";
     this.presentToast("Mayor o Menor", "Será la próxima!", "warning");
     this.reiniciar();
-    setTimeout(()=>{
+    this.pedido.descuento = 0;
+    this.servPedido.actualizarEstadoPedido(this.pedido);
+
+    setTimeout(() => {
       this.router.navigate(["home"]);
-    },2000);
+    }, 2000);
   }
 
   ////////////

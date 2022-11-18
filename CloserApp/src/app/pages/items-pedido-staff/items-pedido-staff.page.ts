@@ -78,19 +78,21 @@ export class ItemsPedidoStaffPage implements OnInit {
   }
 
   obtenerItemsPedido() {
+
     this.pedidosService.getItemPedido().subscribe(items => {
       this.listaItemsPedido = items;
+      console.log(this.listaItemsPedido)
       this.listaItemsPedidoCocinero = this.agruparPorMesa(this.filtrarPedidosCocinero());
       this.listaItemsPedidoBartender = this.agruparPorMesa(this.filtrarPedidosBartender());
     }, error => console.log(error));
   }
 
   filtrarPedidosCocinero() {
-    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.COCINA || item.producto.tipo === TipoProducto.POSTRE) && (item.estado === EstadoPedido.PENDIENTE || item.estado === EstadoPedido.ELABORACION));
+    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.COCINA || item.producto.tipo === TipoProducto.POSTRE) && (item.estado === EstadoPedido.ACEPTADO|| item.estado === EstadoPedido.ELABORACION));
   }
 
   filtrarPedidosBartender() {
-    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.BAR) && (item.estado === EstadoPedido.PENDIENTE || item.estado === EstadoPedido.ELABORACION));
+    return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.BAR) && (item.estado === EstadoPedido.ACEPTADO || item.estado === EstadoPedido.ELABORACION));
   }
 
   agruparPorMesa(lista: ItemPedido[]) {

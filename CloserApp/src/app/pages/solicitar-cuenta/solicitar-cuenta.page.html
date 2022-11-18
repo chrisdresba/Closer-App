@@ -1,47 +1,58 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title slot="start">Cuenta del pedido</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-fab vertical="top" horizontal="end" slot="fixed">
-  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
-    <ion-icon name="exit-outline"></ion-icon>
-  </ion-fab-button>
-  <ion-fab-list side="bottom">
-    <ion-fab-button color="dark" (click)="back()">
-      <ion-icon name="arrow-back-circle"></ion-icon>
-    </ion-fab-button>
-    <ion-fab-button color="dark" (click)="Logout()">
+<div [style.visibility]="content_visibility">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title slot="start">Cuenta del pedido</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-fab vertical="top" horizontal="end" slot="fixed">
+    <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
       <ion-icon name="exit-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab-list>
-</ion-fab>
+    <ion-fab-list side="bottom">
+      <ion-fab-button color="dark" (click)="back()">
+        <ion-icon name="arrow-back-circle"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="dark" (click)="Logout()">
+        <ion-icon name="exit-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
 
-<ion-content>
-  <ion-card id="box" style="margin-top: 10px;">
-    <ion-card class="estadoBox">
-      <img src="./../../../assets/logo2.png" alt="">
-      <h1>Mesa {{listadoVista[1]}}</h1>
-      <h2>Cliente: <span>{{listadoVista[2]}}</span></h2>
-      <div class="itemsPedido">
-        <p style="width: 60vw;" class="tituloProducto"></p>
-        <h3 style="width: 20vw; margin-right: 6px;">x/unidad</h3>
-        <h3 style="width: 20vw;">total</h3>
-      </div>
-      <div *ngFor="let item of listadoVista[8]" class="itemsPedido">
-        <p style="width: 60vw;" class="tituloProducto"> {{item.cantidad}} {{item.nombre}} </p>
-        <p style="width: 20vw;">$ {{item.precio}}</p>
-        <p style="width: 20vw;">$ {{item.precioFinal}}</p>
-      </div>
+  <ion-content [fullscreen]="true">
+    <div *ngIf="!propinaValue">
+      <ion-card id="box" style="margin-top: 10px;">
+        <ion-card class="estadoBox">
+          <h1>Scanear Qr Propina</h1>
+          <img src="./../../../assets/qrPropina.png" alt="" (click)="ReadQrCode()" class="imgQr">
+        </ion-card>
+      </ion-card>
+    </div>
+    <div *ngIf="propinaValue">
+      <ion-card id="box" style="margin-top: 10px;">
+        <ion-card class="estadoBox">
+          <img src="./../../../assets/logo2.png" alt="">
+          <h1>Mesa {{listadoVista[1]}}</h1>
+          <h2>Cliente: <span>{{listadoVista[2]}}</span></h2>
+          <div class="itemsPedido">
+            <p style="width: 60vw;" class="tituloProducto"></p>
+            <h3 style="width: 20vw; margin-right: 6px;">x/unidad</h3>
+            <h3 style="width: 20vw;">total</h3>
+          </div>
+          <div *ngFor="let item of listadoVista[8]" class="itemsPedido">
+            <p style="width: 60vw;" class="tituloProducto"> {{item.cantidad}} {{item.nombre}} </p>
+            <p style="width: 20vw;">$ {{item.precio}}</p>
+            <p style="width: 20vw;">$ {{item.precioFinal}}</p>
+          </div>
 
 
-      <ul>
-        <li> Descuento (% {{listadoVista[4]}}): <span>-$ {{listadoVista[3]}}</span></li>
-        <li> Propina (% {{listadoVista[6]}}): <span>$ {{listadoVista[5]}}</span></li>
-      </ul>
-      <h2>Precio Final: <span>$ {{listadoVista[9]}}</span></h2>
+          <ul>
+            <li *ngIf="listadoVista[4] != 0"> Descuento (% {{listadoVista[4]}}): <span>-$ {{listadoVista[3]}}</span>
+            </li>
+            <li> Propina (% {{listadoVista[6]}}): <span>$ {{listadoVista[5]}}</span></li>
+          </ul>
+          <h2>Precio Final: <span>$ {{listadoVista[9]}}</span></h2>
 
-      <!--
+          <!--
       <div class="itemsPedido">
         <p style="width: 60vw;" class="tituloProducto"> Descuento </p> 
         <p style="width: 20vw;">(% {{listadoVista[4]}})</p> 
@@ -59,7 +70,10 @@
       </div> 
          -->
 
-    </ion-card>
-  </ion-card>
+        </ion-card>
+      </ion-card>
+    </div>
+  </ion-content>
+</div>
 
-</ion-content>
+

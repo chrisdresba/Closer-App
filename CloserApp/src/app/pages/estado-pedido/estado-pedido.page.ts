@@ -39,6 +39,11 @@ export class EstadoPedidoPage implements OnInit {
     public servPedido: PedidosService
   ) {
     this.presentLoading();
+    setTimeout(()=>{
+      if (localStorage.getItem('anonimo')) {
+        this.usuarioLogin = localStorage.getItem('anonimo');
+      }
+    },1000);
     setTimeout(() => {
       this.filtrarPedido();
     }, 2500)

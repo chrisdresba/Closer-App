@@ -93,6 +93,14 @@ export class MesaService {
     }
   }
 
+  devolverMesaAsignada(mesa: string) {
+    for (let i = 0; i < this.listadoMesas.length; i++) {
+      if (this.listadoMesas[i].numero == mesa) {
+        return this.listadoMesas[i];
+      }
+    }
+  }
+
   async agregarPedido(item: Pedido) {
     // this.itemsCollection.add(JSON.parse(JSON.stringify(especialidad)));
 
