@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Cliente } from '../classes/cliente';
 import { Staff } from '../classes/staff';
-
+import { PushNotificationService } from 'src/app/services/push-notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class UsuariosService {
   listadoStaff: any[] = [];
   nombre: string = '';
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firestore: AngularFirestore, private pnService: PushNotificationService) {
     this.getClientes().subscribe(usuario => {
       this.listado = usuario;
     })
@@ -61,7 +61,7 @@ export class UsuariosService {
       if (this.listado[i].email == email) {
         this.nombre = this.listado[i].nombre;
         // concatenar nombre y apellido 
-        // localStorage.setItem('sesionRol', 'cliente', this.nombre)
+        // localStorage.setItem('sesionRol', 'cliente', this.nombre)        
         localStorage.setItem('sesionRol', 'cliente')
         break;
       }
@@ -69,10 +69,12 @@ export class UsuariosService {
 
     for (let i = 0; i < this.listadoStaff.length; i++) {
       if (this.listadoStaff[i].email == email) {
-        localStorage.setItem('sesionRol', this.listadoStaff[i].perfil)
-        break;;
+        localStorage.setItem('sesionRol', this.listadoStaff[i].perfil);
+
+        this.pnService.inicializar(this.listadoStaff[i]);
+
+        break;
       }
     }
   }
-
 }

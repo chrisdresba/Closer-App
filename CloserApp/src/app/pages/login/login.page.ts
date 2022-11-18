@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
         this.serv.rolUsuario(email);
         this.router.navigate(['home']);
 
-        this.pnService.inicializar();
+        // this.pnService.inicializar();
       } else {
         this.presentToast("Ingreso", "El usuario aún no fue validado!", "warning");
       }
