@@ -13,8 +13,7 @@ export class PedidosService {
   listado: any[] = [];
   listadoItems: any[] = [];
 
-  constructor(private firestore: AngularFirestore) 
-  {
+  constructor(private firestore: AngularFirestore) {
     this.getPedidos().subscribe(aux => {
       this.listado = aux;
     })
@@ -22,7 +21,7 @@ export class PedidosService {
     this.getItemPedido().subscribe(aux => {
       this.listadoItems = aux;
     })
-   }
+  }
 
   getPedidos = (): Observable<any[]> => {
     return this.firestore.collection('pedidos').snapshotChanges().pipe(
@@ -47,5 +46,21 @@ export class PedidosService {
   async actualizarEstadoItemPedido(res: ItemPedido) {
     return this.firestore.collection('itemPedido').doc(res.uid).update({ ...res });
   }
-  
+
+  async eliminarPedido(id: string) {
+    return this.firestore.collection('pedidos')
+      .doc(id).delete()
+      .then(() => console.log('Pedido Borrado'))
+      .catch(e => console.log('error', e));
+  }
+
+  async eliminarItemPedido(id: string) {
+    return this.firestore.collection('itemPedido')
+      .doc(id).delete()
+      .then(() => console.log('Pedido Borrado'))
+      .catch(e => console.log('error', e));
+  }
+
+
+
 }
