@@ -8,6 +8,7 @@ export class Pedido {
     productos: Array<string>;
     precioAcumulado: number = 0;
     estado: string = '';
-    descuento: number = 0
+    descuento: number = 0;
+    propina: number = 0;
     uidEncuesta?: string = '';
 }

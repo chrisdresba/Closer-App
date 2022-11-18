@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Cuenta del pedido</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-content>
+  <ion-card id="box" style="margin-top: 10px;">
+    <ion-card class="estadoBox">
+      <img src="./../../../assets/logo2.png" alt="">
+      <h1>Mesa {{listadoVista[1]}}</h1>
+      <h2>Cliente: <span>{{listadoVista[2]}}</span></h2>
+      <div class="itemsPedido">
+        <p style="width: 60vw;" class="tituloProducto"></p>
+        <h3 style="width: 20vw; margin-right: 6px;">x/unidad</h3>
+        <h3 style="width: 20vw;">total</h3>
+      </div>
+      <div *ngFor="let item of listadoVista[8]" class="itemsPedido">
+        <p style="width: 60vw;" class="tituloProducto"> {{item.cantidad}} {{item.nombre}} </p>
+        <p style="width: 20vw;">$ {{item.precio}}</p>
+        <p style="width: 20vw;">$ {{item.precioFinal}}</p>
+      </div>
+
+
+      <ul>
+        <li> Descuento (% {{listadoVista[4]}}): <span>-$ {{listadoVista[3]}}</span></li>
+        <li> Propina (% {{listadoVista[6]}}): <span>$ {{listadoVista[5]}}</span></li>
+      </ul>
+      <h2>Precio Final: <span>$ {{listadoVista[9]}}</span></h2>
+
+      <!--
+      <div class="itemsPedido">
+        <p style="width: 60vw;" class="tituloProducto"> Descuento </p> 
+        <p style="width: 20vw;">(% {{listadoVista[4]}})</p> 
+        <p style="width: 20vw;">- ${{listadoVista[3]}}</p> 
+      </div> 
+      <div class="itemsPedido">
+        <p style="width: 60vw;" class="tituloProducto"> Propina </p> 
+        <p style="width: 20vw;">(% {{listadoVista[6]}})</p> 
+        <p style="width: 20vw;">${{listadoVista[5]}}</p> 
+      </div> 
+      <div class="itemsPedido">
+        <h2 style="width: 60vw;" class="tituloProducto"> Precio Final </h2>  
+        <p style="width: 20vw;"></p> 
+        <h2 style="width: 20vw;">${{listadoVista[9]}}</h2> 
+      </div> 
+         -->
+
+    </ion-card>
+  </ion-card>
+
+</ion-content>

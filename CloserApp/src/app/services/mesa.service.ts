@@ -97,7 +97,7 @@ export class MesaService {
     // this.itemsCollection.add(JSON.parse(JSON.stringify(especialidad)));
 
     let pedido = { 'uid': item.uid, 'usuario': item.usuario, 'mesa': item.mesa, 'productos': item.productos, 
-    'precioAcumulado': item.precioAcumulado, 'estado': item.estado, 'descuento': item.descuento, 'uidEncuesta': item.uidEncuesta };
+    'precioAcumulado': item.precioAcumulado, 'estado': item.estado, 'descuento': item.descuento,'propina': item.propina, 'uidEncuesta': item.uidEncuesta };
     console.log('serv', pedido);
     return await this.firestore.collection('pedidos').doc(item.uid).set(pedido);
   }

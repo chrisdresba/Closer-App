@@ -7,9 +7,9 @@ import { MesaService } from '../services/mesa.service';
 import { ToastService } from '../services/toast.service';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { ListaEspera } from '../classes/lista-espera';
+import { Mesa } from '../classes/mesa';
 import { PedidosService } from '../services/pedidos.service';
 import { Pedido } from '../classes/pedido';
-import { Mesa } from '../classes/mesa';
 import { EstadoPedido } from '../enumerados/estado-pedido';
 
 @Component({
@@ -22,26 +22,27 @@ export class HomePage implements OnInit {
   scannedResult: any;
   content_visibility = '';
   listaEspera: ListaEspera[] = [];
+  listaMesas: Mesa[] = [];
 
   usuario: any;
   usuarioLogin: string;
   rol: string;
+  mesaAux: string;
   mesa: string;
-  view:boolean = false;
+  view: boolean = false;
   encuesta:boolean = false;
 
   listaPedidos: Pedido[] = [];
-  public listaMesas: Mesa[] = [];
 
   constructor(private authService: AuthService, public loadingController: LoadingController, private router: Router, 
     public afAuth: AngularFireAuth, public servMesa: MesaService, public toastSrv: ToastService, 
     private toast: ToastController, private pedidoService: PedidosService) {
 
     this.presentLoading();
-    setTimeout(()=>{
+    setTimeout(() => {
       this.mesa = this.servMesa.comprobarMesaAsignada(this.usuarioLogin);
       this.view = true;
-    },2000)
+    }, 2000)
   }
 
   ngOnInit(): void {
@@ -71,7 +72,10 @@ export class HomePage implements OnInit {
       this.listaEspera = item;
       // console.log(this.listaEspera);
     })
-
+  
+    this.servMesa.getListaMesa().subscribe(item => {
+      this.listaMesas = item;
+    })
   }
 
   async traerPedidos(usuarioLogueado: string){
@@ -121,12 +125,12 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('pedido', { replaceUrl: true });
   }
 
-  verPedidos(){
-    this.router.navigateByUrl('pedidos-staff', { replaceUrl: true });
+  verItemsPedidos() {
+    this.router.navigateByUrl('items-pedido-staff', { replaceUrl: true });
   }
 
-  verItemsPedidos(){
-    this.router.navigateByUrl('items-pedido-staff', { replaceUrl: true });
+  verPedidos() {
+    this.router.navigateByUrl('pedidos-staff', { replaceUrl: true });
   }
 
   realizarEncuesta() {
@@ -141,6 +145,9 @@ export class HomePage implements OnInit {
     try {
       this.servMesa.agregarUsuarioListaEspera(this.usuarioLogin);
       this.presentToast("Lista de Espera", "Ya te encuentras en la lista de espera!", "success");
+      this.servMesa.getListaMesa().subscribe(item => {
+        this.listaMesas = item;
+      })
     } catch (error) {
 
       console.log(error);
@@ -208,19 +215,42 @@ export class HomePage implements OnInit {
         this.agregarALista();
         break;
       case '8soLfeZGDhBYjhkJhaVM':
-        console.log('mesa 4');
+        this.mesaAux = '04';
+        this.comprobarMesa(this.mesaAux);
         break;
       case '9USkEuuY6nJWaO8CSF5Z':
-        console.log('mesa 3');
+        this.mesaAux = '9USkEuuY6nJWaO8CSF5Z';
+        this.comprobarMesa(this.mesaAux);
         break;
       case 'EXceXQ6iRmsibO4jXRHj':
-        console.log('mesa 2');
+        this.mesaAux = 'EXceXQ6iRmsibO4jXRHj';
+        this.comprobarMesa(this.mesaAux);
         break;
       case 'tR1zsOW4f0Lpqfc0kAGp':
-        console.log('mesa 1');
+        this.mesaAux = 'tR1zsOW4f0Lpqfc0kAGp';
+        this.comprobarMesa(this.mesaAux);
         break;
       default: ;
     }
+  }
+
+  comprobarMesa(mesa: string) {
+
+      for (let i = 0; i < this.listaMesas.length; i++) {
+
+      if (this.listaMesas[i].uid == mesa) {
+        if(this.listaMesas[i].usuario == this.usuarioLogin){
+          this.mesa = this.listaMesas[i].numero;
+          this.presentToast("Mesa", "Ya puedes realizar tu pedido!", "success");
+          return true;
+        }else{
+          this.presentToast("Mesa", "No es tu mesa designada. Estado: " + this.listaMesas[i].estado + " !", "warning");
+          return false;
+        }
+      } 
+    }
+    this.presentToast("Mesa", "No es tu mesa asignada!", "warning");
+    return false;
   }
 
   agregarALista() {
@@ -268,3 +298,5 @@ export class HomePage implements OnInit {
   }
 
 }
+
+

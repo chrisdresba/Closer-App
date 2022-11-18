@@ -31,6 +31,7 @@ export class PedidoPage implements OnInit {
   listaPedido: Pedido[] = [];
   public listaMesa: Mesa[] = [];
   mesaOcupadas: Mesa;
+  menu:string='PLATOS';
 
   mesa: Mesa;
   pedido: Pedido;
@@ -63,19 +64,7 @@ export class PedidoPage implements OnInit {
       }
     })
 
-    if (localStorage.getItem('anonimo')) {
-      this.usuarioLogin = localStorage.getItem('anonimo');
-    }
-
-    this.pedidoService.getPedidos().subscribe(item => {
-      this.listaPedido = item;
-      console.log(this.listaPedido);
-    })
-
-    this.pedidoService.getItemPedido().subscribe(item => {
-      this.listaItems = item;
-    })
-
+    
   }
 
   async traerListaMesa(){

@@ -5,20 +5,20 @@
     </ion-toolbar>
   </ion-header>
   <ion-content id="viewHome">
-    <ion-button expand="block" type="submit" color="secondary"
-    class="boton" (click)="chatPorMesa(1)" >
+    <ion-button expand="block" type="submit" color="success"
+    class="boton" (click)="chatPorMesa(01)" >
     <ion-icon class="icon" slot="start" name="pizza"></ion-icon>Mesa 1
   </ion-button>
-  <ion-button expand="block" type="submit" color="secondary"
-  class="boton" (click)="chatPorMesa(2)">
+  <ion-button expand="block" type="submit" color="success"
+  class="boton" (click)="chatPorMesa(02)">
   <ion-icon class="icon" slot="start" name="fast-food"></ion-icon>Mesa 2
 </ion-button>
-<ion-button expand="block" type="submit" color="secondary"
-class="boton" (click)="chatPorMesa(3)" >
+<ion-button expand="block" type="submit" color="success"
+class="boton" (click)="chatPorMesa(03)" >
 <ion-icon class="icon" slot="start" name="ice-cream"></ion-icon>Mesa 3
 </ion-button>
-<ion-button expand="block" type="submit" color="secondary"
-class="boton" (click)="chatPorMesa(4)" >
+<ion-button expand="block" type="submit" color="success"
+class="boton" (click)="chatPorMesa(04)" >
 <ion-icon class="icon" slot="start" name="beer"></ion-icon>Mesa 4
 </ion-button>
   </ion-content>
@@ -59,7 +59,7 @@ class="boton" (click)="chatPorMesa(4)" >
 
 <ion-content>
   <ion-grid>
-    <ion-row *ngFor="let message of listadoMensajes">
+    <ion-row *ngFor="let message of listadoMensajes | async">
         <ion-card *ngIf="message.usuario !== usuarioLogin">
           <ion-card-header title="{{message.usuario}}" class="cardHeader">
             <p class="mensaje"> Mesa N°{{mesa}}</p>

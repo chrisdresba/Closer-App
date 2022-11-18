@@ -10,19 +10,26 @@ import { Mensaje } from '../classes/mensaje';
 export class ChatService {
 
   public chat: Mensaje[] = [];
-  public chats: Observable<any[]>;
+  public chats01: Observable<any[]>;
+  public chats02: Observable<any[]>;
+  public chats03: Observable<any[]>;
+  public chats04: Observable<any[]>;
 
   constructor(private firestore: AngularFirestore) {
-    this.chats = this.firestore.collection('mensajes').valueChanges();
-   }
+    this.chats01 = this.firestore.collection('mensajes-mesa01').valueChanges();
+    this.chats02 = this.firestore.collection('mensajes-mesa02').valueChanges();
+    this.chats03 = this.firestore.collection('mensajes-mesa03').valueChanges();
+    this.chats04 = this.firestore.collection('mensajes-mesa04').valueChanges();
+  }
 
-   async guardarMensaje(usuario: any,mesa:any,mensaje: any) {
+
+  async guardarMensaje(usuario: any, mesa: any, mensaje: any) {
     let fecha = new Date();
     const dia = fecha.getFullYear() + '-' + (fecha.getMonth() + 1) + '-' + fecha.getDate();
     const hora = fecha.getHours() + ':' + this.revision(fecha.getMinutes()) + ':' + this.revision(fecha.getSeconds());
     let referencia = (fecha.getHours() * 3600) + (fecha.getMinutes() * 60) + fecha.getSeconds();
-    let texto = { 'usuario': usuario, 'fecha': dia, 'hora': hora, 'mensaje': mensaje, 'referencia': referencia,'mesa':mesa }
-    return await this.firestore.collection('mensajes').add(texto);
+    let texto = { 'usuario': usuario, 'fecha': dia, 'hora': hora, 'mensaje': mensaje, 'referencia': referencia, 'mesa': mesa }
+    return await this.firestore.collection('mensajes-mesa' + mesa).add(texto);
   }
 
   getMensajes = (): Observable<any[]> => {

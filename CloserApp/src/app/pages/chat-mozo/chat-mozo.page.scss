@@ -1,16 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
 
 //////
-  //Preview
-  #viewHome {
+//Preview
+#viewHome {
     position: absolute;
     width: 100vw;
     height: 100vh;
     margin: 0;
-    --background: #a4a4a4;
+    --background: url("./../../../../src/assets/background1.jpeg") center;
+    background-attachment: fixed;
+    background-size: cover;
+
 }
 
-.boton{
+.boton {
     margin: 20px;
     height: 120px;
     font-size: 2em;
@@ -107,7 +110,7 @@ ion-footer {
     padding: 3px;
 }
 
-#footer{
+#footer {
     display: flex;
     flex-direction: row;
     margin-bottom: 12px;
@@ -151,7 +154,7 @@ ion-card-header {
     right: 0;
 }
 
-.icon{
+.icon {
     width: 50px;
     height: 50px;
 }
@@ -162,4 +165,4 @@ ion-card-header {
         overflow: scroll;
         height: 70vh;
     }
-  }
+}

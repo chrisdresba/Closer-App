@@ -51,7 +51,8 @@ const routes: Routes = [
   {
     path: 'juego-uno',
     loadChildren: () => import('./pages/juego-uno/juego-uno.module').then( m => m.JuegoUnoPageModule)
-  },  {
+  },
+  {
     path: 'register-anonimo',
     loadChildren: () => import('./pages/register-anonimo/register-anonimo.module').then( m => m.RegisterAnonimoPageModule)
   },
@@ -66,6 +67,17 @@ const routes: Routes = [
   {
     path: 'graficos',
     loadChildren: () => import('./pages/graficos/graficos.module').then( m => m.GraficosPageModule)
+  },
+  {    
+    path: 'estado-pedido',
+    loadChildren: () => import('./pages/estado-pedido/estado-pedido.module').then( m => m.EstadoPedidoPageModule)
+  },
+  {
+    path: 'solicitar-cuenta',
+    loadChildren: () => import('./pages/solicitar-cuenta/solicitar-cuenta.module').then( m => m.SolicitarCuentaPageModule)
+  },  {
+    path: 'juego-dos',
+    loadChildren: () => import('./pages/juego-dos/juego-dos.module').then( m => m.JuegoDosPageModule)
   }
 
 

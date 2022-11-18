@@ -12,12 +12,14 @@ ion-title {
 
 #box {
   --background: rgba(253, 253, 253, 0.3);
-  height: 93vh;
   margin-top: -1em;
 }
 
-ion-content{
-  --background: #a4a4a4;
+ion-content {
+  width: 100%;
+  --background: url("./../../../src/assets/background1.jpeg") center;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 ////////////////////////////////////7

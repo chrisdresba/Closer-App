@@ -29,14 +29,22 @@
     </ion-item>
 
     <ion-card *ngFor="let item of listaItemsPedidoCocinero">
-      <h2 class="ion-text-capitalize bold">{{item.usuario?.nombre}}</h2>
       <p>MESA #{{item.mesa}}</p>
       <p>Productos a preparar:</p>
       <ul>
-        <li>{{item.producto?.nombre}} x {{item.cantidad}}</li>
+        <li *ngFor="let subitem of item.itemsMesa">{{subitem.producto?.nombre}} x {{subitem.cantidad}}
+          <ul>
+            <li>
+              <ion-button (click)="actualizarEstadoItem(subitem, 'ELABORACION')" *ngIf="subitem.estado === 'PENDIENTE'">
+                Poner en preparación
+              </ion-button>
+              <ion-button (click)="actualizarEstadoItem(subitem, 'LISTO')" class="btnEntregar"
+                *ngIf="subitem.estado === 'EN ELABORACION'">Poner en finalizado
+              </ion-button>
+            </li>
+          </ul>
+        </li>
       </ul>
-      <ion-button (click)="actualizarEstadoItem(item, 'ELABORACION')" *ngIf="item.estado === 'PENDIENTE'">Poner en preparación</ion-button>
-      <ion-button (click)="actualizarEstadoItem(item, 'LISTO')" class="btnEntregar" *ngIf="item.estado === 'EN ELABORACION'">Listo para servir</ion-button>
     </ion-card>
 
   </section>
@@ -52,14 +60,22 @@
     </ion-item>
 
     <ion-card *ngFor="let item of listaItemsPedidoBartender">
-      <h2 class="ion-text-capitalize bold">{{item.usuario?.nombre}}</h2>
       <p>MESA #{{item.mesa}}</p>
       <p>Productos a preparar:</p>
       <ul>
-        <li>{{item.producto?.nombre}} x {{item.cantidad}}</li>
+        <li *ngFor="let subitem of item.itemsMesa">{{subitem.producto?.nombre}} x {{subitem.cantidad}}
+          <ul>
+            <li>
+              <ion-button (click)="actualizarEstadoItem(subitem, 'ELABORACION')" *ngIf="subitem.estado === 'PENDIENTE'">
+                Poner en preparación
+              </ion-button>
+              <ion-button (click)="actualizarEstadoItem(subitem, 'LISTO')" class="btnEntregar"
+                *ngIf="subitem.estado === 'EN ELABORACION'">Poner en finalizado
+              </ion-button>
+            </li>
+          </ul>
+        </li>
       </ul>
-      <ion-button (click)="actualizarEstadoItem(item, 'ELABORACION')" *ngIf="item.estado === 'PENDIENTE'">Poner en preparación</ion-button>
-      <ion-button (click)="actualizarEstadoItem(item, 'LISTO')" class="btnEntregar" *ngIf="item.estado === 'EN ELABORACION'">Listo para servir</ion-button>
     </ion-card>
 
   </section>

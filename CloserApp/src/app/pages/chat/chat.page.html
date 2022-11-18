@@ -19,7 +19,7 @@
 
 <ion-content>
   <ion-grid>
-    <ion-row *ngFor="let message of listadoMensajes">
+    <ion-row *ngFor="let message of listadoMensajes | async">
       <ion-card *ngIf="message.usuario !== usuarioLogin">
         <ion-card-header title="{{message.usuario}}" class="cardHeader">
           <p class="mensaje"> {{message.usuario}}</p>

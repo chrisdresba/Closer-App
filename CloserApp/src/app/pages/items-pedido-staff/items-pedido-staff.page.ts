@@ -19,8 +19,8 @@ import { EstadoPedido } from 'src/app/enumerados/estado-pedido'
 export class ItemsPedidoStaffPage implements OnInit {
 
   listaItemsPedido: ItemPedido[] = [];
-  listaItemsPedidoCocinero: ItemPedido[] = [];
-  listaItemsPedidoBartender: ItemPedido[] = [];
+  listaItemsPedidoCocinero: ItemPedido[] | any = [];
+  listaItemsPedidoBartender: ItemPedido[] | any = [];
   rol: string;
 
   constructor(public authSrv: AuthService,
@@ -80,8 +80,8 @@ export class ItemsPedidoStaffPage implements OnInit {
   obtenerItemsPedido() {
     this.pedidosService.getItemPedido().subscribe(items => {
       this.listaItemsPedido = items;
-      this.listaItemsPedidoCocinero = this.filtrarPedidosCocinero();
-      this.listaItemsPedidoBartender = this.filtrarPedidosBartender();
+      this.listaItemsPedidoCocinero = this.agruparPorMesa(this.filtrarPedidosCocinero());
+      this.listaItemsPedidoBartender = this.agruparPorMesa(this.filtrarPedidosBartender());
     }, error => console.log(error));
   }
 
@@ -91,6 +91,34 @@ export class ItemsPedidoStaffPage implements OnInit {
 
   filtrarPedidosBartender() {
     return this.listaItemsPedido.filter((item: ItemPedido) => (item.producto.tipo === TipoProducto.BAR) && (item.estado === EstadoPedido.PENDIENTE || item.estado === EstadoPedido.ELABORACION));
+  }
+
+  agruparPorMesa(lista: ItemPedido[]) {
+    let itemsPorMesa: [
+      {
+        mesa: string,
+        itemsMesa: ItemPedido[]
+      }
+    ] | any = [];
+
+    let mesasPosibles: string[] = [];
+
+    lista.forEach(element => {
+      mesasPosibles.push(element.mesa);
+    });
+
+    mesasPosibles = mesasPosibles.filter((item, index) => {
+      return mesasPosibles.indexOf(item) === index;
+    });
+
+    mesasPosibles.forEach(mesaPosible => {
+      itemsPorMesa.push({
+        mesa: mesaPosible,
+        itemsMesa: lista.filter((item: ItemPedido) => item.mesa === mesaPosible)
+      })
+    });
+    
+    return itemsPorMesa;
   }
 
   async actualizarEstadoItem(item: ItemPedido, estado: string) {

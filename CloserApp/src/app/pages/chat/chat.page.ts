@@ -8,7 +8,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { Mensaje } from 'src/app/classes/mensaje';
-import { observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 
@@ -19,9 +20,7 @@ import { observable } from 'rxjs';
 })
 export class ChatPage implements OnInit {
 
-  public listado: Array<any> = [];
-  public listadoAux: Array<any> = [];
-  public listadoMensajes: Array<any> = [];
+  public listadoMensajes: Observable<Mensaje[]>;
   public listaMesa: Mesa[] = [];
   public mensaje: string = '';
   usuario: any;
@@ -40,9 +39,12 @@ export class ChatPage implements OnInit {
     private mesaService: MesaService
   ) {
     this.presentLoading();
+    //Asigno un tiempo para filtrar la busqueda
     setTimeout(() => {
-      this.ordenarMensajes()
-    }, 4000)
+      this.traerMensajes();
+      this.ordenarMensajes();
+    }, 3000)
+
   }
 
   ngOnInit() {
@@ -58,20 +60,13 @@ export class ChatPage implements OnInit {
       this.usuarioLogin = localStorage.getItem('anonimo');
     }
 
-    //Busqueda Mensajes
-    this.chat.getMensajes().subscribe(aux => {
-      this.listadoAux = aux;
-    })
     //Busqueda Mesa
     this.mesaService.getListaMesa().subscribe(item => {
       this.listaMesa = item;
     })
-    this.buscarMesa();
-
-    //Asigno un tiempo para filtrar la busqueda
     setTimeout(() => {
-      this.listado = this.filtrarMensajes();
-    }, 2000)
+      this.buscarMesa();
+    }, 1500)
 
   }
 
@@ -82,15 +77,31 @@ export class ChatPage implements OnInit {
         break;
       }
     }
-    this.mesa = '1';//prueba
   }
 
-  filtrarMensajes() {
-    return this.listadoAux.filter(item => item.mesa == this.mesa);
+  traerMensajes() {
+    switch (this.mesa) {
+      case '01':
+        this.listadoMensajes = this.chat.chats01;
+        break;
+      case '02':
+        this.listadoMensajes = this.chat.chats02;
+        break;
+      case '03':
+        this.listadoMensajes = this.chat.chats03;
+        break;
+      case '04':
+        this.listadoMensajes = this.chat.chats04;
+        break;
+    }
   }
 
   ordenarMensajes() {
-    this.listadoMensajes = this.listado.sort((a?, b?) => (((a.fecha! > b.fecha!)||(a.fecha! == b.fecha! && a.referencia! > b.referencia!)) ? 1 : -1));
+    this.listadoMensajes = this.listadoMensajes.pipe(
+      map(docs => {
+        return docs.sort((a?, b?) => (((a.fecha! > b.fecha!) || (a.fecha! == b.fecha! && a.referencia! > b.referencia!)) ? 1 : -1));
+      })
+    );
   }
 
   guardarMensaje() {
@@ -105,15 +116,11 @@ export class ChatPage implements OnInit {
     obj.fecha = dia;
     obj.hora = hora;
     obj.mensaje = this.mensaje;
-    obj.referencia = referencia.toString(); 
+    obj.referencia = referencia.toString();
     obj.mesa = this.mesa;
 
     if (this.mensaje.length > 0) {
-      this.listadoMensajes.push(obj);
       this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
-      setTimeout(() => {
-        this.ordenarMensajes();
-      }, 500)
       this.mensaje = '';
     }
   }
