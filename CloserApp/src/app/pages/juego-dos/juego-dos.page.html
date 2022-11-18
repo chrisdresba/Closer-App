@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title slot="start">Ahorcado</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-content>
+  <div id="container" class="color-change-2x">
+    <div class="row">
+        <div class="col text-center font box">
+            <h4><img src="assets/ahorcado/vida.png" alt="" class="vida"> {{vidas}}</h4>
+            <h3>Puntaje <small> {{puntaje}} </small></h3>
+            <img src="{{url}}" alt="ahorcado-img" class="ahorcado-img flicker-1">
+            <div>
+                <h3>Intentos <small> {{intentos}}/6</small></h3>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col text-center box-palabra font">
+            <div *ngFor="let letra of palabraAuxiliar" class="box-letra">{{letra}}</div>
+        </div>
+    </div>
+
+    <div class="row teclado">
+        <div class="col text-center">
+            <button *ngFor="let letra of letras" class="btn btn-primary btn-letras color-change-btn" (click)="buscar(letra)"> {{ letra }}
+            </button>
+        </div>
+    </div>
+</div>
+</ion-content>

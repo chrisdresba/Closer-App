@@ -34,6 +34,7 @@
     "@ionic-native/barcode-scanner": "^5.31.1",
     "@ionic-native/camera": "^5.36.0",
     "@ionic/angular": "^6.1.9",
+    "chart.js": "^4.0.1",
     "cordova-plugin-camera": "^6.0.0",
     "cordova-plugin-screen-orientation": "^3.0.2",
     "cordova-plugin-splashscreen": "^6.0.0",

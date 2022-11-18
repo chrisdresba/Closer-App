@@ -41,11 +41,30 @@
         routerLink="/estado-pedido">
         <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Estado del pedido
       </ion-button>
+      
+      <!-- <ion-button *ngIf="this.encuesta == false && (rol == 'cliente' || rol == 'ADMINISTRADOR')" expand="block" type="submit" color="success"
+        class="boton" (click)="realizarEncuesta()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
+      </ion-button>
+ -->
+      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="verValoraciones()">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>¿Qué opinan nuestros clientes?
+      </ion-button>
 
+      <ion-button *ngIf="rol == 'METRE' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+        class="boton" (click)="verListaEspera()">
+        <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Lista de espera
+      </ion-button>
 
       <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
         routerLink="/juego-uno">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juego
+      </ion-button>
+
+      <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+        routerLink="/juego-dos">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Ahorcado
       </ion-button>
 
       <ion-button *ngIf="rol == 'MOZO'" expand="block" type="submit" color="success" class="boton"

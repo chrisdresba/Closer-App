@@ -61,7 +61,7 @@
       <ion-item lines="full" fill="solid" class="ion-margin-bottom espacio">
         <ion-label position="stacked">¿Cómo valoras la atención del personal?</ion-label>
       </ion-item>
-      <ion-range name="personal" [ticks]="true" [snaps]="true" [min]="0" [max]="10" (ionChange)="checkValuePersonal($event)" [value]="item"></ion-range>
+      <ion-range name="personal" [pin]="true" [ticks]="true" [snaps]="true" [min]="0" [max]="10" (ionChange)="checkValuePersonal($event)" [value]="item"></ion-range>
       <!-- <ion-range name="personal" formControlName="personal" [ticks]="true" [snaps]="true" [min]="0" [max]="10"></ion-range> -->
       <!-- <small *ngIf="formEncuesta.get('personal')?.errors?.required && formEncuesta.get('personal')?.touched">Personal es requerido</small> -->
     
@@ -85,13 +85,20 @@
         </ion-segment-button>
       </ion-segment>
       <small *ngIf="formEncuesta.get('recomendacion')?.errors?.required && formEncuesta.get('recomendacion')?.touched">Recomendación es requerido</small> -->
-      
-      <!-- <ion-button expand="full" (click)="cargarUsuario()">Usuario</ion-button> -->
-      <ion-button expand="block" type="submit" color="success" class="boton" >Finalizar</ion-button>
-      <!-- <ion-button expand="block" type="submit" color="success" class="boton" [disabled]="!encuesta.valid">Finalizar</ion-button> -->
-      <ion-button expand="block" type="button" class="boton" (click)="back()">Cancelar</ion-button>
 
-      </form>
+        <ion-button expand="block" type="submit" color="success" class="boton" style="width: 100%;" *ngIf="confirmar == false">
+          Finalizar
+        </ion-button>
+
+        <ion-button expand="block" type="button" class="boton" style="width: 100%;" *ngIf="confirmar == false" (click)="back()">
+          Cancelar
+        </ion-button>
+
+        <ion-button expand="block" type="button" class="boton" color="warning" style="width: 100%;" *ngIf="confirmar != false" (click)="back()">
+          Volver al menú
+        </ion-button>
+
+        </form>
     </ion-list>
   </ion-card>
 
