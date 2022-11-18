@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "113444583387",
+    "project_id": "closer-pps",
+    "storage_bucket": "closer-pps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113444583387:android:9dd4185909ee0d60c759fe",
+        "android_client_info": {
+          "package_name": "io.ionic.starter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113444583387-jiji340tkgf8m4htvcpaj7ei9sndp1no.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZeonQviF8Dj283qozJ91eF72VxdlWWcg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113444583387-jiji340tkgf8m4htvcpaj7ei9sndp1no.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
