@@ -3,6 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  fcmUrl: 'https://fcm.googleapis.com/fcm/send',
+  fcmServerKey:
+    // eslint-disable-next-line max-len
+    'AAAAGmnS99s:APA91bGCenGWvKxEiS39t5QnPn0X8hlnFJNAjc2HB-h3xFUYHX_oUCP79kuUl-KP44SbQCmRJ_toaCxUjB17-QEhsQoWX3Y2W6NlZWh3pFesU0pRVd4uJRU4XE54ktRrCFCCtzyIb6Ey',
   firebaseConfig: {
       /*  apiKey: "AIzaSyD9yXDDKCy18B3Utj4NNnzkfX2yPk_MYj4",
         authDomain: "closer-app-255c5.firebaseapp.com",
