@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class JuegoDosPage implements OnInit {
   public random: number = 0;
   public letras = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-  public palabras = ['ANGULAR', 'TYPESCRIPT', 'EXCELENTE', 'METODOS', 'LOCALIZAR', 'AVELLANEDA', 'FACULTAD', 'INVERSION', 'CAPACIDAD', 'MIERCOLES'];
+  public palabras = ['RESTAURANT', 'RATATOUILLE', 'EXCELENTE', 'ALMUERZO', 'DESAYUNO', 'AVELLANEDA', 'MERIENDA', 'GUALEGUAYCHU', 'CAPACIDAD', 'MIERCOLES'];
   public palabra: any;
   public palabraAuxiliar: any;
   public letrasAuxiliar: any;
@@ -169,7 +169,7 @@ export class JuegoDosPage implements OnInit {
   }
 
   back() {
-    this.router.navigate(["home"]);
+    this.router.navigate(["menu-juegos"]);
   }
 
 }

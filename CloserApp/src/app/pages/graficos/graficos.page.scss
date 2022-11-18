@@ -19,10 +19,16 @@ ion-list{
     --background: rgba(253, 253, 253, 0.3);
 }
 
+.context{
+    justify-content: center;
+    margin-left: 3em;
+}
 #box {
     --background: rgba(253, 253, 253, 0.3);
     height: 93vh;
-    margin-top: -0.5em;
+    margin-top: 1.5em;
+    // margin-left: 2.5em;
+
 }
 
 .chart-container{

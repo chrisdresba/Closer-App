@@ -1,0 +1,33 @@
+ion-toolbar {
+    --background: #39a1ac;
+    width: 100%;
+  }
+  
+  ion-title {
+    --color: #fff;
+    font-weight: 600;
+    font-size: 1.5em;
+  }
+  
+  
+  #box {
+    --background: rgba(253, 253, 253, 0.3);
+    margin-top: -1em;
+  }
+  
+  ion-content {
+    width: 100%;
+    --background: url("../../../assets/background1.jpeg") center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+  
+
+  .lbl{
+    font-size: 25px;
+    font-family: cursive;
+  }
+  
+  .boton{
+    height: 170px;
+  }

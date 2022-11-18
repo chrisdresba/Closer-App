@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Menú de juegos</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-fab vertical="top" horizontal="end" slot="fixed">
+  <ion-fab-button color="dark" style="width:45px;height:45px;margin-top:-5px">
+    <ion-icon name="exit-outline"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="bottom">
+    <ion-fab-button color="dark" (click)="back()">
+      <ion-icon name="arrow-back-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="dark" (click)="Logout()">
+      <ion-icon name="exit-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
+
+<ion-content>
+  <ion-card id="box">
+
+  <div id="container">
+    <div>
+      <!-- <img src="../../../assets/ahorcado/ahorcado.png"> -->
+      <div class="card-body">
+        <h5 class="card-title">Ahorcado</h5>
+        <p class="card-text">Puedes descubrir cada una de las palabras ocultas?</p>
+        <p class="card-text">Comenzar</p>
+        <ion-button expand="block" type="submit" color="success" class="boton" routerLink="/juego-dos">
+          <img src="../../../assets/ahorcado/ahorcado.png">
+        </ion-button>
+      </div>
+    </div>
+    <div>
+      <!-- <img src="./../../../assets/naipe.jpg"> -->
+      <div class="card-body">
+        <h5 class="card-title">Mayor o menor</h5>
+        <p class="card-text">Tienes que adivinar si la proxima carta es mayor o menor</p>
+        <p class="card-text">Comenzar</p>
+        <ion-button expand="block" type="submit" color="success" class="boton" routerLink="/juego-uno">
+          <img src="./../../../assets/naipe.jpg">
+        </ion-button>
+      </div>
+    </div>
+  </div>
+  </ion-card>
+</ion-content>

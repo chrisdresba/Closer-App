@@ -78,6 +78,10 @@ const routes: Routes = [
   },  {
     path: 'juego-dos',
     loadChildren: () => import('./pages/juego-dos/juego-dos.module').then( m => m.JuegoDosPageModule)
+  },
+  {
+    path: 'menu-juegos',
+    loadChildren: () => import('./pages/menu-juegos/menu-juegos.module').then( m => m.MenuJuegosPageModule)
   }
 
 
