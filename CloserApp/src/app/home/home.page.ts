@@ -11,6 +11,8 @@ import { Mesa } from '../classes/mesa';
 import { PedidosService } from '../services/pedidos.service';
 import { Pedido } from '../classes/pedido';
 import { EstadoPedido } from '../enumerados/estado-pedido';
+import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
 
 @Component({
   selector: 'app-home',
@@ -36,7 +38,7 @@ export class HomePage implements OnInit {
 
   constructor(private authService: AuthService, public loadingController: LoadingController, private router: Router, 
     public afAuth: AngularFireAuth, public servMesa: MesaService, public toastSrv: ToastService, 
-    private toast: ToastController, private pedidoService: PedidosService) {
+    private toast: ToastController, private pedidoService: PedidosService, private pnService: PushNotificationService) {
 
     this.presentLoading();
     setTimeout(() => {
@@ -144,6 +146,25 @@ export class HomePage implements OnInit {
   ingresarListaEspera() {
     try {
       this.servMesa.agregarUsuarioListaEspera(this.usuarioLogin);
+
+      // //Envío de push notification al metre (METRE)
+      this.pnService
+      .sendPushNotification({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        registration_ids: this.pnService.listUserToken.filter((usrToken: PushUserRolToken) => (usrToken.perfil === 'METRE')).map(usrTokenReading => usrTokenReading.token),
+        notification: {
+          title: 'Lista de espera:',
+          body: 'El usuario ' + this.usuarioLogin + ' entró a la lista de espera.',
+        },
+        data: {
+          id: 2,
+          nombre: 'listaEspera',
+        },
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+
       this.presentToast("Lista de Espera", "Ya te encuentras en la lista de espera!", "success");
       this.servMesa.getListaMesa().subscribe(item => {
         this.listaMesas = item;
