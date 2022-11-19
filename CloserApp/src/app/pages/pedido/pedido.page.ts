@@ -37,6 +37,7 @@ export class PedidoPage implements OnInit {
   pedido: Pedido;
   itemPedido: ItemPedido;
   uuid: string = '';
+  listadoItems:any[]=[];
   
   // listaProductosPedido: Array<ItemPedido> = new Array<ItemPedido>();
   listaProductosPedido: Array<string> = new Array<string>();
@@ -199,6 +200,7 @@ export class PedidoPage implements OnInit {
     this.itemPedido.estado = EstadoPedido.PENDIENTE;
     this.itemPedido.cantidad += 1;
     this.itemPedido.uid = this.uuid;
+    this.listadoItems.push({'nombre':item.nombre,'cantidad':1})
 
     this.mesaService.agregarItemPedido(this.itemPedido); 
     console.log("item", this.itemPedido);

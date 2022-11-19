@@ -133,6 +133,11 @@
         <h3>Tiempo {{tiempoMaximo}} min</h3>
       </ion-label>
     </ion-item>
+    <ion-card>
+      <div  *ngFor="let producto of listadoItems">
+        <p>{{producto.cantidad}} {{producto.nombre}}</p>
+      </div>
+    </ion-card>
     <ion-item>
       <ion-label *ngIf="importeAcumulado > 0 && confirmar == false">
         <ion-button expand="block" color="warning" style="width: 100%;" (click)="confirmarPedido()">
