@@ -10,6 +10,8 @@ import { PedidosService } from 'src/app/services/pedidos.service';
 import { ItemPedido } from 'src/app/classes/item-pedido';
 import { TipoProducto } from 'src/app/enumerados/tipo-producto';
 import { EstadoPedido } from 'src/app/enumerados/estado-pedido'
+import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
 
 @Component({
   selector: 'app-items-pedido-staff',
@@ -29,7 +31,8 @@ export class ItemsPedidoStaffPage implements OnInit {
     private toast: ToastController,
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
-    private pedidosService: PedidosService
+    private pedidosService: PedidosService,
+    private pnService: PushNotificationService
   ) { }
 
   ngOnInit() {
@@ -131,6 +134,24 @@ export class ItemsPedidoStaffPage implements OnInit {
       item.estado = EstadoPedido.ELABORACION;
     } else if (estado === 'LISTO') {
       item.estado = EstadoPedido.LISTO;
+
+      // //Envío de push notification al mozo (MOZO)
+      this.pnService
+      .sendPushNotification({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        registration_ids: this.pnService.listUserToken.filter((usrToken: PushUserRolToken) => (usrToken.perfil === 'MOZO')).map(usrTokenReading => usrTokenReading.token),
+        notification: {
+          title: 'Producto de la mesa N° ' + item.mesa + ' listo para servir:',
+          body: item.producto.nombre,
+        },
+        data: {
+          id: 5,
+          nombre: 'itemPedido',
+        },
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
     }
 
 
