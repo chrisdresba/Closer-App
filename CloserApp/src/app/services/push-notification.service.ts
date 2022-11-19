@@ -21,7 +21,7 @@ import { UsrPushRolTokenService } from 'src/app/services/usr-push-rol-token.serv
 })
 export class PushNotificationService {
   private user;
-  private listUserToken: PushUserRolToken[];
+  public listUserToken: PushUserRolToken[];
 
   constructor(
     private platform: Platform,

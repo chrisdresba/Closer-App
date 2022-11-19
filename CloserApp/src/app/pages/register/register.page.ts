@@ -10,6 +10,9 @@ import { Camera, CameraOptions } from '@awesome-cordova-plugins/camera/ngx';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { UsrPushRolTokenService } from 'src/app/services/usr-push-rol-token.service';
+import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
 
 declare let window: any;
 
@@ -54,6 +57,8 @@ export class RegisterPage implements OnInit {
     private storage: AngularFireStorage,
     public loadingController: LoadingController,
     private camera: Camera,
+    private pnService: PushNotificationService,
+    private usrPushRolTokenService: UsrPushRolTokenService
   ) {
 
   }
@@ -68,7 +73,7 @@ export class RegisterPage implements OnInit {
       dni: ["", Validators.compose([Validators.required, Validators.max(99999999)])],
       //  fotoUrl: ["", Validators.compose([Validators.required])],
     });
-   
+
   }
 
 
@@ -102,6 +107,25 @@ export class RegisterPage implements OnInit {
             this.usuario.estado = "inactivo";
 
             this.servUsuario.saveCliente(this.usuario);
+
+            //Envío de push notification al dueño y supervisor (SUPERVISOR y ADMINISTRADOR)
+            this.pnService
+            .sendPushNotification({
+              // eslint-disable-next-line @typescript-eslint/naming-convention
+              registration_ids: this.pnService.listUserToken.filter((usrToken: PushUserRolToken) => (usrToken.perfil === 'SUPERVISOR' || usrToken.perfil === 'ADMINISTRADOR')).map(usrTokenReading => usrTokenReading.token),
+              notification: {
+                title: 'Se registró un nuevo cliente.',
+                body: 'El usuario ' + this.usuario.nombre + ' ' + this.usuario.apellido + ' desea ingresar a Closer.',
+              },
+              data: {
+                id: 1,
+                nombre: 'register',
+              },
+            })
+            .subscribe((data) => {
+              console.log(data);
+            });
+
             this.presentToast("Registro", "Usuario creado con exito", "success");
 
             setTimeout(() => {
