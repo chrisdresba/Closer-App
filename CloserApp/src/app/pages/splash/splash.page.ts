@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SplashScreen } from '@capacitor/splash-screen';
 //import { Plugins } from '@capacitor/core';
 //const {SplashScreen} = Plugins;
 //import { SplashScreen } from '@capacitor/splash-screen';
@@ -19,8 +20,11 @@ export class SplashPage implements OnInit {
     }, 3000);
    }
 
-  ngOnInit() {
-    
+  async ngOnInit() {
+    await SplashScreen.hide();
+  }
+  async ionViewWillEnter(){
+    await SplashScreen.hide();
   }
 
  /* async ionViewWillEnter(){

@@ -223,21 +223,24 @@ export class HomePage implements OnInit {
         this.agregarALista();
         break;
       case '8soLfeZGDhBYjhkJhaVM':
-        this.mesaAux = '04';
+        this.mesaAux = '8soLfeZGDhBYjhkJhaVM';
         this.comprobarMesa(this.mesaAux);
         this.pedido = this.pedidoService.comprobarPedido(this.usuarioLogin);
         break;
       case '9USkEuuY6nJWaO8CSF5Z':
         this.mesaAux = '9USkEuuY6nJWaO8CSF5Z';
         this.comprobarMesa(this.mesaAux);
+        this.pedido = this.pedidoService.comprobarPedido(this.usuarioLogin);
         break;
       case 'EXceXQ6iRmsibO4jXRHj':
         this.mesaAux = 'EXceXQ6iRmsibO4jXRHj';
         this.comprobarMesa(this.mesaAux);
+        this.pedido = this.pedidoService.comprobarPedido(this.usuarioLogin);
         break;
       case 'tR1zsOW4f0Lpqfc0kAGp':
         this.mesaAux = 'tR1zsOW4f0Lpqfc0kAGp';
         this.comprobarMesa(this.mesaAux);
+        this.pedido = this.pedidoService.comprobarPedido(this.usuarioLogin);
         break;
       default: ;
     }
