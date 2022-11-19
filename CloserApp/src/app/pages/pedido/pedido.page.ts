@@ -56,6 +56,7 @@ export class PedidoPage implements OnInit {
     slidesPerView: 1,
     autoplay: true
   };
+  slider: any;
 
   constructor(private router: Router, private authService: AuthService, private productosService: ProductosService,
     private mesaService: MesaService, private afAuth: AngularFireAuth, public toastSrv: ToastService, 
