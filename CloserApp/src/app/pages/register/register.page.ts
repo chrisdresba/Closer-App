@@ -11,7 +11,6 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 import { PushNotificationService } from 'src/app/services/push-notification.service';
-import { UsrPushRolTokenService } from 'src/app/services/usr-push-rol-token.service';
 import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
 
 declare let window: any;
@@ -57,8 +56,7 @@ export class RegisterPage implements OnInit {
     private storage: AngularFireStorage,
     public loadingController: LoadingController,
     private camera: Camera,
-    private pnService: PushNotificationService,
-    private usrPushRolTokenService: UsrPushRolTokenService
+    private pnService: PushNotificationService
   ) {
 
   }
