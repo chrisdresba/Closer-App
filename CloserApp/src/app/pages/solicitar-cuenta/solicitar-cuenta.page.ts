@@ -222,8 +222,9 @@ export class SolicitarCuentaPage implements OnInit {
     this.mesaService.actualizarEstadoPedido(this.pedido);
     this.presentLoading();
     setTimeout(()=>{
+      this.filtrarPedido();
       this.propinaValue = true;
-    },3000)
+    },4000)
 
   }
 
@@ -252,7 +253,7 @@ export class SolicitarCuentaPage implements OnInit {
     const loading = await this.loadingController.create({
       spinner: 'circles',
       message: 'Cargando...',
-      duration: 3000,
+      duration: 4000,
       translucent: true,
 
       cssClass: 'my-loading-class'

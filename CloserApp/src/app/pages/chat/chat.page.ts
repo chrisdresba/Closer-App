@@ -10,8 +10,8 @@ import { MesaService } from 'src/app/services/mesa.service';
 import { Mensaje } from 'src/app/classes/mensaje';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-
+import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
 
 @Component({
   selector: 'app-chat',
@@ -36,7 +36,8 @@ export class ChatPage implements OnInit {
     public chat: ChatService,
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
-    private mesaService: MesaService
+    private mesaService: MesaService,
+    private pnService: PushNotificationService
   ) {
     this.presentLoading();
     //Asigno un tiempo para filtrar la busqueda
@@ -121,6 +122,25 @@ export class ChatPage implements OnInit {
 
     if (this.mensaje.length > 0) {
       this.chat.guardarMensaje(this.usuarioLogin, this.mesa, this.mensaje);
+
+      // //Envío de push notification al mozo (MOZO)
+      this.pnService
+      .sendPushNotification({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        registration_ids: this.pnService.listUserToken.filter((usrToken: PushUserRolToken) => (usrToken.perfil === 'MOZO')).map(usrTokenReading => usrTokenReading.token),
+        notification: {
+          title: 'Nuevo mensaje de la mesa N°: ' + this.mesa,
+          body: this.mensaje,
+        },
+        data: {
+          id: 3,
+          nombre: 'chat',
+        },
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+
       this.mensaje = '';
     }
   }

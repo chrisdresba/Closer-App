@@ -14,7 +14,12 @@ import { ItemPedido } from 'src/app/classes/item-pedido';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+<<<<<<< HEAD
 import { ChatService } from 'src/app/services/chat.service';
+=======
+import { PushNotificationService } from 'src/app/services/push-notification.service';
+import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
+>>>>>>> 0f2b3697f166899ea8543d4535e02ac27d9fad6f
 
 @Component({
   selector: 'app-pedidos-staff',
@@ -40,7 +45,11 @@ export class PedidosStaffPage implements OnInit {
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
     public servPedido: PedidosService,
+<<<<<<< HEAD
     public chat: ChatService
+=======
+    private pnService: PushNotificationService
+>>>>>>> 0f2b3697f166899ea8543d4535e02ac27d9fad6f
   ) {
     this.presentLoading();
     setTimeout(() => {
@@ -80,7 +89,7 @@ export class PedidosStaffPage implements OnInit {
         for (let e = 0; e < item.productos.length; e++) {
           for (let i = 0; i < this.listaItemPedidos.length; i++) {
             if (this.listaItemPedidos[i].uid == item.productos[e]) {
-              platos.push({ 'nombre': this.listaItemPedidos[i].producto.nombre, 'cantidad': this.listaItemPedidos[i].cantidad, 'estado': this.listaItemPedidos[i].estado })
+              platos.push({ 'nombre': this.listaItemPedidos[i].producto.nombre, 'cantidad': this.listaItemPedidos[i].cantidad, 'estado': this.listaItemPedidos[i].estado, 'tipo': this.listaItemPedidos[i].producto.tipo })
               if (this.listaItemPedidos[i].estado == EstadoPedido.LISTO) {
                 acumulador++;
               }
@@ -125,6 +134,9 @@ export class PedidosStaffPage implements OnInit {
 
     if (auxiliar) {
       this.pedido.estado = EstadoPedido.ACEPTADO;
+
+      this.enviarPushNotification();
+
       this.mesaService.actualizarEstadoPedido(this.pedido);
       this.recargar();
       this.presentToast("Pedido", "El pedido fue aceptado", "success");
@@ -234,5 +246,74 @@ export class PedidosStaffPage implements OnInit {
     this.router.navigate(["home"]);
   }
 
+  enviarPushNotification(){
+    // //Envío de push notification al cocinero y bartender (COCINERO y BARTENDER)
+
+    let productos = [];
+
+    this.listadoVista.forEach(elementoVista => {
+      if(elementoVista[0] === this.pedido.uid){
+        productos = elementoVista[2];
+      }
+    });
+
+    let productosCocinero = [];
+    let productosBartender = [];
+
+    if(productos.length > 0){
+      productosCocinero = productos.filter(item => ((item.tipo === 'COCINA' || item.tipo === 'POSTRE')));
+      productosBartender = productos.filter(item => ((item.tipo === 'BAR')));
+    }
+
+    if(productosCocinero.length > 0){
+      let productosCocineroString: string[] = [];
+      
+      productosCocinero.forEach(productoCocinero => {
+        productosCocineroString.push(productoCocinero.nombre + ' x ' + productoCocinero.cantidad + ' ')
+      });
+
+      this.pnService
+      .sendPushNotification({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        registration_ids: this.pnService.listUserToken.filter((usrToken: PushUserRolToken) => (usrToken.perfil === 'COCINERO')).map(usrTokenReading => usrTokenReading.token),
+        notification: {
+          title: 'Nuevo pedido de la mesa N°: ' + this.pedido.mesa + ':',
+          body: productosCocineroString.toString(),
+        },
+        data: {
+          id: 4,
+          nombre: 'pedido',
+        },
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+    }
+
+    if(productosBartender.length > 0){
+      let productosBartenderString: string[] = [];
+      
+      productosBartender.forEach(productoCocinero => {
+        productosBartenderString.push(productoCocinero.nombre + ' x ' + productoCocinero.cantidad + ' ')
+      });
+
+      this.pnService
+      .sendPushNotification({
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        registration_ids: this.pnService.listUserToken.filter((usrToken: PushUserRolToken) => (usrToken.perfil === 'BARTENDER')).map(usrTokenReading => usrTokenReading.token),
+        notification: {
+          title: 'Nuevo pedido de la mesa N°: ' + this.pedido.mesa + ':',
+          body: productosBartenderString.toString(),
+        },
+        data: {
+          id: 4,
+          nombre: 'pedido',
+        },
+      })
+      .subscribe((data) => {
+        console.log(data);
+      });
+    }
+  }
 
 }

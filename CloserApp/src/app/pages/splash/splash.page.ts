@@ -16,16 +16,14 @@ export class SplashPage implements OnInit {
   constructor(private router: Router) {
 
   setTimeout(() => {
-      this.router.navigateByUrl('login')
+      this.router.navigateByUrl('login',{ replaceUrl: true })
     }, 3000);
    }
 
-  async ngOnInit() {
-    await SplashScreen.hide();
+  ngOnInit() {
+
   }
-  async ionViewWillEnter(){
-    await SplashScreen.hide();
-  }
+
 
  /* async ionViewWillEnter(){
     //Plugins.SplashScreen.hide() 
