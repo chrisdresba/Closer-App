@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import {
   ActionPerformed,
@@ -40,6 +41,11 @@ export class PushNotificationService {
   }
 
   async inicializar(usuarioStaff: Staff): Promise<void> {
+    //Primero remuevo los listeners para que no se vayan incrementando las suscripciones.
+    const resultRemove = await PushNotifications.removeAllListeners();
+
+    console.log('Removedor de Listeners: ', resultRemove);
+
     this.addListeners(usuarioStaff);
 
     // Verificamos que este en un dispositivo y no en una PC y tambien que el usuario no tegna seteado el token
