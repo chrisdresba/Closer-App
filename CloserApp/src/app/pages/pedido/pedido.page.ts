@@ -15,6 +15,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Mesa } from 'src/app/classes/mesa';
 import { ToastService } from 'src/app/services/toast.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
+import { IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-pedido',
@@ -49,12 +50,23 @@ export class PedidoPage implements OnInit {
   tiempoMaximo: number = 0;
   confirmar: boolean = false;
 
+  public didInit = false;
+  slideOpts = {
+    initialSlide: 0,
+    slidesPerView: 1,
+    autoplay: true
+  };
+
   constructor(private router: Router, private authService: AuthService, private productosService: ProductosService,
     private mesaService: MesaService, private afAuth: AngularFireAuth, public toastSrv: ToastService, 
     private pedidoService: PedidosService ) {
       this.traerListaMesa();
         this.filtrarPedido();
         }
+
+  ngAfterViewInit() {
+    this.didInit = true;
+  }
 
   ngOnInit() {
     this.obtenerProductos();
@@ -191,7 +203,10 @@ export class PedidoPage implements OnInit {
     return this.listaDetalle;
   }
 
-  agregar(item: Producto){
+  agregar(item: Producto, e: Event){
+    e.stopPropagation(); // Lo freno para que no se abra el accordion cuando toco el botón
+    e.preventDefault(); // Lo freno para que no se abra el accordion cuando toco el botón
+
     this.uuid = uuidv4();
     this.itemPedido = new ItemPedido();
     this.itemPedido.mesa = this.mesa.numero;
@@ -267,5 +282,37 @@ export class PedidoPage implements OnInit {
       position: "middle"
     });
     toast.present();
+  }
+
+  // Method called when slide is changed by drag or navigation
+  SlideDidChange(object: any, slideView: IonSlides) {
+    this.checkIfNavDisabled(object, slideView);
+  }
+
+    // Call methods to check if slide is first or last to enable disbale navigation
+    checkIfNavDisabled(object: any, slideView: IonSlides) {
+    this.checkisBeginning(object, slideView);
+    this.checkisEnd(object, slideView);
+  }
+
+  checkisBeginning(object: any, slideView: IonSlides) {
+    slideView.isBeginning().then((istrue) => {
+      object.isBeginningSlide = istrue;
+    });
+  }
+
+  checkisEnd(object: any, slideView: IonSlides) {
+    slideView.isEnd().then((istrue) => {
+      object.isEndSlide = istrue;
+    });
+  }
+
+  slideUpdate(slideView: IonSlides) {
+    slideView.update();
+  }
+
+  prevenirEvento(e: Event){
+    e.stopPropagation(); // Lo freno para que no se abra el accordion cuando toco el botón
+    e.preventDefault(); // Lo freno para que no se abra el accordion cuando toco el botón
   }
 }
