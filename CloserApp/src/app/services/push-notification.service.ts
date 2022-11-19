@@ -11,35 +11,17 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-<<<<<<< HEAD
-=======
 import { Staff } from 'src/app/classes/staff'
 import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
 import { UsrPushRolTokenService } from 'src/app/services/usr-push-rol-token.service';
 
->>>>>>> 3f089d9a3e4383cb59c6f69b50260c76e498116a
 
 @Injectable({
   providedIn: 'root',
 })
 export class PushNotificationService {
   private user;
-<<<<<<< HEAD
-  constructor(
-    private platform: Platform,
-    // private firestore: Firestore,
-    private http: HttpClient
-  ) {
-    // const aux = doc(firestore, 'personas/4hjcn6LXY1qVfxBDYub3');
-    // docData(aux).subscribe((user) => (this.user = user));
-  }
-
-  async inicializar(): Promise<void> {
-    this.addListeners();
-    // Verificamos que este en un dispositivo y no en una PC y tambien que el usuario no tegna seteado el token
-    if (this.platform.is('capacitor') && this.user.token === '') {
-=======
-  private listUserToken: PushUserRolToken[];
+  public listUserToken: PushUserRolToken[];
 
   constructor(
     private platform: Platform,
@@ -63,7 +45,6 @@ export class PushNotificationService {
     // Verificamos que este en un dispositivo y no en una PC y tambien que el usuario no tegna seteado el token
     // if (this.platform.is('capacitor') && this.user.token === '') {
     if (this.platform.is('capacitor')) {
->>>>>>> 3f089d9a3e4383cb59c6f69b50260c76e498116a
       const result = await PushNotifications.requestPermissions();
       if (result.receive === 'granted') {
         await PushNotifications.register();
@@ -75,11 +56,7 @@ export class PushNotificationService {
     // const aux = doc(this.firestore, 'personas/4hjcn6LXY1qVfxBDYub3');
     // docData(aux, { idField: 'id' }).subscribe(async (user) => {
     //   this.user = user;
-<<<<<<< HEAD
-      this.inicializar();
-=======
     // this.inicializar();
->>>>>>> 3f089d9a3e4383cb59c6f69b50260c76e498116a
     // });
   }
 
@@ -94,23 +71,11 @@ export class PushNotificationService {
     });
   }
 
-<<<<<<< HEAD
-  private async addListeners(): Promise<void> {
-=======
   private async addListeners(usuarioStaff: Staff): Promise<void> {
->>>>>>> 3f089d9a3e4383cb59c6f69b50260c76e498116a
     //Ocurre cuando el registro de las push notifications finaliza sin errores
     await PushNotifications.addListener(
       'registration',
       async (token: Token) => {
-<<<<<<< HEAD
-        //Acá deberiamos asociar el token a nuestro usario en nuestra bd
-        console.log('Registration token: ', token.value);
-        // const aux = doc(this.firestore, `personas/${this.user.id}`);
-        // await updateDoc(aux, {
-        //   token: token.value,
-        // });
-=======
         let isUsuarioEncontrado = false;
         let objetoUsuarioPush: PushUserRolToken = new PushUserRolToken();
         //Acá deberiamos asociar el token a nuestro usario en nuestra bd
@@ -144,7 +109,6 @@ export class PushNotificationService {
               console.log(err);
             });
         }
->>>>>>> 3f089d9a3e4383cb59c6f69b50260c76e498116a
       }
     );
 

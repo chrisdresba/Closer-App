@@ -42,7 +42,7 @@
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Consulta Al Mozo
       </ion-button>
 
-      <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+      <ion-button *ngIf="this.mesa && this.pedido && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
         routerLink="/estado-pedido">
         <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Estado del pedido
       </ion-button>
@@ -52,12 +52,17 @@
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
       </ion-button>
  -->
-      <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+      <ion-button *ngIf="this.mesa && this.pedido && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
         routerLink="/menu-juegos">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juegos
       </ion-button>
 
-      <ion-button *ngIf="rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
+      <ion-button *ngIf="this.encuesta == false && this.pedido && this.mesa && rol == 'cliente' || rol == 'ADMINISTRADOR'"
+      expand="block" type="submit" color="success" class="boton" (click)="realizarEncuesta()">
+      <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
+    </ion-button>
+    
+      <ion-button *ngIf="this.encuesta == true && rol == 'cliente' || rol == 'ADMINISTRADOR'" expand="block" type="submit" color="success"
         class="boton" (click)="verValoraciones()">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>¿Qué opinan nuestros clientes?
       </ion-button>
@@ -82,12 +87,7 @@
         <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Consultas Mesas
       </ion-button>
 
-      <ion-button *ngIf="this.encuesta == false && this.mesa && rol == 'cliente' || rol == 'ADMINISTRADOR'"
-        expand="block" type="submit" color="success" class="boton" (click)="realizarEncuesta()">
-        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
-      </ion-button>
-
-      <ion-button *ngIf="this.mesa && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+      <ion-button *ngIf="this.mesa && this.cuenta && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
         routerLink="/solicitar-cuenta">
         <ion-icon class="lbl" slot="start" name="restaurant-sharp"></ion-icon>Pedir la cuenta
       </ion-button>

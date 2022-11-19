@@ -29,6 +29,8 @@ export class HomePage implements OnInit {
   rol: string;
   mesaAux: string;
   mesa: string;
+  pedido: string;
+  cuenta: string;
   view: boolean = false;
   encuesta:boolean = false;
 
@@ -41,6 +43,8 @@ export class HomePage implements OnInit {
     this.presentLoading();
     setTimeout(() => {
       this.mesa = this.servMesa.comprobarMesaAsignada(this.usuarioLogin);
+      this.cuenta = this.pedidoService.comprobarPedidoEntregado(this.usuarioLogin);
+      //this.pedido = this.pedidoService.comprobarPedido(this.usuarioLogin);
       this.view = true;
     }, 2000)
   }
@@ -66,6 +70,10 @@ export class HomePage implements OnInit {
     if (localStorage.getItem('anonimo')) {
       this.usuarioLogin = localStorage.getItem('anonimo');
       this.traerPedidos(this.usuarioLogin);
+    }
+
+    if (localStorage.getItem('pedidoExistente')) {
+      this.pedido = 'OK';
     }
 
     this.servMesa.getListaEspera().subscribe(item => {
@@ -217,6 +225,7 @@ export class HomePage implements OnInit {
       case '8soLfeZGDhBYjhkJhaVM':
         this.mesaAux = '04';
         this.comprobarMesa(this.mesaAux);
+        this.pedido = this.pedidoService.comprobarPedido(this.usuarioLogin);
         break;
       case '9USkEuuY6nJWaO8CSF5Z':
         this.mesaAux = '9USkEuuY6nJWaO8CSF5Z';
@@ -258,6 +267,7 @@ export class HomePage implements OnInit {
       if (this.listaEspera[i].usuario == this.usuarioLogin) {
         if (this.listaEspera[i].estado == true) {
           this.presentToast("Lista de Espera", "No puedes agregarte nuevamente a la lista de espera!", "warning");
+          this.encuesta = true;
           return false;
         }
       }

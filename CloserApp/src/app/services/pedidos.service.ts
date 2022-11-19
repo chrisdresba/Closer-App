@@ -4,6 +4,7 @@ import { Pedido } from '../classes/pedido';
 import { map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ItemPedido } from '../classes/item-pedido';
+import { EstadoPedido } from 'src/app/enumerados/estado-pedido';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,24 @@ export class PedidosService {
         return docs.map(d => d.payload.doc.data()) as ItemPedido[];
       })
     );
+  }
+
+
+  comprobarPedido(usuario: string) {
+    for (let i = 0; i < this.listado.length; i++) {
+      if (this.listado[i].usuario == usuario) {
+        localStorage.setItem('pedidoExistente','OK')
+        return this.listado[i].mesa;
+      }
+    }
+  }
+
+  comprobarPedidoEntregado(usuario: string) {
+    for (let i = 0; i < this.listado.length; i++) {
+      if (this.listado[i].usuario == usuario && this.listado[i].estado == EstadoPedido.CONFIRMADO ) {
+        return this.listado[i].estado;
+      }
+    }
   }
 
   async actualizarEstadoPedido(res: Pedido) {

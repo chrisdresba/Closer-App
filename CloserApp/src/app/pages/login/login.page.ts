@@ -7,7 +7,6 @@ import { ToastService } from 'src/app/services/toast.service';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { AuthService } from '../../services/auth.service';
 import { ValidacionUsuario } from 'src/app/enumerados/validacion-usuario'
-import { PushNotificationService } from 'src/app/services/push-notification.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +22,7 @@ export class LoginPage implements OnInit {
   // cargarPassword: string;
 
   constructor(private fb: FormBuilder, private loadingController: LoadingController, public toastSrv: ToastService, private toast: ToastController,
-    private authService: AuthService, private alertController: AlertController, private router: Router, public serv: UsuariosService, private pnService: PushNotificationService) {
+    private authService: AuthService, private alertController: AlertController, private router: Router, public serv: UsuariosService) {
     this.opcion = "Staff";
     // this.cargarEmail="";
     // this.cargarPassword="";
@@ -82,8 +81,6 @@ export class LoginPage implements OnInit {
       if (this.estado) {
         this.serv.rolUsuario(email);
         this.router.navigate(['home']);
-
-        this.pnService.inicializar();
       } else {
         this.presentToast("Ingreso", "El usuario aún no fue validado!", "warning");
       }
