@@ -9,37 +9,54 @@ Se desarrollará una aplicación encargada de toda la comunicación de un restau
 Las tareas a realizar se dividirán entre los integrantes y será de la siguiente manera:
 
 ##### Cristian Andrés Barraza
-- Creación de Logo e Icono
-- Desarrollo de Splash Screen
-- Maquetado Pantalla de Registro
-- Formularios Pantalla de Registro
-- Generación de Chat - Consulta al mozo
-- Creación y validación Qr Lista de Espera
+- Creación de Logo e Icono.
+- Desarrollo de Splash Screen.
+- Maquetado Pantalla de Registro.
+- Formularios Pantalla de Registro.
+- Generación de Chat - Consulta al mozo.
+- Creación y validación Qr Lista de Espera.
 - Generación de Chat - Mozos con las diferentes mesas.
 - Listado de pedidos y confirmación del Mozo.
-- Lectura Qr Dni realizada
-- Juego Mayor o Menor
+- Lectura Qr Dni realizada.
+- Juego Mayor o Menor.
+- Estado del pedido.
+- Entrega y recepción del pedido.
+- Lógica Qr propina.
+- Solicitud de la cuenta del pedido.
+- Cobro y liberación de mesa (Mozo).
 
 ##### Andrés Wuthrich
-- Maquetado Pantalla de Ingreso
-- Lógica Pantalla de Ingreso
-- Servicios de autenticación
-- Ajuste en estilos de la Aplicación
-- Asignación de Mesa a cliente (Metre)
+- Maquetado Pantalla de Ingreso.
+- Lógica Pantalla de Ingreso.
+- Servicios de autenticación.
+- Ajuste en estilos de la Aplicación.
+- Asignación de Mesa a cliente (Metre).
 - Lista en Espera (Metre), maquetado y lógica.
 - Diseño componente de pedido(cliente).
 - Desarrollo de Encuesta.
 - Creación códigos Qr Propina.
+- Revisión usuario anónimo.
+- Lógica de Encuesta.
+- Desarrollo gráficos.
+- Push Notifications.
+- Generación de descuentos (Juego).
+- Juego.
 
 ##### Lucas Sanchez
--  Maquetado Pantalla de Inicio
--  Desarrollo listado de clientes pendientes
-- Envio correo electrónico
-- Codigos Qr Mesas
+-  Maquetado Pantalla de Inicio.
+-  Desarrollo listado de clientes pendientes.
+- Envio correo electrónico.
+- Codigos Qr Mesas.
 -  Maquetado o loǵica del menú.
--  Mantenimiento Firebase
-- Visualización de pedidos por sector
+-  Mantenimiento Firebase.
+- Visualización de pedidos por sector.
 - Cambio de estado del pedido.
+-  Cambios de estados en productos del pedido.
+- Pedidos Sector Cocinero - Bartender - Staff.
+- Generación de descuentos (Juego).
+- Cambio de estado del pedido.
+- Desarrollo gráficos.
+- Push Notifications.
 
 ### Semana 1 
 ------------
@@ -112,6 +129,33 @@ Desarrollamos las tareas requeridas para cumplir con los objetivos hasta el punt
 - Visualización de pedidos por sector
 - Cambio de estado del pedido.
 - Juego (pendiente).
+
+### Semana 5 (ENTREGA FINAL)
+------------
+Desarrollamos las tareas requeridas para cumplir con los objetivos hasta el punto 13, realizando los envíos de push notifications. Se detallan las tareas realizadas:
+
+##### Andrés Wuthrich
+- Revisión usuario anónimo.
+- Lógica de Encuesta.
+- Desarrollo gráficos.
+- Push Notifications.
+- Generación de descuentos (Juego).
+- Juego.
+
+##### Cristian Andrés Barraza
+- Estado del pedido.
+- Entrega y recepción del pedido.
+- Lógica Qr propina.
+- Solicitud de la cuenta del pedido.
+- Cobro y liberación de mesa (Mozo).
+
+##### Lucas Sanchez
+-  Cambios de estados en productos del pedido.
+- Pedidos Sector Cocinero - Bartender - Staff.
+- Generación de descuentos (Juego).
+- Cambio de estado del pedido.
+- Desarrollo gráficos.
+- Push Notifications.
 
 ### Pantallas de la Aplicación
 ------------
