@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { Pedido } from 'src/app/classes/pedido';
 import { AuthService } from 'src/app/services/auth.service';
+import { PedidosService } from 'src/app/services/pedidos.service';
 
 @Component({
   selector: 'app-juego-dos',
@@ -29,21 +31,36 @@ export class JuegoDosPage implements OnInit {
   public usuarioLogueado:string = '';
   public fecha:any;
 
+  usuarioLogin: string;
+  juegoValue: string = '';
+  listadoPedidos: Pedido[] = [];
+  pedido: Pedido;
+
   constructor(public afAuth: AngularFireAuth, private router: Router, private authService: AuthService,
-    private toast: ToastController
-    //,public serv: ResultadosService
+    private toast: ToastController, private servPedido: PedidosService
     ) {
-    this.iniciar();
+        this.identificarPedido();
+        this.iniciar();
   }
 
   ngOnInit(): void {
     this.usuario = this.afAuth.onAuthStateChanged(user => {
-      if (!user) {
-        this.usuarioLogueado = 'anonimo';
-      } else {
+      if (user) {
         this.usuario = user;
-        this.usuarioLogueado = this.usuario.email;
+        this.usuarioLogin = this.usuario.email;
       }
+    })
+
+    if (localStorage.getItem('anonimo')) {
+      this.usuarioLogin = localStorage.getItem('anonimo');
+    }
+
+    if (localStorage.getItem('juegoOk')) {
+      this.juegoValue = localStorage.getItem('juegoOk');
+    }
+
+    this.servPedido.getPedidos().subscribe(item => {
+      this.listadoPedidos = item;
     })
   }
 
@@ -55,6 +72,28 @@ export class JuegoDosPage implements OnInit {
       this.palabraAuxiliar[i] = '';
     }
     this.letrasAuxiliar = new Array();
+  }
+
+  identificarPedido() {
+
+    setTimeout(() => {
+      if (this.juegoValue == 'OK') {
+        this.presentToast("Ahorcado", "Suma 300 puntos y gana!", "success");
+      } else {
+        this.presentToast("Ahorcado", "Suma 300 puntos para ganar un descuento!", "success");
+      }
+    }, 1000)
+
+    setTimeout(() => {
+      console.log(this.listadoPedidos);
+      this.listadoPedidos.forEach(item => {
+        console.log(item.productos.length, item.usuario, this.usuarioLogin);
+        if (item.productos.length > 0 && item.usuario == this.usuarioLogin) {
+          this.pedido = item;
+          console.log(this.pedido);
+        }
+      })
+    }, 2500)
   }
 
   letrasIngresadas(letra: any) {
@@ -79,7 +118,6 @@ export class JuegoDosPage implements OnInit {
 
       }
 
-      //guardo la letra que ingreso para que no se repitan
       this.letrasAuxiliar.push(letra);
 
       if (auxiliar == 0) {
@@ -88,16 +126,14 @@ export class JuegoDosPage implements OnInit {
       }
 
       if (this.arrayEquals(this.palabra, this.palabraAuxiliar)) {
-        // Swal.fire({
-        //   icon: 'success',
-        //   title: 'Excelente',
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
+        this.presentToast("Ahorcado", "Excelente!!", "warning");
+
         setTimeout(() => {
-          this.puntaje = this.puntaje + 10;
+          this.puntaje = this.puntaje + 100;
+          this.comprobarVictoria();
           this.recargar();
         }, 3000)
+
       }
     }
     if (this.intentos == 6) {
@@ -105,23 +141,12 @@ export class JuegoDosPage implements OnInit {
       this.vidas--;
 
       if (this.vidas == 0) {
-        // Swal.fire({
-        //   icon: 'warning',
-        //   title: 'Perdiste, volvamos a jugar',
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
-        this.guardarResultado();
+        this.presentToast("Ahorcado", "Será la próxima!", "warning");
         this.vidas = 4;
         this.puntaje = 0;
         this.recargar();
       }else{
-        // Swal.fire({
-        //   icon: 'warning',
-        //   title: 'Vuelve a intentarlo',
-        //   showConfirmButton: false,
-        //   timer: 1500,
-        // });
+        this.presentToast("Ahorcado", "Vuelve a intentarlo!", "warning");
         this.recargar();
       }
 
@@ -142,13 +167,22 @@ export class JuegoDosPage implements OnInit {
       a.every((val, index) => val === b[index]);
   }
 
+  comprobarVictoria() {
+    if (this.puntaje == 300) {
+      if (localStorage.getItem('juegoOk')) {
+        this.presentToast("Ahorcado", "Felicitaciones, has ganado!", "success");
+      } else {
+        console.log("desc", this.pedido);
+        this.pedido.descuento = 15;
+        this.servPedido.actualizarEstadoPedido(this.pedido);
+        this.presentToast("Ahorcado", "Felicitaciones, has ganado! 15% DE DESCUENTO", "success");
+        localStorage.setItem('juegoOk', 'OK');
+      }
 
-  guardarResultado(){
-    let pipe = new DatePipe('en-US');
-    this.fecha = String(pipe.transform(Date.now(), 'dd/MM/yyyy'));
-    // let resultado = new Resultados();
-    // resultado.crearResultado(this.usuarioLogueado,this.puntaje,this.juego,this.fecha);
-    // this.serv.guardarResultado(resultado);
+      setTimeout(() => {
+        this.router.navigate(["home"]);
+      }, 3000);
+    }
   }
 
   async presentToast(header: string, message: string, color: string) {

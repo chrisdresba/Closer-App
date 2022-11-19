@@ -51,11 +51,16 @@
         class="boton" (click)="realizarEncuesta()">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Realizar encuesta
       </ion-button>
- -->
+ 
       <ion-button *ngIf="this.mesa && this.pedido && rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
         routerLink="/menu-juegos">
         <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juegos
-      </ion-button>
+      </ion-button>  -->
+
+      <ion-button *ngIf="rol == 'cliente'" expand="block" type="submit" color="success" class="boton"
+        routerLink="/menu-juegos">
+        <ion-icon class="lbl" slot="start" name="people"></ion-icon>Juegos
+      </ion-button> 
 
       <ion-button *ngIf="this.encuesta == false && this.pedido && this.mesa && rol == 'cliente' || rol == 'ADMINISTRADOR'"
       expand="block" type="submit" color="success" class="boton" (click)="realizarEncuesta()">

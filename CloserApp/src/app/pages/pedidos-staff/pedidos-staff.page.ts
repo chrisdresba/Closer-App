@@ -14,12 +14,9 @@ import { ItemPedido } from 'src/app/classes/item-pedido';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { PedidosService } from 'src/app/services/pedidos.service';
-<<<<<<< HEAD
 import { ChatService } from 'src/app/services/chat.service';
-=======
 import { PushNotificationService } from 'src/app/services/push-notification.service';
 import { PushUserRolToken } from 'src/app/classes/push-user-rol-token'
->>>>>>> 0f2b3697f166899ea8543d4535e02ac27d9fad6f
 
 @Component({
   selector: 'app-pedidos-staff',
@@ -45,11 +42,8 @@ export class PedidosStaffPage implements OnInit {
     public firestore: AngularFirestore,
     public afAuth: AngularFireAuth,
     public servPedido: PedidosService,
-<<<<<<< HEAD
-    public chat: ChatService
-=======
-    private pnService: PushNotificationService
->>>>>>> 0f2b3697f166899ea8543d4535e02ac27d9fad6f
+    private pnService: PushNotificationService,
+    public chat:ChatService
   ) {
     this.presentLoading();
     setTimeout(() => {
